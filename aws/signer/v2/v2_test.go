@@ -2,6 +2,7 @@ package v2
 
 import (
 	"bytes"
+	"context"
 	"net/http"
 	"net/url"
 	"os"
@@ -62,7 +63,6 @@ func TestSignRequestWithAndWithoutSession(t *testing.T) {
 	}
 
 	// create request without a SecurityToken (session) in the credentials
-
 	query := newQuery()
 	timestamp := time.Date(2015, 7, 16, 7, 56, 16, 0, time.UTC)
 	builder := signerBuilder{
@@ -75,7 +75,7 @@ func TestSignRequestWithAndWithoutSession(t *testing.T) {
 
 	signer := builder.BuildSigner()
 
-	err := signer.Sign()
+	err := signer.Sign(context.Background())
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
 	}
@@ -122,7 +122,7 @@ func TestSignRequestWithAndWithoutSession(t *testing.T) {
 	builder.SessionToken = "SESSION"
 	signer = builder.BuildSigner()
 
-	err = signer.Sign()
+	err = signer.Sign(context.Background())
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
 	}
@@ -165,7 +165,7 @@ func TestMoreComplexSignRequest(t *testing.T) {
 
 	signer := builder.BuildSigner()
 
-	err := signer.Sign()
+	err := signer.Sign(context.Background())
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
 	}

@@ -13,6 +13,64 @@ import (
 var _ aws.Config
 var _ = awsutil.Prettify
 
+// CDN Authorization credentials
+type Authorization struct {
+	_ struct{} `type:"structure"`
+
+	// The Amazon Resource Name (ARN) for the secret in Secrets Manager that your
+	// Content Distribution Network (CDN) uses for authorization to access your
+	// endpoint.
+	//
+	// CdnIdentifierSecret is a required field
+	CdnIdentifierSecret *string `locationName:"cdnIdentifierSecret" type:"string" required:"true"`
+
+	// The Amazon Resource Name (ARN) for the IAM role that allows MediaPackage
+	// to communicate with AWS Secrets Manager.
+	//
+	// SecretsRoleArn is a required field
+	SecretsRoleArn *string `locationName:"secretsRoleArn" type:"string" required:"true"`
+}
+
+// String returns the string representation
+func (s Authorization) String() string {
+	return awsutil.Prettify(s)
+}
+
+// Validate inspects the fields of the type to determine if they are valid.
+func (s *Authorization) Validate() error {
+	invalidParams := aws.ErrInvalidParams{Context: "Authorization"}
+
+	if s.CdnIdentifierSecret == nil {
+		invalidParams.Add(aws.NewErrParamRequired("CdnIdentifierSecret"))
+	}
+
+	if s.SecretsRoleArn == nil {
+		invalidParams.Add(aws.NewErrParamRequired("SecretsRoleArn"))
+	}
+
+	if invalidParams.Len() > 0 {
+		return invalidParams
+	}
+	return nil
+}
+
+// MarshalFields encodes the AWS API shape using the passed in protocol encoder.
+func (s Authorization) MarshalFields(e protocol.FieldEncoder) error {
+	if s.CdnIdentifierSecret != nil {
+		v := *s.CdnIdentifierSecret
+
+		metadata := protocol.Metadata{}
+		e.SetValue(protocol.BodyTarget, "cdnIdentifierSecret", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
+	}
+	if s.SecretsRoleArn != nil {
+		v := *s.SecretsRoleArn
+
+		metadata := protocol.Metadata{}
+		e.SetValue(protocol.BodyTarget, "secretsRoleArn", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
+	}
+	return nil
+}
+
 // A Channel resource configuration.
 type Channel struct {
 	_ struct{} `type:"structure"`
@@ -354,7 +412,7 @@ type DashPackage struct {
 	// A list of SCTE-35 message types that are treated as ad markers in the output.
 	// If empty, noad markers are output. Specify multiple items to create ad markers
 	// for all of the includedmessage types.
-	AdTriggers []__AdTriggersElement `locationName:"adTriggers" type:"list"`
+	AdTriggers []AdTriggersElement `locationName:"adTriggers" type:"list"`
 
 	// This setting allows the delivery restriction flags on SCTE-35 segmentation
 	// descriptors todetermine whether a message signals an ad. Choosing "NONE"
@@ -393,7 +451,7 @@ type DashPackage struct {
 	// into multiple periods. If empty, the content will notbe partitioned into
 	// more than one period. If the list contains "ADS", new periods will be created
 	// wherethe Channel source contains SCTE-35 ad markers.
-	PeriodTriggers []__PeriodTriggersElement `locationName:"periodTriggers" type:"list"`
+	PeriodTriggers []PeriodTriggersElement `locationName:"periodTriggers" type:"list"`
 
 	// The Dynamic Adaptive Streaming over HTTP (DASH) profile type. When set to
 	// "HBBTV_1_5", HbbTV 1.5 compliant output is enabled.
@@ -865,7 +923,7 @@ type HlsManifestCreateOrUpdateParameters struct {
 	// A list of SCTE-35 message types that are treated as ad markers in the output.
 	// If empty, noad markers are output. Specify multiple items to create ad markers
 	// for all of the includedmessage types.
-	AdTriggers []__AdTriggersElement `locationName:"adTriggers" type:"list"`
+	AdTriggers []AdTriggersElement `locationName:"adTriggers" type:"list"`
 
 	// This setting allows the delivery restriction flags on SCTE-35 segmentation
 	// descriptors todetermine whether a message signals an ad. Choosing "NONE"
@@ -1009,7 +1067,7 @@ type HlsPackage struct {
 	// A list of SCTE-35 message types that are treated as ad markers in the output.
 	// If empty, noad markers are output. Specify multiple items to create ad markers
 	// for all of the includedmessage types.
-	AdTriggers []__AdTriggersElement `locationName:"adTriggers" type:"list"`
+	AdTriggers []AdTriggersElement `locationName:"adTriggers" type:"list"`
 
 	// This setting allows the delivery restriction flags on SCTE-35 segmentation
 	// descriptors todetermine whether a message signals an ad. Choosing "NONE"
@@ -1325,6 +1383,9 @@ type OriginEndpoint struct {
 	// The Amazon Resource Name (ARN) assigned to the OriginEndpoint.
 	Arn *string `locationName:"arn" type:"string"`
 
+	// CDN Authorization credentials
+	Authorization *Authorization `locationName:"authorization" type:"structure"`
+
 	// The ID of the Channel the OriginEndpoint is associated with.
 	ChannelId *string `locationName:"channelId" type:"string"`
 
@@ -1386,6 +1447,12 @@ func (s OriginEndpoint) MarshalFields(e protocol.FieldEncoder) error {
 
 		metadata := protocol.Metadata{}
 		e.SetValue(protocol.BodyTarget, "arn", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
+	}
+	if s.Authorization != nil {
+		v := s.Authorization
+
+		metadata := protocol.Metadata{}
+		e.SetFields(protocol.BodyTarget, "authorization", v, metadata)
 	}
 	if s.ChannelId != nil {
 		v := *s.ChannelId

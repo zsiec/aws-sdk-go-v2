@@ -5,26 +5,22 @@ package wafregional_test
 import (
 	"context"
 	"fmt"
-	"strings"
 	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/awserr"
 	"github.com/aws/aws-sdk-go-v2/aws/external"
-	"github.com/aws/aws-sdk-go-v2/service/waf"
 	"github.com/aws/aws-sdk-go-v2/service/wafregional"
 )
 
-var _ time.Duration
-var _ strings.Reader
 var _ aws.Config
 
-func parseTime(layout, value string) *time.Time {
+func parseTime(layout, value string) time.Time {
 	t, err := time.Parse(layout, value)
 	if err != nil {
 		panic(err)
 	}
-	return &t
+	return t
 }
 
 // To create an IP set
@@ -228,8 +224,8 @@ func ExampleClient_CreateWebACLRequest_shared00() {
 	svc := wafregional.New(cfg)
 	input := &wafregional.CreateWebACLInput{
 		ChangeToken: aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
-		DefaultAction: &waf.WafAction{
-			Type: waf.WafActionTypeAllow,
+		DefaultAction: &wafregional.WafAction{
+			Type: wafregional.WafActionTypeAllow,
 		},
 		MetricName: aws.String("CreateExample"),
 		Name:       aws.String("CreateExample"),
@@ -851,9 +847,9 @@ func ExampleClient_GetSampledRequestsRequest_shared00() {
 	input := &wafregional.GetSampledRequestsInput{
 		MaxItems: aws.Int64(100),
 		RuleId:   aws.String("WAFRule-1-Example"),
-		TimeWindow: &waf.TimeWindow{
-			EndTime:   parseTime("2006-01-02T15:04:05Z", "2016-09-27T15:50Z"),
-			StartTime: parseTime("2006-01-02T15:04:05Z", "2016-09-27T15:50Z"),
+		TimeWindow: &wafregional.TimeWindow{
+			EndTime:   aws.Time(parseTime("2006-01-02T15:04:05Z", "2016-09-27T15:50Z")),
+			StartTime: aws.Time(parseTime("2006-01-02T15:04:05Z", "2016-09-27T15:50Z")),
 		},
 		WebAclId: aws.String("createwebacl-1472061481310"),
 	}
@@ -1275,9 +1271,18 @@ func ExampleClient_UpdateByteMatchSetRequest_shared00() {
 	input := &wafregional.UpdateByteMatchSetInput{
 		ByteMatchSetId: aws.String("exampleIDs3t-46da-4fdb-b8d5-abc321j569j5"),
 		ChangeToken:    aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
-		Updates: []waf.ByteMatchSetUpdate{
+		Updates: []wafregional.ByteMatchSetUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				ByteMatchTuple: &wafregional.ByteMatchTuple{
+					FieldToMatch: &wafregional.FieldToMatch{
+						Data: aws.String("referer"),
+						Type: wafregional.MatchFieldTypeHeader,
+					},
+					PositionalConstraint: wafregional.PositionalConstraintContains,
+					TargetString:         []byte("badrefer1"),
+					TextTransformation:   wafregional.TextTransformationNone,
+				},
 			},
 		},
 	}
@@ -1331,9 +1336,13 @@ func ExampleClient_UpdateIPSetRequest_shared00() {
 	input := &wafregional.UpdateIPSetInput{
 		ChangeToken: aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
 		IPSetId:     aws.String("example1ds3t-46da-4fdb-b8d5-abc321j569j5"),
-		Updates: []waf.IPSetUpdate{
+		Updates: []wafregional.IPSetUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				IPSetDescriptor: &wafregional.IPSetDescriptor{
+					Type:  wafregional.IPSetDescriptorTypeIpv4,
+					Value: aws.String("192.0.2.44/32"),
+				},
 			},
 		},
 	}
@@ -1388,9 +1397,14 @@ func ExampleClient_UpdateRuleRequest_shared00() {
 	input := &wafregional.UpdateRuleInput{
 		ChangeToken: aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
 		RuleId:      aws.String("example1ds3t-46da-4fdb-b8d5-abc321j569j5"),
-		Updates: []waf.RuleUpdate{
+		Updates: []wafregional.RuleUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				Predicate: &wafregional.Predicate{
+					DataId:  aws.String("MyByteMatchSetID"),
+					Negated: aws.Bool(false),
+					Type:    wafregional.PredicateTypeByteMatch,
+				},
 			},
 		},
 	}
@@ -1446,9 +1460,17 @@ func ExampleClient_UpdateSizeConstraintSetRequest_shared00() {
 	input := &wafregional.UpdateSizeConstraintSetInput{
 		ChangeToken:         aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
 		SizeConstraintSetId: aws.String("example1ds3t-46da-4fdb-b8d5-abc321j569j5"),
-		Updates: []waf.SizeConstraintSetUpdate{
+		Updates: []wafregional.SizeConstraintSetUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				SizeConstraint: &wafregional.SizeConstraint{
+					ComparisonOperator: wafregional.ComparisonOperatorGt,
+					FieldToMatch: &wafregional.FieldToMatch{
+						Type: wafregional.MatchFieldTypeQueryString,
+					},
+					Size:               aws.Int64(0),
+					TextTransformation: wafregional.TextTransformationNone,
+				},
 			},
 		},
 	}
@@ -1504,9 +1526,15 @@ func ExampleClient_UpdateSqlInjectionMatchSetRequest_shared00() {
 	input := &wafregional.UpdateSqlInjectionMatchSetInput{
 		ChangeToken:            aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
 		SqlInjectionMatchSetId: aws.String("example1ds3t-46da-4fdb-b8d5-abc321j569j5"),
-		Updates: []waf.SqlInjectionMatchSetUpdate{
+		Updates: []wafregional.SqlInjectionMatchSetUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				SqlInjectionMatchTuple: &wafregional.SqlInjectionMatchTuple{
+					FieldToMatch: &wafregional.FieldToMatch{
+						Type: wafregional.MatchFieldTypeQueryString,
+					},
+					TextTransformation: wafregional.TextTransformationUrlDecode,
+				},
 			},
 		},
 	}
@@ -1558,12 +1586,19 @@ func ExampleClient_UpdateWebACLRequest_shared00() {
 	svc := wafregional.New(cfg)
 	input := &wafregional.UpdateWebACLInput{
 		ChangeToken: aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
-		DefaultAction: &waf.WafAction{
-			Type: waf.WafActionTypeAllow,
+		DefaultAction: &wafregional.WafAction{
+			Type: wafregional.WafActionTypeAllow,
 		},
-		Updates: []waf.WebACLUpdate{
+		Updates: []wafregional.WebACLUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				ActivatedRule: &wafregional.ActivatedRule{
+					Action: &wafregional.WafAction{
+						Type: wafregional.WafActionTypeAllow,
+					},
+					Priority: aws.Int64(1),
+					RuleId:   aws.String("WAFRule-1-Example"),
+				},
 			},
 		},
 		WebACLId: aws.String("webacl-1472061481310"),
@@ -1621,9 +1656,15 @@ func ExampleClient_UpdateXssMatchSetRequest_shared00() {
 	svc := wafregional.New(cfg)
 	input := &wafregional.UpdateXssMatchSetInput{
 		ChangeToken: aws.String("abcd12f2-46da-4fdb-b8d5-fbd4c466928f"),
-		Updates: []waf.XssMatchSetUpdate{
+		Updates: []wafregional.XssMatchSetUpdate{
 			{
-				Action: waf.ChangeActionDelete,
+				Action: wafregional.ChangeActionDelete,
+				XssMatchTuple: &wafregional.XssMatchTuple{
+					FieldToMatch: &wafregional.FieldToMatch{
+						Type: wafregional.MatchFieldTypeQueryString,
+					},
+					TextTransformation: wafregional.TextTransformationUrlDecode,
+				},
 			},
 		},
 		XssMatchSetId: aws.String("example1ds3t-46da-4fdb-b8d5-abc321j569j5"),

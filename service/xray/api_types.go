@@ -2416,10 +2416,10 @@ type TraceSummary struct {
 	// segments.
 	FaultRootCauses []FaultRootCause `type:"list"`
 
-	// The root segment document has a 400 series error.
+	// One or more of the segment documents has a 400 series error.
 	HasError *bool `type:"boolean"`
 
-	// The root segment document has a 500 series error.
+	// One or more of the segment documents has a 500 series error.
 	HasFault *bool `type:"boolean"`
 
 	// One or more of the segment documents has a 429 throttling error.

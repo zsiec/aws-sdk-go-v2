@@ -4,14 +4,6 @@ package transfer
 
 const (
 
-	// ErrCodeConflictException for service response error code
-	// "ConflictException".
-	//
-	// This exception is thrown when the UpdatServer is called for a server that
-	// has VPC as the endpoint type and the server's VpcEndpointID is not in the
-	// available state.
-	ErrCodeConflictException = "ConflictException"
-
 	// ErrCodeInternalServiceError for service response error code
 	// "InternalServiceError".
 	//

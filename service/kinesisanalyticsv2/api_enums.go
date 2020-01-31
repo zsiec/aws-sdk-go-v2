@@ -154,7 +154,6 @@ type RuntimeEnvironment string
 const (
 	RuntimeEnvironmentSql10   RuntimeEnvironment = "SQL-1_0"
 	RuntimeEnvironmentFlink16 RuntimeEnvironment = "FLINK-1_6"
-	RuntimeEnvironmentFlink18 RuntimeEnvironment = "FLINK-1_8"
 )
 
 func (enum RuntimeEnvironment) MarshalValue() (string, error) {

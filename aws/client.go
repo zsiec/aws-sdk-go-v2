@@ -11,6 +11,7 @@ type Metadata struct {
 	EndpointsID string
 	APIVersion  string
 
+	Endpoint      string
 	SigningName   string
 	SigningRegion string
 
@@ -23,6 +24,7 @@ type Metadata struct {
 type Client struct {
 	Metadata         Metadata
 	Config           Config
+	Region           string
 	Credentials      CredentialsProvider
 	EndpointResolver EndpointResolver
 	Handlers         Handlers
@@ -40,6 +42,7 @@ func NewClient(cfg Config, metadata Metadata) *Client {
 		// TODO remove config when request refactored
 		Config: cfg,
 
+		Region:           cfg.Region,
 		Credentials:      cfg.Credentials,
 		EndpointResolver: cfg.EndpointResolver,
 		Handlers:         cfg.Handlers.Copy(),

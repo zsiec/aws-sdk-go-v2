@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type UpdateByteMatchSetInput struct {
@@ -35,7 +36,7 @@ type UpdateByteMatchSetInput struct {
 	//    * FieldToMatch: Contains Data and Type
 	//
 	// Updates is a required field
-	Updates []ByteMatchSetUpdate `min:"1" type:"list" required:"true"`
+	Updates []waf.ByteMatchSetUpdate `min:"1" type:"list" required:"true"`
 }
 
 // String returns the string representation

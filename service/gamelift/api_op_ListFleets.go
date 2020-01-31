@@ -13,13 +13,13 @@ import (
 type ListFleetsInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a build to return fleets for. Use this parameter
-	// to return only fleets using the specified build. Use either the build ID
-	// or ARN value.To retrieve all fleets, leave this parameter empty.
+	// Unique identifier for a build to return fleets for. Use this parameter to
+	// return only fleets using the specified build. To retrieve all fleets, leave
+	// this parameter empty.
 	BuildId *string `type:"string"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages.
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages.
 	Limit *int64 `min:"1" type:"integer"`
 
 	// Token that indicates the start of the next sequential page of results. Use
@@ -27,9 +27,9 @@ type ListFleetsInput struct {
 	// at the beginning of the result set, do not specify a value.
 	NextToken *string `min:"1" type:"string"`
 
-	// A unique identifier for a Realtime script to return fleets for. Use this
-	// parameter to return only fleets using the specified script. Use either the
-	// script ID or ARN value.To retrieve all fleets, leave this parameter empty.
+	// Unique identifier for a Realtime script to return fleets for. Use this parameter
+	// to return only fleets using the specified script. To retrieve all fleets,
+	// leave this parameter empty.
 	ScriptId *string `type:"string"`
 }
 
@@ -98,9 +98,12 @@ const opListFleets = "ListFleets"
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 //

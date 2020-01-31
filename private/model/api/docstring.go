@@ -28,29 +28,30 @@ type shapeDocumentation struct {
 }
 
 // AttachDocs attaches documentation from a JSON filename.
-func (a *API) AttachDocs(filename string) error {
+func (a *API) AttachDocs(filename string) {
 	var d apiDocumentation
 
 	f, err := os.Open(filename)
 	defer f.Close()
 	if err != nil {
-		return err
+		panic(err)
 	}
 	err = json.NewDecoder(f).Decode(&d)
 	if err != nil {
-		return fmt.Errorf("failed to decode %s, err: %v", filename, err)
+		panic(err)
 	}
 
-	return d.setup(a)
+	d.setup(a)
 }
 
-func (d *apiDocumentation) setup(a *API) error {
+func (d *apiDocumentation) setup(a *API) {
 	a.Documentation = docstring(d.Service)
 
 	for opName, doc := range d.Operations {
 		if _, ok := a.Operations[opName]; !ok {
-			return fmt.Errorf("%s, doc op %q not found in API op set",
-				a.ServiceID(), opName)
+			panic(fmt.Sprintf("%s, doc op %q not found in API op set",
+				a.ServiceID(), opName),
+			)
 		}
 		a.Operations[opName].Documentation = docstring(doc)
 	}
@@ -79,8 +80,6 @@ func (d *apiDocumentation) setup(a *API) error {
 			}
 		}
 	}
-
-	return nil
 }
 
 var reNewline = regexp.MustCompile(`\r?\n`)

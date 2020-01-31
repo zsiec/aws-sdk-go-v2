@@ -78,8 +78,6 @@ type ClientAPI interface {
 
 	BacktrackDBClusterRequest(*rds.BacktrackDBClusterInput) rds.BacktrackDBClusterRequest
 
-	CancelExportTaskRequest(*rds.CancelExportTaskInput) rds.CancelExportTaskRequest
-
 	CopyDBClusterParameterGroupRequest(*rds.CopyDBClusterParameterGroupInput) rds.CopyDBClusterParameterGroupRequest
 
 	CopyDBClusterSnapshotRequest(*rds.CopyDBClusterSnapshotInput) rds.CopyDBClusterSnapshotRequest
@@ -210,8 +208,6 @@ type ClientAPI interface {
 
 	DescribeEventsRequest(*rds.DescribeEventsInput) rds.DescribeEventsRequest
 
-	DescribeExportTasksRequest(*rds.DescribeExportTasksInput) rds.DescribeExportTasksRequest
-
 	DescribeGlobalClustersRequest(*rds.DescribeGlobalClustersInput) rds.DescribeGlobalClustersRequest
 
 	DescribeInstallationMediaRequest(*rds.DescribeInstallationMediaInput) rds.DescribeInstallationMediaRequest
@@ -239,8 +235,6 @@ type ClientAPI interface {
 	ImportInstallationMediaRequest(*rds.ImportInstallationMediaInput) rds.ImportInstallationMediaRequest
 
 	ListTagsForResourceRequest(*rds.ListTagsForResourceInput) rds.ListTagsForResourceRequest
-
-	ModifyCertificatesRequest(*rds.ModifyCertificatesInput) rds.ModifyCertificatesRequest
 
 	ModifyCurrentDBClusterCapacityRequest(*rds.ModifyCurrentDBClusterCapacityInput) rds.ModifyCurrentDBClusterCapacityRequest
 
@@ -315,8 +309,6 @@ type ClientAPI interface {
 	StartDBClusterRequest(*rds.StartDBClusterInput) rds.StartDBClusterRequest
 
 	StartDBInstanceRequest(*rds.StartDBInstanceInput) rds.StartDBInstanceRequest
-
-	StartExportTaskRequest(*rds.StartExportTaskInput) rds.StartExportTaskRequest
 
 	StopActivityStreamRequest(*rds.StopActivityStreamInput) rds.StopActivityStreamRequest
 

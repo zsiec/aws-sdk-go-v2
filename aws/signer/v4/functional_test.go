@@ -1,7 +1,6 @@
 package v4_test
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -163,7 +162,7 @@ func TestStandaloneSign_CustomURIEscape(t *testing.T) {
 	req.URL.Path = `/log-*/_search`
 	req.URL.Opaque = "//subdomain.us-east-1.es.amazonaws.com/log-%2A/_search"
 
-	_, err = signer.Sign(context.Background(), req, nil, "es", "us-east-1", time.Unix(0, 0))
+	_, err = signer.Sign(req, nil, "es", "us-east-1", time.Unix(0, 0))
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
 	}
@@ -192,7 +191,7 @@ func TestStandaloneSign(t *testing.T) {
 		req.URL.Path = c.OrigURI
 		req.URL.RawQuery = c.OrigQuery
 
-		_, err = signer.Sign(context.Background(), req, nil, c.Service, c.Region, time.Unix(0, 0))
+		_, err = signer.Sign(req, nil, c.Service, c.Region, time.Unix(0, 0))
 		if err != nil {
 			t.Errorf("expected no error, but received %v", err)
 		}
@@ -229,7 +228,7 @@ func TestStandaloneSign_RawPath(t *testing.T) {
 		req.URL.RawPath = c.EscapedURI
 		req.URL.RawQuery = c.OrigQuery
 
-		_, err = signer.Sign(context.Background(), req, nil, c.Service, c.Region, time.Unix(0, 0))
+		_, err = signer.Sign(req, nil, c.Service, c.Region, time.Unix(0, 0))
 		if err != nil {
 			t.Errorf("expected no error, but received %v", err)
 		}

@@ -721,8 +721,7 @@
         {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"TooManyRequestsException"}
       ]
     },
     "UntagResource":{
@@ -737,8 +736,7 @@
         {"shape":"ServiceException"},
         {"shape":"ResourceNotFoundException"},
         {"shape":"InvalidParameterValueException"},
-        {"shape":"TooManyRequestsException"},
-        {"shape":"ResourceConflictException"}
+        {"shape":"TooManyRequestsException"}
       ]
     },
     "UpdateAlias":{
@@ -1843,10 +1841,7 @@
         "EniLimitExceeded",
         "InsufficientRolePermissions",
         "InvalidConfiguration",
-        "InternalError",
-        "SubnetOutOfIPAddresses",
-        "InvalidSubnet",
-        "InvalidSecurityGroup"
+        "InternalError"
       ]
     },
     "Layer":{
@@ -2675,9 +2670,7 @@
         "InsufficientRolePermissions",
         "InvalidConfiguration",
         "InternalError",
-        "SubnetOutOfIPAddresses",
-        "InvalidSubnet",
-        "InvalidSecurityGroup"
+        "SubnetOutOfIPAddresses"
       ]
     },
     "StatementId":{

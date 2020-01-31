@@ -8,9 +8,6 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/internal/awstesting/integration"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
-	"github.com/aws/aws-sdk-go-v2/service/s3/s3iface"
-	"github.com/aws/aws-sdk-go-v2/service/s3control"
-	"github.com/aws/aws-sdk-go-v2/service/s3control/s3controliface"
 )
 
 // BucketPrefix is the root prefix of integration test buckets.
@@ -22,8 +19,8 @@ func GenerateBucketName() string {
 		BucketPrefix, integration.UniqueID())
 }
 
-// SetupBucket returns a test bucket created for the integration tests.
-func SetupBucket(ctx context.Context, svc s3iface.ClientAPI, bucketName string) (err error) {
+// SetupTest returns a test bucket created for the integration tests.
+func SetupTest(ctx context.Context, svc *s3.Client, bucketName string) (err error) {
 	fmt.Println("Setup: Creating test bucket,", bucketName)
 	_, err = svc.CreateBucketRequest(&s3.CreateBucketInput{Bucket: &bucketName}).Send(ctx)
 	if err != nil {
@@ -40,10 +37,10 @@ func SetupBucket(ctx context.Context, svc s3iface.ClientAPI, bucketName string) 
 	return nil
 }
 
-// CleanupBucket deletes the contents of a S3 bucket, before deleting the bucket
+// CleanupTest deletes the contents of a S3 bucket, before deleting the bucket
 // it self.
-func CleanupBucket(ctx context.Context, svc s3iface.ClientAPI, bucketName string) error {
-	var errs []error
+func CleanupTest(ctx context.Context, svc *s3.Client, bucketName string) error {
+	errs := []error{}
 
 	fmt.Println("TearDown: Deleting objects from test bucket,", bucketName)
 	listReq := svc.ListObjectsRequest(
@@ -98,34 +95,5 @@ func CleanupBucket(ctx context.Context, svc s3iface.ClientAPI, bucketName string
 		return fmt.Errorf("failed to delete test bucket, %s", bucketName)
 	}
 
-	return nil
-}
-
-// SetupAccessPoint returns an access point for the given bucket for testing
-func SetupAccessPoint(svc s3controliface.ClientAPI, account, bucket, accessPoint string) error {
-	fmt.Printf("Setup: creating access point %q for bucket %q\n", accessPoint, bucket)
-	req := svc.CreateAccessPointRequest(&s3control.CreateAccessPointInput{
-		AccountId: &account,
-		Bucket:    &bucket,
-		Name:      &accessPoint,
-	})
-	_, err := req.Send(context.Background())
-	if err != nil {
-		return fmt.Errorf("failed to create access point: %v", err)
-	}
-	return nil
-}
-
-// CleanupAccessPoint deletes the given access point
-func CleanupAccessPoint(svc s3controliface.ClientAPI, account, accessPoint string) error {
-	fmt.Printf("TearDown: Deleting access point %q\n", accessPoint)
-	req := svc.DeleteAccessPointRequest(&s3control.DeleteAccessPointInput{
-		AccountId: &account,
-		Name:      &accessPoint,
-	})
-	_, err := req.Send(context.Background())
-	if err != nil {
-		return fmt.Errorf("failed to delete access point: %v", err)
-	}
 	return nil
 }

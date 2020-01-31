@@ -80,7 +80,7 @@ type DescribeDBClustersOutput struct {
 	// Contains a list of DB clusters for the user.
 	DBClusters []DBCluster `locationNameList:"DBCluster" type:"list"`
 
-	// A pagination token that can be used in a later DescribeDBClusters request.
+	// A pagination token that can be used in a subsequent DescribeDBClusters request.
 	Marker *string `type:"string"`
 }
 
@@ -100,8 +100,7 @@ const opDescribeDBClusters = "DescribeDBClusters"
 // For more information on Amazon Aurora, see What Is Amazon Aurora? (https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/CHAP_AuroraOverview.html)
 // in the Amazon Aurora User Guide.
 //
-// This operation can also return information for Amazon Neptune DB instances
-// and Amazon DocumentDB instances.
+// This action only applies to Aurora DB clusters.
 //
 //    // Example sending a request using DescribeDBClustersRequest.
 //    req := client.DescribeDBClustersRequest(params)

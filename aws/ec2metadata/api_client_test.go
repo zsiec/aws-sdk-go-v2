@@ -1,7 +1,6 @@
 package ec2metadata_test
 
 import (
-	"context"
 	"os"
 	"strings"
 	"testing"
@@ -24,7 +23,7 @@ func TestClientDisableIMDS(t *testing.T) {
 	cfg.Logger = t
 
 	svc := ec2metadata.New(cfg)
-	resp, err := svc.GetUserData(context.Background())
+	resp, err := svc.GetUserData()
 	if err == nil {
 		t.Fatalf("expect error, got none")
 	}

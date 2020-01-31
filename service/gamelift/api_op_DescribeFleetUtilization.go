@@ -13,12 +13,12 @@ import (
 type DescribeFleetUtilizationInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet(s) to retrieve utilization data for. You
-	// can use either the fleet ID or ARN value.
+	// Unique identifier for a fleet(s) to retrieve utilization data for. To request
+	// utilization data for all fleets, leave this parameter empty.
 	FleetIds []string `min:"1" type:"list"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages. This parameter is ignored when
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages. This parameter is ignored when
 	// the request specifies one or a list of fleet IDs.
 	Limit *int64 `min:"1" type:"integer"`
 
@@ -57,7 +57,7 @@ func (s *DescribeFleetUtilizationInput) Validate() error {
 type DescribeFleetUtilizationOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of objects containing utilization information for each requested
+	// Collection of objects containing utilization information for each requested
 	// fleet ID.
 	FleetUtilization []FleetUtilization `type:"list"`
 
@@ -104,7 +104,8 @@ const opDescribeFleetUtilization = "DescribeFleetUtilization"
 //    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
 //    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 //

@@ -18,18 +18,12 @@ type GetRecommendationsInput struct {
 	// CampaignArn is a required field
 	CampaignArn *string `locationName:"campaignArn" type:"string" required:"true"`
 
-	// The contextual metadata to use when getting recommendations. Contextual metadata
-	// includes any interaction information that might be relevant when getting
-	// a user's recommendations, such as the user's current location or device type.
-	// For more information, see Contextual Metadata.
-	Context map[string]string `locationName:"context" type:"map"`
-
 	// The item ID to provide recommendations for.
 	//
 	// Required for RELATED_ITEMS recipe type.
 	ItemId *string `locationName:"itemId" type:"string"`
 
-	// The number of results to return. The default is 25. The maximum is 500.
+	// The number of results to return. The default is 25. The maximum is 100.
 	NumResults *int64 `locationName:"numResults" type:"integer"`
 
 	// The user ID to provide recommendations for.
@@ -67,18 +61,6 @@ func (s GetRecommendationsInput) MarshalFields(e protocol.FieldEncoder) error {
 		metadata := protocol.Metadata{}
 		e.SetValue(protocol.BodyTarget, "campaignArn", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
 	}
-	if s.Context != nil {
-		v := s.Context
-
-		metadata := protocol.Metadata{}
-		ms0 := e.Map(protocol.BodyTarget, "context", metadata)
-		ms0.Start()
-		for k1, v1 := range v {
-			ms0.MapSetValue(k1, protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v1)})
-		}
-		ms0.End()
-
-	}
 	if s.ItemId != nil {
 		v := *s.ItemId
 
@@ -103,8 +85,7 @@ func (s GetRecommendationsInput) MarshalFields(e protocol.FieldEncoder) error {
 type GetRecommendationsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A list of recommendations sorted in ascending order by prediction score.
-	// There can be a maximum of 500 items in the list.
+	// A list of recommendations.
 	ItemList []PredictedItem `locationName:"itemList" type:"list"`
 }
 

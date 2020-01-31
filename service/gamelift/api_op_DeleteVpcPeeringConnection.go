@@ -13,15 +13,14 @@ import (
 type DeleteVpcPeeringConnectionInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet. This fleet specified must match the fleet
-	// referenced in the VPC peering connection record. You can use either the fleet
-	// ID or ARN value.
+	// Unique identifier for a fleet. This value must match the fleet ID referenced
+	// in the VPC peering connection record.
 	//
 	// FleetId is a required field
 	FleetId *string `type:"string" required:"true"`
 
-	// A unique identifier for a VPC peering connection. This value is included
-	// in the VpcPeeringConnection object, which can be retrieved by calling DescribeVpcPeeringConnections.
+	// Unique identifier for a VPC peering connection. This value is included in
+	// the VpcPeeringConnection object, which can be retrieved by calling DescribeVpcPeeringConnections.
 	//
 	// VpcPeeringConnectionId is a required field
 	VpcPeeringConnectionId *string `min:"1" type:"string" required:"true"`

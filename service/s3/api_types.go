@@ -1683,11 +1683,8 @@ type Encryption struct {
 	// the encryption context for the restore results.
 	KMSContext *string `type:"string"`
 
-	// If the encryption type is aws:kms, this optional value specifies the ID of
-	// the symmetric customer managed AWS KMS CMK to use for encryption of job results.
-	// Amazon S3 only supports symmetric CMKs. For more information, see Using Symmetric
-	// and Asymmetric Keys (https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html)
-	// in the AWS Key Management Service Developer Guide.
+	// If the encryption type is aws:kms, this optional value specifies the AWS
+	// KMS key ID to use for encryption of job results.
 	KMSKeyId *string `type:"string" sensitive:"true"`
 }
 
@@ -1737,12 +1734,8 @@ func (s Encryption) MarshalFields(e protocol.FieldEncoder) error {
 type EncryptionConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Specifies the ID (Key ARN or Alias ARN) of the customer managed customer
-	// master key (CMK) stored in AWS Key Management Service (KMS) for the destination
-	// bucket. Amazon S3 uses this key to encrypt replica objects. Amazon S3 only
-	// supports symmetric customer managed CMKs. For more information, see Using
-	// Symmetric and Asymmetric Keys (https://docs.aws.amazon.com/kms/latest/developerguide/symmetric-asymmetric.html)
-	// in the AWS Key Management Service Developer Guide.
+	// Specifies the AWS KMS Key ID (Key ARN or Alias ARN) for the destination bucket.
+	// Amazon S3 uses this key to encrypt replica objects.
 	ReplicaKmsKeyID *string `type:"string"`
 }
 
@@ -6015,8 +6008,8 @@ func (s S3Location) MarshalFields(e protocol.FieldEncoder) error {
 type SSEKMS struct {
 	_ struct{} `locationName:"SSE-KMS" type:"structure"`
 
-	// Specifies the ID of the AWS Key Management Service (AWS KMS) symmetric customer
-	// managed customer master key (CMK) to use for encrypting inventory reports.
+	// Specifies the ID of the AWS Key Management Service (AWS KMS) customer master
+	// key (CMK) to use for encrypting inventory reports.
 	//
 	// KeyId is a required field
 	KeyId *string `type:"string" required:"true" sensitive:"true"`

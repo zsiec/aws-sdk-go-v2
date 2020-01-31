@@ -28,9 +28,6 @@ type DescribePlacementGroupsInput struct {
 	//    * strategy - The strategy of the placement group (cluster | spread | partition).
 	Filters []Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	// The IDs of the placement groups.
-	GroupIds []string `locationName:"GroupId" locationNameList:"GroupId" type:"list"`
-
 	// The names of the placement groups.
 	//
 	// Default: Describes all your placement groups, or only those otherwise specified.

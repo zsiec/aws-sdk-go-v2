@@ -22,11 +22,12 @@ type CreateDocumentInput struct {
 	// Content is a required field
 	Content *string `min:"1" type:"string" required:"true"`
 
-	// Specify the document format for the request. The document format can be JSON,
-	// YAML, or TEXT. JSON is the default format.
+	// Specify the document format for the request. The document format can be either
+	// JSON or YAML. JSON is the default format.
 	DocumentFormat DocumentFormat `type:"string" enum:"true"`
 
-	// The type of document to create.
+	// The type of document to create. Valid document types include: Command, Policy,
+	// Automation, Session, and Package.
 	DocumentType DocumentType `type:"string" enum:"true"`
 
 	// A name for the Systems Manager document.

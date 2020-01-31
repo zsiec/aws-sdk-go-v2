@@ -136,9 +136,8 @@ type AttachmentsSourceKey string
 
 // Enum values for AttachmentsSourceKey
 const (
-	AttachmentsSourceKeySourceUrl           AttachmentsSourceKey = "SourceUrl"
-	AttachmentsSourceKeyS3fileUrl           AttachmentsSourceKey = "S3FileUrl"
-	AttachmentsSourceKeyAttachmentReference AttachmentsSourceKey = "AttachmentReference"
+	AttachmentsSourceKeySourceUrl AttachmentsSourceKey = "SourceUrl"
+	AttachmentsSourceKeyS3fileUrl AttachmentsSourceKey = "S3FileUrl"
 )
 
 func (enum AttachmentsSourceKey) MarshalValue() (string, error) {
@@ -162,7 +161,6 @@ const (
 	AutomationExecutionFilterKeyStartTimeBefore    AutomationExecutionFilterKey = "StartTimeBefore"
 	AutomationExecutionFilterKeyStartTimeAfter     AutomationExecutionFilterKey = "StartTimeAfter"
 	AutomationExecutionFilterKeyAutomationType     AutomationExecutionFilterKey = "AutomationType"
-	AutomationExecutionFilterKeyTagKey             AutomationExecutionFilterKey = "TagKey"
 )
 
 func (enum AutomationExecutionFilterKey) MarshalValue() (string, error) {

@@ -15,8 +15,7 @@ import (
 type DeleteBuildInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a build to delete. You can use either the build ID
-	// or ARN value.
+	// Unique identifier for a build to delete.
 	//
 	// BuildId is a required field
 	BuildId *string `type:"string" required:"true"`

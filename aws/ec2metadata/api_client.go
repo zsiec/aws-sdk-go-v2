@@ -9,7 +9,6 @@ package ec2metadata
 
 import (
 	"bytes"
-	"context"
 	"errors"
 	"io"
 	"net"
@@ -34,17 +33,10 @@ const (
 	tokenHeader = "x-aws-ec2-metadata-token"
 
 	// Named Handler constants
-	contextWithTimeoutHandlerName  = "ContextWithTimeoutHandler"
-	cancelContextHandlerName       = "CancelContextHandler"
 	fetchTokenHandlerName          = "FetchTokenHandler"
 	unmarshalMetadataHandlerName   = "unmarshalMetadataHandler"
 	unmarshalTokenHandlerName      = "unmarshalTokenHandler"
 	enableTokenProviderHandlerName = "enableTokenProviderHandler"
-
-	// client constants
-	defaultClientContextTimeout  = 5 * time.Second
-	defaultDialerTimeout         = 250 * time.Millisecond
-	defaultResponseHeaderTimeout = 500 * time.Millisecond
 
 	// TTL constants
 	defaultTTL          = 21600 * time.Second
@@ -72,15 +64,7 @@ func New(config aws.Config) *Client {
 		// environment with the service present. The client should fail fast in
 		// this case.
 		config.HTTPClient = c.WithDialerOptions(func(d *net.Dialer) {
-			d.Timeout = defaultDialerTimeout
-		})
-
-		// Use a custom Transport timeout for the EC2 Metadata service to account
-		// for the possibility that the application might be running in a container,
-		// and EC2Metadata service drops the connection after a single IP Hop. The client
-		// should fail fast in this case.
-		config.HTTPClient = c.WithTransportOptions(func(tr *http.Transport) {
-			tr.ResponseHeaderTimeout = defaultResponseHeaderTimeout
+			d.Timeout = 5 * time.Second
 		})
 	}
 
@@ -103,23 +87,6 @@ func New(config aws.Config) *Client {
 		Name: fetchTokenHandlerName,
 		Fn:   tp.fetchTokenHandler,
 	})
-
-	// The context With timeout handler function wraps a context with timeout and sets it on a request.
-	// It also sets a handler on complete handler stack that cancels the context
-	svc.Handlers.Send.PushFrontNamed(aws.NamedHandler{
-		Name: contextWithTimeoutHandlerName,
-		Fn: func(r *aws.Request) {
-			ctx, cancelFn := context.WithTimeout(r.Context(), defaultClientContextTimeout)
-			r.SetContext(ctx)
-			r.Handlers.Complete.PushBackNamed(aws.NamedHandler{
-				Name: cancelContextHandlerName,
-				Fn: func(r *aws.Request) {
-					cancelFn()
-				},
-			})
-		},
-	})
-
 	// NamedHandler for enabling token provider
 	svc.Handlers.Complete.PushBackNamed(aws.NamedHandler{
 		Name: enableTokenProviderHandlerName,
@@ -227,7 +194,7 @@ func unmarshalError(r *aws.Request) {
 }
 
 func validateEndpointHandler(r *aws.Request) {
-	if len(r.Endpoint.URL) == 0 {
+	if r.Metadata.Endpoint == "" {
 		r.Error = aws.ErrMissingEndpoint
 	}
 }

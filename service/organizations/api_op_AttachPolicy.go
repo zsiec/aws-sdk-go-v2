@@ -18,8 +18,7 @@ type AttachPolicyInput struct {
 	// You can get the ID for the policy by calling the ListPolicies operation.
 	//
 	// The regex pattern (http://wikipedia.org/wiki/regex) for a policy ID string
-	// requires "p-" followed by from 8 to 128 lowercase or uppercase letters, digits,
-	// or the underscore character (_).
+	// requires "p-" followed by from 8 to 128 lowercase letters or digits.
 	//
 	// PolicyId is a required field
 	PolicyId *string `type:"string" required:"true"`

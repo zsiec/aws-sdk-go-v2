@@ -1,7 +1,6 @@
 package aws
 
 import (
-	"context"
 	"fmt"
 	"math/rand"
 	"sync"
@@ -19,7 +18,7 @@ type stubProvider struct {
 	onInvalidate func(*stubProvider)
 }
 
-func (s *stubProvider) Retrieve(ctx context.Context) (Credentials, error) {
+func (s *stubProvider) Retrieve() (Credentials, error) {
 	creds := s.creds
 	creds.Source = "stubProvider"
 	creds.CanExpire = !s.expires.IsZero()
@@ -42,7 +41,7 @@ func TestSafeCredentialsProvider_Cache(t *testing.T) {
 
 	var called bool
 	p := &SafeCredentialsProvider{
-		RetrieveFn: func(ctx context.Context) (Credentials, error) {
+		RetrieveFn: func() (Credentials, error) {
 			if called {
 				t.Fatalf("expect RetrieveFn to only be called once")
 			}
@@ -52,7 +51,7 @@ func TestSafeCredentialsProvider_Cache(t *testing.T) {
 	}
 
 	for i := 0; i < 2; i++ {
-		creds, err := p.Retrieve(context.Background())
+		creds, err := p.Retrieve()
 		if err != nil {
 			t.Fatalf("expect no error, got %v", err)
 		}
@@ -108,21 +107,21 @@ func TestSafeCredentialsProvider_Expires(t *testing.T) {
 	for _, c := range cases {
 		var called int
 		p := &SafeCredentialsProvider{
-			RetrieveFn: func(ctx context.Context) (Credentials, error) {
+			RetrieveFn: func() (Credentials, error) {
 				called++
 				return c.Creds(), nil
 			},
 		}
 
-		p.Retrieve(context.Background())
-		p.Retrieve(context.Background())
-		p.Retrieve(context.Background())
+		p.Retrieve()
+		p.Retrieve()
+		p.Retrieve()
 
 		mockTime = mockTime.Add(10)
 
-		p.Retrieve(context.Background())
-		p.Retrieve(context.Background())
-		p.Retrieve(context.Background())
+		p.Retrieve()
+		p.Retrieve()
+		p.Retrieve()
 
 		if e, a := c.Called, called; e != a {
 			t.Errorf("expect %v called, got %v", e, a)
@@ -132,12 +131,12 @@ func TestSafeCredentialsProvider_Expires(t *testing.T) {
 
 func TestSafeCredentialsProvider_Error(t *testing.T) {
 	p := &SafeCredentialsProvider{
-		RetrieveFn: func(ctx context.Context) (Credentials, error) {
+		RetrieveFn: func() (Credentials, error) {
 			return Credentials{}, fmt.Errorf("failed")
 		},
 	}
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err == nil {
 		t.Fatalf("expect error, not none")
 	}
@@ -156,7 +155,7 @@ func TestSafeCredentialsProvider_Race(t *testing.T) {
 	}
 	var called bool
 	p := &SafeCredentialsProvider{
-		RetrieveFn: func(ctx context.Context) (Credentials, error) {
+		RetrieveFn: func() (Credentials, error) {
 			time.Sleep(time.Duration(rand.Intn(10)) * time.Millisecond)
 			if called {
 				t.Fatalf("expect RetrieveFn only called once")
@@ -172,7 +171,7 @@ func TestSafeCredentialsProvider_Race(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		go func() {
 			time.Sleep(time.Duration(rand.Intn(10)) * time.Millisecond)
-			creds, err := p.Retrieve(context.Background())
+			creds, err := p.Retrieve()
 			if err != nil {
 				t.Errorf("expect no error, got %v", err)
 			}

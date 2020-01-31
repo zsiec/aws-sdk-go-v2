@@ -47,22 +47,6 @@
       "max":256,
       "pattern":"arn:([a-z\\d-]+):personalize:.*:.*:.+"
     },
-    "AttributeName":{
-      "type":"string",
-      "max":150,
-      "pattern":"[A-Za-z\\d_]+"
-    },
-    "AttributeValue":{
-      "type":"string",
-      "max":1000,
-      "sensitive":true
-    },
-    "Context":{
-      "type":"map",
-      "key":{"shape":"AttributeName"},
-      "value":{"shape":"AttributeValue"},
-      "max":150
-    },
     "ErrorMessage":{"type":"string"},
     "GetPersonalizedRankingRequest":{
       "type":"structure",
@@ -74,8 +58,7 @@
       "members":{
         "campaignArn":{"shape":"Arn"},
         "inputList":{"shape":"InputList"},
-        "userId":{"shape":"UserID"},
-        "context":{"shape":"Context"}
+        "userId":{"shape":"UserID"}
       }
     },
     "GetPersonalizedRankingResponse":{
@@ -91,8 +74,7 @@
         "campaignArn":{"shape":"Arn"},
         "itemId":{"shape":"ItemID"},
         "userId":{"shape":"UserID"},
-        "numResults":{"shape":"NumResults"},
-        "context":{"shape":"Context"}
+        "numResults":{"shape":"NumResults"}
       }
     },
     "GetRecommendationsResponse":{

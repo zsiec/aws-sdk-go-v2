@@ -15,11 +15,10 @@ type StartMatchmakingInput struct {
 	_ struct{} `type:"structure"`
 
 	// Name of the matchmaking configuration to use for this request. Matchmaking
-	// configurations must exist in the same Region as this request. You can use
-	// either the configuration name or ARN value.
+	// configurations must exist in the same region as this request.
 	//
 	// ConfigurationName is a required field
-	ConfigurationName *string `min:"1" type:"string" required:"true"`
+	ConfigurationName *string `type:"string" required:"true"`
 
 	// Information on each player to be matched. This information must include a
 	// player ID, and may contain player attributes and latency data to be used
@@ -29,7 +28,7 @@ type StartMatchmakingInput struct {
 	// Players is a required field
 	Players []Player `type:"list" required:"true"`
 
-	// A unique identifier for a matchmaking ticket. If no ticket ID is specified
+	// Unique identifier for a matchmaking ticket. If no ticket ID is specified
 	// here, Amazon GameLift will generate one in the form of a UUID. Use this identifier
 	// to track the matchmaking ticket status and retrieve match results.
 	TicketId *string `type:"string"`
@@ -46,9 +45,6 @@ func (s *StartMatchmakingInput) Validate() error {
 
 	if s.ConfigurationName == nil {
 		invalidParams.Add(aws.NewErrParamRequired("ConfigurationName"))
-	}
-	if s.ConfigurationName != nil && len(*s.ConfigurationName) < 1 {
-		invalidParams.Add(aws.NewErrParamMinLen("ConfigurationName", 1))
 	}
 
 	if s.Players == nil {

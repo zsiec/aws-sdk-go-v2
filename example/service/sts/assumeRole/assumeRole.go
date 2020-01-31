@@ -47,7 +47,8 @@ type CredentialsProvider struct {
 	*sts.Credentials
 }
 
-func (s CredentialsProvider) Retrieve(ctx context.Context) (aws.Credentials, error) {
+func (s CredentialsProvider) Retrieve() (aws.Credentials, error) {
+
 	if s.Credentials == nil {
 		return aws.Credentials{}, errors.New("sts credentials are nil")
 	}

@@ -31,7 +31,8 @@ func (s DescribeEC2InstanceLimitsInput) String() string {
 type DescribeEC2InstanceLimitsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of instances for the specified instance type.
+	// Object that contains the maximum number of instances for the specified instance
+	// type.
 	EC2InstanceLimits []EC2InstanceLimit `type:"list"`
 }
 
@@ -51,7 +52,7 @@ const opDescribeEC2InstanceLimits = "DescribeEC2InstanceLimits"
 //
 //    * current usage level for the AWS account
 //
-// Service limits vary depending on Region. Available Regions for Amazon GameLift
+// Service limits vary depending on region. Available regions for Amazon GameLift
 // can be found in the AWS Management Console for Amazon GameLift (see the drop-down
 // list in the upper right corner).
 //

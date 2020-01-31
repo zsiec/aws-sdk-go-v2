@@ -4,7 +4,6 @@ package opsworkscm
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
@@ -26,11 +25,10 @@ type CreateServerInput struct {
 	// exceeded. The default value is 1.
 	BackupRetentionCount *int64 `min:"1" type:"integer"`
 
-	// Supported on servers running Chef Automate 2. A PEM-formatted HTTPS certificate.
-	// The value can be be a single, self-signed certificate, or a certificate chain.
-	// If you specify a custom certificate, you must also specify values for CustomDomain
-	// and CustomPrivateKey. The following are requirements for the CustomCertificate
-	// value:
+	// A PEM-formatted HTTPS certificate. The value can be be a single, self-signed
+	// certificate, or a certificate chain. If you specify a custom certificate,
+	// you must also specify values for CustomDomain and CustomPrivateKey. The following
+	// are requirements for the CustomCertificate value:
 	//
 	//    * You can provide either a self-signed, custom certificate, or the full
 	//    certificate chain.
@@ -48,20 +46,19 @@ type CreateServerInput struct {
 	//    * The certificate must match the value of CustomPrivateKey.
 	CustomCertificate *string `type:"string"`
 
-	// Supported on servers running Chef Automate 2. An optional public endpoint
-	// of a server, such as https://aws.my-company.com. To access the server, create
-	// a CNAME DNS record in your preferred DNS service that points the custom domain
-	// to the endpoint that is generated when the server is created (the value of
-	// the CreateServer Endpoint attribute). You cannot access the server by using
-	// the generated Endpoint value if the server is using a custom domain. If you
-	// specify a custom domain, you must also specify values for CustomCertificate
-	// and CustomPrivateKey.
+	// An optional public endpoint of a server, such as https://aws.my-company.com.
+	// To access the server, create a CNAME DNS record in your preferred DNS service
+	// that points the custom domain to the endpoint that is generated when the
+	// server is created (the value of the CreateServer Endpoint attribute). You
+	// cannot access the server by using the generated Endpoint value if the server
+	// is using a custom domain. If you specify a custom domain, you must also specify
+	// values for CustomCertificate and CustomPrivateKey.
 	CustomDomain *string `type:"string"`
 
-	// Supported on servers running Chef Automate 2. A private key in PEM format
-	// for connecting to the server by using HTTPS. The private key must not be
-	// encrypted; it cannot be protected by a password or passphrase. If you specify
-	// a custom private key, you must also specify values for CustomDomain and CustomCertificate.
+	// A private key in PEM format for connecting to the server by using HTTPS.
+	// The private key must not be encrypted; it cannot be protected by a password
+	// or passphrase. If you specify a custom private key, you must also specify
+	// values for CustomDomain and CustomCertificate.
 	CustomPrivateKey *string `type:"string" sensitive:"true"`
 
 	// Enable or disable scheduled backups. Valid values are true or false. The
@@ -195,26 +192,6 @@ type CreateServerInput struct {
 	// For more information about supported Amazon EC2 platforms, see Supported
 	// Platforms (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-supported-platforms.html).
 	SubnetIds []string `type:"list"`
-
-	// A map that contains tag keys and tag values to attach to an AWS OpsWorks
-	// for Chef Automate or AWS OpsWorks for Puppet Enterprise server.
-	//
-	//    * The key cannot be empty.
-	//
-	//    * The key can be a maximum of 127 characters, and can contain only Unicode
-	//    letters, numbers, or separators, or the following special characters:
-	//    + - = . _ : /
-	//
-	//    * The value can be a maximum 255 characters, and contain only Unicode
-	//    letters, numbers, or separators, or the following special characters:
-	//    + - = . _ : /
-	//
-	//    * Leading and trailing white spaces are trimmed from both the key and
-	//    value.
-	//
-	//    * A maximum of 50 user-applied tags is allowed for any AWS OpsWorks-CM
-	//    server.
-	Tags []Tag `type:"list"`
 }
 
 // String returns the string representation
@@ -246,13 +223,6 @@ func (s *CreateServerInput) Validate() error {
 
 	if s.ServiceRoleArn == nil {
 		invalidParams.Add(aws.NewErrParamRequired("ServiceRoleArn"))
-	}
-	if s.Tags != nil {
-		for i, v := range s.Tags {
-			if err := v.Validate(); err != nil {
-				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "Tags", i), err.(aws.ErrInvalidParams))
-			}
-		}
 	}
 
 	if invalidParams.Len() > 0 {

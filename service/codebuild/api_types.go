@@ -411,8 +411,7 @@ type EnvironmentVariable struct {
 	//    * PARAMETER_STORE: An environment variable stored in Amazon EC2 Systems
 	//    Manager Parameter Store.
 	//
-	//    * PLAINTEXT: An environment variable in plain text format. This is the
-	//    default value.
+	//    * PLAINTEXT: An environment variable in plain text format.
 	//
 	//    * SECRETS_MANAGER: An environment variable stored in AWS Secrets Manager.
 	Type EnvironmentVariableType `locationName:"type" type:"string" enum:"true"`

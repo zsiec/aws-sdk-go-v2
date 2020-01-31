@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type CreateRegexPatternSetInput struct {
@@ -62,7 +63,7 @@ type CreateRegexPatternSetOutput struct {
 	ChangeToken *string `min:"1" type:"string"`
 
 	// A RegexPatternSet that contains no objects.
-	RegexPatternSet *RegexPatternSet `type:"structure"`
+	RegexPatternSet *waf.RegexPatternSet `type:"structure"`
 }
 
 // String returns the string representation

@@ -5,6 +5,8 @@ package lexmodelbuildingservice_test
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/awserr"
@@ -12,7 +14,17 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/lexmodelbuildingservice"
 )
 
+var _ time.Duration
+var _ strings.Reader
 var _ aws.Config
+
+func parseTime(layout, value string) *time.Time {
+	t, err := time.Parse(layout, value)
+	if err != nil {
+		panic(err)
+	}
+	return &t
+}
 
 // To get information about a bot
 //
@@ -414,23 +426,6 @@ func ExampleClient_PutIntentRequest_shared00() {
 				SlotConstraint:  lexmodelbuildingservice.SlotConstraintRequired,
 				SlotType:        aws.String("DocPizzaType"),
 				SlotTypeVersion: aws.String("$LATEST"),
-				ValueElicitationPrompt: &lexmodelbuildingservice.Prompt{
-					MaxAttempts: aws.Int64(1),
-					Messages: []lexmodelbuildingservice.Message{
-						{
-							Content:     aws.String("What type of pizza would you like?"),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-						{
-							Content:     aws.String("Vegie or cheese pizza?"),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-						{
-							Content:     aws.String("I can get you a vegie or a cheese pizza."),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-					},
-				},
 			},
 			{
 				Description: aws.String("The type of pizza crust to order."),
@@ -443,19 +438,6 @@ func ExampleClient_PutIntentRequest_shared00() {
 				SlotConstraint:  lexmodelbuildingservice.SlotConstraintRequired,
 				SlotType:        aws.String("DocPizzaCrustType"),
 				SlotTypeVersion: aws.String("$LATEST"),
-				ValueElicitationPrompt: &lexmodelbuildingservice.Prompt{
-					MaxAttempts: aws.Int64(1),
-					Messages: []lexmodelbuildingservice.Message{
-						{
-							Content:     aws.String("What type of crust would you like?"),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-						{
-							Content:     aws.String("Thick or thin crust?"),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-					},
-				},
 			},
 			{
 				Description: aws.String("The type of sauce to use on the pizza."),
@@ -468,19 +450,6 @@ func ExampleClient_PutIntentRequest_shared00() {
 				SlotConstraint:  lexmodelbuildingservice.SlotConstraintRequired,
 				SlotType:        aws.String("DocPizzaSauceType"),
 				SlotTypeVersion: aws.String("$LATEST"),
-				ValueElicitationPrompt: &lexmodelbuildingservice.Prompt{
-					MaxAttempts: aws.Int64(1),
-					Messages: []lexmodelbuildingservice.Message{
-						{
-							Content:     aws.String("White or red sauce?"),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-						{
-							Content:     aws.String("Garlic or tomato sauce?"),
-							ContentType: lexmodelbuildingservice.ContentTypePlainText,
-						},
-					},
-				},
 			},
 		},
 	}

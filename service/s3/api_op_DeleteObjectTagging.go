@@ -4,12 +4,10 @@ package s3
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
 	"github.com/aws/aws-sdk-go-v2/private/protocol"
-	"github.com/aws/aws-sdk-go-v2/service/s3/internal/arn"
 )
 
 type DeleteObjectTaggingInput struct {
@@ -93,20 +91,6 @@ func (s DeleteObjectTaggingInput) MarshalFields(e protocol.FieldEncoder) error {
 	return nil
 }
 
-func (s *DeleteObjectTaggingInput) getEndpointARN() (arn.Resource, error) {
-	if s.Bucket == nil {
-		return nil, fmt.Errorf("member Bucket is nil")
-	}
-	return parseEndpointARN(*s.Bucket)
-}
-
-func (s *DeleteObjectTaggingInput) hasEndpointARN() bool {
-	if s.Bucket == nil {
-		return false
-	}
-	return arn.IsARN(*s.Bucket)
-}
-
 type DeleteObjectTaggingOutput struct {
 	_ struct{} `type:"structure"`
 
@@ -136,7 +120,7 @@ const opDeleteObjectTagging = "DeleteObjectTagging"
 // Amazon Simple Storage Service.
 //
 // Removes the entire tag set from the specified object. For more information
-// about managing object tags, see Object Tagging (https://docs.aws.amazon.com/AmazonS3/latest/dev/object-tagging.html).
+// about managing object tags, see Object Tagging (https://docs.aws.amazon.com/AmazonS3/latest/dev/Versioning.html#MultiFactorAuthenticationDelete).
 //
 // To use this operation, you must have permission to perform the s3:DeleteObjectTagging
 // action.

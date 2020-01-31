@@ -12,8 +12,7 @@ import (
 type DescribeScriptInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a Realtime script to retrieve properties for. You
-	// can use either the script ID or ARN value.
+	// Unique identifier for a Realtime script to retrieve properties for.
 	//
 	// ScriptId is a required field
 	ScriptId *string `type:"string" required:"true"`
@@ -41,7 +40,7 @@ func (s *DescribeScriptInput) Validate() error {
 type DescribeScriptOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A set of properties describing the requested script.
+	// Set of properties describing the requested script.
 	Script *Script `type:"structure"`
 }
 

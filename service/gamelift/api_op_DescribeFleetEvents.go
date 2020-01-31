@@ -19,14 +19,13 @@ type DescribeFleetEventsInput struct {
 	// Format is a number expressed in Unix time as milliseconds (ex: "1469498468.057").
 	EndTime *time.Time `type:"timestamp"`
 
-	// A unique identifier for a fleet to get event logs for. You can use either
-	// the fleet ID or ARN value.
+	// Unique identifier for a fleet to get event logs for.
 	//
 	// FleetId is a required field
 	FleetId *string `type:"string" required:"true"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages.
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages.
 	Limit *int64 `min:"1" type:"integer"`
 
 	// Token that indicates the start of the next sequential page of results. Use
@@ -70,7 +69,7 @@ func (s *DescribeFleetEventsInput) Validate() error {
 type DescribeFleetEventsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of objects containing event log entries for the specified fleet.
+	// Collection of objects containing event log entries for the specified fleet.
 	Events []Event `type:"list"`
 
 	// Token that indicates where to resume retrieving results on the next call
@@ -110,7 +109,8 @@ const opDescribeFleetEvents = "DescribeFleetEvents"
 //    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
 //    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 //

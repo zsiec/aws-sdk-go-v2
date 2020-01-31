@@ -141,14 +141,7 @@
       "max":10,
       "min":1
     },
-    "CmkArn":{
-      "type":"string",
-      "max":2048,
-      "min":0,
-      "pattern":"arn:aws(-[a-z]{1,3}){0,2}:kms:([a-z]+-){2,3}\\d:\\d+:key/.*"
-    },
     "CopyTags":{"type":"boolean"},
-    "CopyTagsNullable":{"type":"boolean"},
     "Count":{
       "type":"integer",
       "max":1000,
@@ -188,33 +181,6 @@
         "Times":{"shape":"TimesList"}
       }
     },
-    "CrossRegionCopyRetainRule":{
-      "type":"structure",
-      "members":{
-        "Interval":{"shape":"Interval"},
-        "IntervalUnit":{"shape":"RetentionIntervalUnitValues"}
-      }
-    },
-    "CrossRegionCopyRule":{
-      "type":"structure",
-      "required":[
-        "TargetRegion",
-        "Encrypted"
-      ],
-      "members":{
-        "TargetRegion":{"shape":"TargetRegion"},
-        "Encrypted":{"shape":"Encrypted"},
-        "CmkArn":{"shape":"CmkArn"},
-        "CopyTags":{"shape":"CopyTagsNullable"},
-        "RetainRule":{"shape":"CrossRegionCopyRetainRule"}
-      }
-    },
-    "CrossRegionCopyRules":{
-      "type":"list",
-      "member":{"shape":"CrossRegionCopyRule"},
-      "max":3,
-      "min":0
-    },
     "DeleteLifecyclePolicyRequest":{
       "type":"structure",
       "required":["PolicyId"],
@@ -231,7 +197,6 @@
       "members":{
       }
     },
-    "Encrypted":{"type":"boolean"},
     "ErrorCode":{"type":"string"},
     "ErrorMessage":{"type":"string"},
     "ExcludeBootVolume":{"type":"boolean"},
@@ -408,8 +373,6 @@
     },
     "PolicyArn":{
       "type":"string",
-      "max":2048,
-      "min":0,
       "pattern":"^arn:aws:dlm:[A-Za-z0-9_/.-]{0,63}:\\d+:policy/[0-9A-Za-z_-]{1,128}$"
     },
     "PolicyDescription":{
@@ -492,8 +455,7 @@
         "VariableTags":{"shape":"VariableTagsList"},
         "CreateRule":{"shape":"CreateRule"},
         "RetainRule":{"shape":"RetainRule"},
-        "FastRestoreRule":{"shape":"FastRestoreRule"},
-        "CrossRegionCopyRules":{"shape":"CrossRegionCopyRules"}
+        "FastRestoreRule":{"shape":"FastRestoreRule"}
       }
     },
     "ScheduleList":{
@@ -585,8 +547,7 @@
     },
     "TagValue":{
       "type":"string",
-      "max":256,
-      "pattern":"[\\p{all}]*"
+      "max":256
     },
     "TagsToAddFilterList":{
       "type":"list",
@@ -599,12 +560,6 @@
       "member":{"shape":"Tag"},
       "max":50,
       "min":0
-    },
-    "TargetRegion":{
-      "type":"string",
-      "max":16,
-      "min":0,
-      "pattern":"([a-z]+-){2,3}\\d"
     },
     "TargetTagList":{
       "type":"list",

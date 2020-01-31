@@ -13,8 +13,7 @@ import (
 type DescribeBuildInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a build to retrieve properties for. You can use either
-	// the build ID or ARN value.
+	// Unique identifier for a build to retrieve properties for.
 	//
 	// BuildId is a required field
 	BuildId *string `type:"string" required:"true"`

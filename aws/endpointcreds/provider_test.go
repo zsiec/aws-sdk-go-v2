@@ -1,7 +1,6 @@
 package endpointcreds_test
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -48,7 +47,7 @@ func TestRetrieveRefreshableCredentials(t *testing.T) {
 	cfg.EndpointResolver = aws.ResolveWithEndpointURL(server.URL + "/path/to/endpoint?something=else")
 
 	p := endpointcreds.New(cfg)
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
@@ -95,7 +94,7 @@ func TestRetrieveStaticCredentials(t *testing.T) {
 	cfg.EndpointResolver = aws.ResolveWithEndpointURL(server.URL)
 
 	p := endpointcreds.New(cfg)
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
@@ -138,7 +137,7 @@ func TestFailedRetrieveCredentials(t *testing.T) {
 	cfg.EndpointResolver = aws.ResolveWithEndpointURL(server.URL)
 
 	p := endpointcreds.New(cfg)
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 
 	if err == nil {
 		t.Fatalf("expect error, got none")

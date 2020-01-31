@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 // A request to create a SqlInjectionMatchSet.
@@ -64,7 +65,7 @@ type CreateSqlInjectionMatchSetOutput struct {
 	ChangeToken *string `min:"1" type:"string"`
 
 	// A SqlInjectionMatchSet.
-	SqlInjectionMatchSet *SqlInjectionMatchSet `type:"structure"`
+	SqlInjectionMatchSet *waf.SqlInjectionMatchSet `type:"structure"`
 }
 
 // String returns the string representation

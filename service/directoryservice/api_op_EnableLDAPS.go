@@ -19,9 +19,7 @@ type EnableLDAPSInput struct {
 
 	// The type of LDAP security the customer wants to enable. The security can
 	// be either server or client, but currently only the default Client is supported.
-	//
-	// Type is a required field
-	Type LDAPSType `type:"string" required:"true" enum:"true"`
+	Type LDAPSType `type:"string" enum:"true"`
 }
 
 // String returns the string representation
@@ -35,9 +33,6 @@ func (s *EnableLDAPSInput) Validate() error {
 
 	if s.DirectoryId == nil {
 		invalidParams.Add(aws.NewErrParamRequired("DirectoryId"))
-	}
-	if len(s.Type) == 0 {
-		invalidParams.Add(aws.NewErrParamRequired("Type"))
 	}
 
 	if invalidParams.Len() > 0 {

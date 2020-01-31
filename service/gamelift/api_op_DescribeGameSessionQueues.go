@@ -13,17 +13,16 @@ import (
 type DescribeGameSessionQueuesInput struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages.
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages.
 	Limit *int64 `min:"1" type:"integer"`
 
-	// A list of queue names to retrieve information for. You can use either the
-	// queue ID or ARN value. To request settings for all queues, leave this parameter
-	// empty.
+	// List of queue names to retrieve information for. To request settings for
+	// all queues, leave this parameter empty.
 	Names []string `type:"list"`
 
-	// A token that indicates the start of the next sequential page of results.
-	// Use the token that is returned with a previous call to this action. To start
+	// Token that indicates the start of the next sequential page of results. Use
+	// the token that is returned with a previous call to this action. To start
 	// at the beginning of the result set, do not specify a value.
 	NextToken *string `min:"1" type:"string"`
 }
@@ -53,10 +52,10 @@ func (s *DescribeGameSessionQueuesInput) Validate() error {
 type DescribeGameSessionQueuesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of objects that describe the requested game session queues.
+	// Collection of objects that describes the requested game session queues.
 	GameSessionQueues []GameSessionQueue `type:"list"`
 
-	// A token that indicates where to resume retrieving results on the next call
+	// Token that indicates where to resume retrieving results on the next call
 	// to this action. If no token is returned, these results represent the end
 	// of the list.
 	NextToken *string `min:"1" type:"string"`
@@ -76,7 +75,7 @@ const opDescribeGameSessionQueues = "DescribeGameSessionQueues"
 // multiple queues, use the pagination parameters to retrieve results as a set
 // of sequential pages. If successful, a GameSessionQueue object is returned
 // for each requested queue. When specifying a list of queues, objects are returned
-// only for queues that currently exist in the Region.
+// only for queues that currently exist in the region.
 //
 //    * CreateGameSessionQueue
 //

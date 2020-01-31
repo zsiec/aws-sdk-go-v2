@@ -13,8 +13,7 @@ import (
 type DescribeFleetPortSettingsInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet to retrieve port settings for. You can use
-	// either the fleet ID or ARN value.
+	// Unique identifier for a fleet to retrieve port settings for.
 	//
 	// FleetId is a required field
 	FleetId *string `type:"string" required:"true"`
@@ -43,7 +42,7 @@ func (s *DescribeFleetPortSettingsInput) Validate() error {
 type DescribeFleetPortSettingsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The port settings for the requested fleet ID.
+	// Object that contains port settings for the requested fleet ID.
 	InboundPermissions []IpPermission `type:"list"`
 }
 
@@ -80,7 +79,8 @@ const opDescribeFleetPortSettings = "DescribeFleetPortSettings"
 //    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
 //    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 //

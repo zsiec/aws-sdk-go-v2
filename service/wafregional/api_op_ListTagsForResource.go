@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type ListTagsForResourceInput struct {
@@ -50,7 +51,7 @@ type ListTagsForResourceOutput struct {
 
 	NextMarker *string `min:"1" type:"string"`
 
-	TagInfoForResource *TagInfoForResource `type:"structure"`
+	TagInfoForResource *waf.TagInfoForResource `type:"structure"`
 }
 
 // String returns the string representation

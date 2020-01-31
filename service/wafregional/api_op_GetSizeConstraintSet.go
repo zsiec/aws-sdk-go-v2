@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type GetSizeConstraintSetInput struct {
@@ -55,7 +56,7 @@ type GetSizeConstraintSetOutput struct {
 	//    and Size
 	//
 	//    * FieldToMatch: Contains Data and Type
-	SizeConstraintSet *SizeConstraintSet `type:"structure"`
+	SizeConstraintSet *waf.SizeConstraintSet `type:"structure"`
 }
 
 // String returns the string representation

@@ -13,8 +13,7 @@ import (
 type ScheduleRunInput struct {
 	_ struct{} `type:"structure"`
 
-	// The ARN of an application package to run tests against, created with CreateUpload.
-	// See ListUploads.
+	// The ARN of the app to schedule a run.
 	AppArn *string `locationName:"appArn" min:"32" type:"string"`
 
 	// Information about the settings for the run to be scheduled.
@@ -24,7 +23,7 @@ type ScheduleRunInput struct {
 	DevicePoolArn *string `locationName:"devicePoolArn" min:"32" type:"string"`
 
 	// The filter criteria used to dynamically select a set of devices for a test
-	// run and the maximum number of devices to be included in the run.
+	// run, as well as the maximum number of devices to be included in the run.
 	//
 	// Either devicePoolArn or deviceSelectionConfiguration is required in a request.
 	DeviceSelectionConfiguration *DeviceSelectionConfiguration `locationName:"deviceSelectionConfiguration" type:"structure"`

@@ -890,9 +890,8 @@ type EventSubscription struct {
 	// subscription.
 	SourceIdsList []string `locationNameList:"SourceId" type:"list"`
 
-	// The source type of the events returned by the Amazon Redshift event notification,
-	// such as cluster, cluster-snapshot, cluster-parameter-group, cluster-security-group,
-	// or scheduled-action.
+	// The source type of the events returned the Amazon Redshift event notification,
+	// such as cluster, or cluster-snapshot.
 	SourceType *string `type:"string"`
 
 	// The status of the Amazon Redshift event notification subscription.
@@ -1948,7 +1947,7 @@ type TaggedResource struct {
 	_ struct{} `type:"structure"`
 
 	// The Amazon Resource Name (ARN) with which the tag is associated, for example:
-	// arn:aws:redshift:us-east-2:123456789:cluster:t1.
+	// arn:aws:redshift:us-east-1:123456789:cluster:t1.
 	ResourceName *string `type:"string"`
 
 	// The type of resource with which the tag is associated. Valid resource types

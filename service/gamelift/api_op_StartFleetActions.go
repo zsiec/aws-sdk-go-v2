@@ -17,8 +17,7 @@ type StartFleetActionsInput struct {
 	// Actions is a required field
 	Actions []FleetAction `min:"1" type:"list" required:"true"`
 
-	// A unique identifier for a fleet to start actions on. You can use either the
-	// fleet ID or ARN value.
+	// Unique identifier for a fleet
 	//
 	// FleetId is a required field
 	FleetId *string `type:"string" required:"true"`

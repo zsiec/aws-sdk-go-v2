@@ -71,10 +71,6 @@ type ClientAPI interface {
 
 	CreateRemoteAccessSessionRequest(*devicefarm.CreateRemoteAccessSessionInput) devicefarm.CreateRemoteAccessSessionRequest
 
-	CreateTestGridProjectRequest(*devicefarm.CreateTestGridProjectInput) devicefarm.CreateTestGridProjectRequest
-
-	CreateTestGridUrlRequest(*devicefarm.CreateTestGridUrlInput) devicefarm.CreateTestGridUrlRequest
-
 	CreateUploadRequest(*devicefarm.CreateUploadInput) devicefarm.CreateUploadRequest
 
 	CreateVPCEConfigurationRequest(*devicefarm.CreateVPCEConfigurationInput) devicefarm.CreateVPCEConfigurationRequest
@@ -90,8 +86,6 @@ type ClientAPI interface {
 	DeleteRemoteAccessSessionRequest(*devicefarm.DeleteRemoteAccessSessionInput) devicefarm.DeleteRemoteAccessSessionRequest
 
 	DeleteRunRequest(*devicefarm.DeleteRunInput) devicefarm.DeleteRunRequest
-
-	DeleteTestGridProjectRequest(*devicefarm.DeleteTestGridProjectInput) devicefarm.DeleteTestGridProjectRequest
 
 	DeleteUploadRequest(*devicefarm.DeleteUploadInput) devicefarm.DeleteUploadRequest
 
@@ -124,10 +118,6 @@ type ClientAPI interface {
 	GetSuiteRequest(*devicefarm.GetSuiteInput) devicefarm.GetSuiteRequest
 
 	GetTestRequest(*devicefarm.GetTestInput) devicefarm.GetTestRequest
-
-	GetTestGridProjectRequest(*devicefarm.GetTestGridProjectInput) devicefarm.GetTestGridProjectRequest
-
-	GetTestGridSessionRequest(*devicefarm.GetTestGridSessionInput) devicefarm.GetTestGridSessionRequest
 
 	GetUploadRequest(*devicefarm.GetUploadInput) devicefarm.GetUploadRequest
 
@@ -167,14 +157,6 @@ type ClientAPI interface {
 
 	ListTagsForResourceRequest(*devicefarm.ListTagsForResourceInput) devicefarm.ListTagsForResourceRequest
 
-	ListTestGridProjectsRequest(*devicefarm.ListTestGridProjectsInput) devicefarm.ListTestGridProjectsRequest
-
-	ListTestGridSessionActionsRequest(*devicefarm.ListTestGridSessionActionsInput) devicefarm.ListTestGridSessionActionsRequest
-
-	ListTestGridSessionArtifactsRequest(*devicefarm.ListTestGridSessionArtifactsInput) devicefarm.ListTestGridSessionArtifactsRequest
-
-	ListTestGridSessionsRequest(*devicefarm.ListTestGridSessionsInput) devicefarm.ListTestGridSessionsRequest
-
 	ListTestsRequest(*devicefarm.ListTestsInput) devicefarm.ListTestsRequest
 
 	ListUniqueProblemsRequest(*devicefarm.ListUniqueProblemsInput) devicefarm.ListUniqueProblemsRequest
@@ -208,8 +190,6 @@ type ClientAPI interface {
 	UpdateNetworkProfileRequest(*devicefarm.UpdateNetworkProfileInput) devicefarm.UpdateNetworkProfileRequest
 
 	UpdateProjectRequest(*devicefarm.UpdateProjectInput) devicefarm.UpdateProjectRequest
-
-	UpdateTestGridProjectRequest(*devicefarm.UpdateTestGridProjectInput) devicefarm.UpdateTestGridProjectRequest
 
 	UpdateUploadRequest(*devicefarm.UpdateUploadInput) devicefarm.UpdateUploadRequest
 

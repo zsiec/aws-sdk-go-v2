@@ -82,7 +82,7 @@ type GetJourneyExecutionMetricsOutput struct {
 	_ struct{} `type:"structure" payload:"JourneyExecutionMetricsResponse"`
 
 	// Provides the results of a query that retrieved the data for a standard execution
-	// metric that applies to a journey, and provides information about that query.
+	// metric that applies to a journey.
 	//
 	// JourneyExecutionMetricsResponse is a required field
 	JourneyExecutionMetricsResponse *JourneyExecutionMetricsResponse `type:"structure" required:"true"`

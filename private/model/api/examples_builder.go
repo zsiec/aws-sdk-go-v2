@@ -3,40 +3,33 @@
 package api
 
 import (
-	"fmt"
+	"bytes"
 )
 
-// ExamplesBuilder provides the logic to build modeled examples as Go code.
-type ExamplesBuilder struct {
+type examplesBuilder interface {
+	BuildShape(*ShapeRef, map[string]interface{}, bool, bool) string
+	BuildList(string, string, *ShapeRef, []interface{}) string
+	BuildComplex(string, string, *ShapeRef, map[string]interface{}, bool) string
+	GoType(*ShapeRef, bool) string
+	Imports(*API) string
+}
+
+type defaultExamplesBuilder struct {
 	ShapeValueBuilder
-
-	HasTimestamp bool
 }
 
-// NewExamplesBuilder returns an initialized example builder for generating
-// example input API shapes from a model.
-func NewExamplesBuilder() *ExamplesBuilder {
-	b := &ExamplesBuilder{
-		ShapeValueBuilder: NewShapeValueBuilder(),
-	}
-	b.ParseTimeString = b.parseExampleTimeString
-	return b
-}
+func (builder defaultExamplesBuilder) Imports(a *API) string {
+	buf := bytes.NewBuffer(nil)
+	buf.WriteString(`"fmt"
+	"context"
+	"strings"
+	"time"
 
-// Returns a string which assigns the value of a time member by calling
-// parseTime function defined in the file.
-func (b *ExamplesBuilder) parseExampleTimeString(ref *ShapeRef, v string) (string, error) {
-	b.HasTimestamp = true
+	"` + SDKImportRoot + `/aws"
+	"` + SDKImportRoot + `/aws/awserr"
+	"` + SDKImportRoot + `/aws/external"
+	"` + a.ImportPath() + `"
+	`)
 
-	if ref.Location == "header" {
-		return fmt.Sprintf("parseTime(%q,%q)", "Mon, 2 Jan 2006 15:04:05 GMT", v), nil
-	}
-
-	switch ref.API.Metadata.Protocol {
-	case "json", "rest-json", "rest-xml", "ec2", "query":
-		return fmt.Sprintf("parseTime(%q,%q)", "2006-01-02T15:04:05Z", v), nil
-
-	default:
-		return "", fmt.Errorf("Unsupported time type: %s", ref.API.Metadata.Protocol)
-	}
+	return buf.String()
 }

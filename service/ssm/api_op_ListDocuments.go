@@ -85,8 +85,7 @@ const opListDocuments = "ListDocuments"
 // ListDocumentsRequest returns a request value for making API operation for
 // Amazon Simple Systems Manager (SSM).
 //
-// Returns all Systems Manager (SSM) documents in the current AWS account and
-// Region. You can limit the results of this request by using a filter.
+// Describes one or more of your Systems Manager documents.
 //
 //    // Example sending a request using ListDocumentsRequest.
 //    req := client.ListDocumentsRequest(params)

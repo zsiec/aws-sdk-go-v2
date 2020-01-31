@@ -13,8 +13,7 @@ import (
 type DescribeAliasInput struct {
 	_ struct{} `type:"structure"`
 
-	// The unique identifier for the fleet alias that you want to retrieve. You
-	// can use either the alias ID or ARN value.
+	// Unique identifier for a fleet alias. Specify the alias you want to retrieve.
 	//
 	// AliasId is a required field
 	AliasId *string `type:"string" required:"true"`
@@ -43,7 +42,7 @@ func (s *DescribeAliasInput) Validate() error {
 type DescribeAliasOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The requested alias resource.
+	// Object that contains the requested alias.
 	Alias *Alias `type:"structure"`
 }
 

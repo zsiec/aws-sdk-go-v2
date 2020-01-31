@@ -28,8 +28,8 @@ func (a *API) EnableSelectGeneratedMarshalers() {
 }
 
 // customizationPasses Executes customization logic for the API by package name.
-func (a *API) customizationPasses() error {
-	var svcCustomizations = map[string]func(*API) error{
+func (a *API) customizationPasses() {
+	var svcCustomizations = map[string]func(*API){
 		"s3":         s3Customizations,
 		"s3control":  s3ControlCustomizations,
 		"cloudfront": cloudfrontCustomizations,
@@ -54,24 +54,18 @@ func (a *API) customizationPasses() error {
 	}
 
 	if fn := svcCustomizations[a.PackageName()]; fn != nil {
-		err := fn(a)
-		if err != nil {
-			return fmt.Errorf("service customization pass failure for %s: %v", a.PackageName(), err)
-		}
+		fn(a)
 	}
 
 	a.EnableSelectGeneratedMarshalers()
-
-	return nil
 }
 
-func supressSmokeTest(a *API) error {
+func supressSmokeTest(a *API) {
 	a.SmokeTests.TestCases = []SmokeTestCase{}
-	return nil
 }
 
 // s3Customizations customizes the API generation to replace values specific to S3.
-func s3Customizations(a *API) error {
+func s3Customizations(a *API) {
 	var strExpires *Shape
 
 	var keepContentMD5Ref = map[string]struct{}{
@@ -111,38 +105,12 @@ func s3Customizations(a *API) error {
 		}
 	}
 	s3CustRemoveHeadObjectModeledErrors(a)
-
-	// Generate an endpointARN method for the BucketName shape operation inputs
-	for _, o := range a.Operations {
-		if o.Name == "CreateBucket" {
-			// For all operations but CreateBucket the BucketName shape
-			// needs to be decorated.
-			continue
-		}
-		var endpointARNShape *ShapeRef
-		for _, ref := range o.InputRef.Shape.MemberRefs {
-			if ref.OrigShapeName != "BucketName" || ref.Shape.Type != "string" {
-				continue
-			}
-			if endpointARNShape != nil {
-				return fmt.Errorf("more then one BucketName shape present on shape")
-			}
-			ref.EndpointARN = true
-			endpointARNShape = ref
-		}
-		if endpointARNShape != nil {
-			o.InputRef.Shape.HasEndpointARNMember = true
-			o.HasEndpointARN = true
-		}
-	}
-
-	return nil
 }
 
 // S3 Control service operations with an AccountId need accessors to be
 // generated for them so the fields can be dynamically accessed without
 // reflection.
-func s3ControlCustomizations(a *API) error {
+func s3ControlCustomizations(a *API) {
 	for _, op := range a.Operations {
 		// Add moving AccountId into the hostname instead of header.
 		if _, ok := op.InputRef.Shape.MemberRefs["AccountId"]; ok {
@@ -152,8 +120,6 @@ func s3ControlCustomizations(a *API) error {
 			)
 		}
 	}
-
-	return nil
 }
 
 // S3 HeadObject API call incorrect models NoSuchKey as valid
@@ -176,7 +142,7 @@ func s3CustRemoveHeadObjectModeledErrors(a *API) {
 
 // cloudfrontCustomizations customized the API generation to replace values
 // specific to CloudFront.
-func cloudfrontCustomizations(a *API) error {
+func cloudfrontCustomizations(a *API) {
 	// MaxItems members should always be integers
 	for _, s := range a.Shapes {
 		if ref, ok := s.MemberRefs["MaxItems"]; ok {
@@ -184,12 +150,10 @@ func cloudfrontCustomizations(a *API) error {
 			ref.Shape = a.Shapes["Integer"]
 		}
 	}
-
-	return nil
 }
 
 // rdsCustomizations are customization for the service/rds. This adds non-modeled fields used for presigning.
-func rdsCustomizations(a *API) error {
+func rdsCustomizations(a *API) {
 	inputs := []string{
 		"CopyDBSnapshotInput",
 		"CreateDBInstanceReadReplicaInput",
@@ -211,12 +175,9 @@ func rdsCustomizations(a *API) error {
 			}
 		}
 	}
-
-	return nil
 }
-
-func backfillAuthType(typ AuthType, opNames ...string) func(*API) error {
-	return func(a *API) error {
+func backfillAuthType(typ AuthType, opNames ...string) func(*API) {
+	return func(a *API) {
 		for _, opName := range opNames {
 			op, ok := a.Operations[opName]
 			if !ok {
@@ -229,6 +190,5 @@ func backfillAuthType(typ AuthType, opNames ...string) func(*API) error {
 
 			op.AuthType = typ
 		}
-		return nil
 	}
 }

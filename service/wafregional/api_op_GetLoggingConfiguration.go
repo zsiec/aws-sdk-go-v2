@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type GetLoggingConfigurationInput struct {
@@ -45,7 +46,7 @@ type GetLoggingConfigurationOutput struct {
 	_ struct{} `type:"structure"`
 
 	// The LoggingConfiguration for the specified web ACL.
-	LoggingConfiguration *LoggingConfiguration `type:"structure"`
+	LoggingConfiguration *waf.LoggingConfiguration `type:"structure"`
 }
 
 // String returns the string representation

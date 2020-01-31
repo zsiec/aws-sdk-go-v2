@@ -37,8 +37,6 @@ type ModifyEbsDefaultKmsKeyIdInput struct {
 	// alias, or ARN that is not valid, the action can appear to complete, but eventually
 	// fails.
 	//
-	// Amazon EBS does not support asymmetric CMKs.
-	//
 	// KmsKeyId is a required field
 	KmsKeyId *string `type:"string" required:"true"`
 }
@@ -83,10 +81,9 @@ const opModifyEbsDefaultKmsKeyId = "ModifyEbsDefaultKmsKeyId"
 // for your account in this Region.
 //
 // AWS creates a unique AWS managed CMK in each Region for use with encryption
-// by default. If you change the default CMK to a symmetric customer managed
-// CMK, it is used instead of the AWS managed CMK. To reset the default CMK
-// to the AWS managed CMK for EBS, use ResetEbsDefaultKmsKeyId. Amazon EBS does
-// not support asymmetric CMKs.
+// by default. If you change the default CMK to a customer managed CMK, it is
+// used instead of the AWS managed CMK. To reset the default CMK to the AWS
+// managed CMK for EBS, use ResetEbsDefaultKmsKeyId.
 //
 // If you delete or disable the customer managed CMK that you specified for
 // use with encryption by default, your instances will fail to launch.

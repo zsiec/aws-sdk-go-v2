@@ -4,7 +4,6 @@ package fms
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
@@ -17,9 +16,6 @@ type PutPolicyInput struct {
 	//
 	// Policy is a required field
 	Policy *Policy `type:"structure" required:"true"`
-
-	// The tags to add to the AWS resource.
-	TagList []Tag `type:"list"`
 }
 
 // String returns the string representation
@@ -37,13 +33,6 @@ func (s *PutPolicyInput) Validate() error {
 	if s.Policy != nil {
 		if err := s.Policy.Validate(); err != nil {
 			invalidParams.AddNested("Policy", err.(aws.ErrInvalidParams))
-		}
-	}
-	if s.TagList != nil {
-		for i, v := range s.TagList {
-			if err := v.Validate(); err != nil {
-				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "TagList", i), err.(aws.ErrInvalidParams))
-			}
 		}
 	}
 

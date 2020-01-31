@@ -3,8 +3,6 @@
 package s3
 
 import (
-	"fmt"
-
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/signer/v4"
 	"github.com/aws/aws-sdk-go-v2/private/protocol/restxml"
@@ -59,10 +57,6 @@ type Client struct {
 	// accelerate.
 	//
 	UseAccelerate bool
-
-	// Set this to `true` to use the region specified
-	// in the ARN, when an ARN is provided as an argument to a bucket parameter.
-	UseARNRegion bool
 }
 
 // Used for custom client initialization logic
@@ -95,10 +89,6 @@ func New(config aws.Config) *Client {
 				APIVersion:    "2006-03-01",
 			},
 		),
-	}
-
-	if err := resolveClientConfig(svc, config.ConfigSources); err != nil {
-		panic(fmt.Errorf("failed to resolve service configuration: %v", err))
 	}
 
 	// Handlers

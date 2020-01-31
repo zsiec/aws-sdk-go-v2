@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type GetRegexPatternSetInput struct {
@@ -47,7 +48,7 @@ type GetRegexPatternSetOutput struct {
 	// Information about the RegexPatternSet that you specified in the GetRegexPatternSet
 	// request, including the identifier of the pattern set and the regular expression
 	// patterns you want AWS WAF to search for.
-	RegexPatternSet *RegexPatternSet `type:"structure"`
+	RegexPatternSet *waf.RegexPatternSet `type:"structure"`
 }
 
 // String returns the string representation

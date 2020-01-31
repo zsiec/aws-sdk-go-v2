@@ -5,6 +5,8 @@ package efs_test
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/awserr"
@@ -12,7 +14,17 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/efs"
 )
 
+var _ time.Duration
+var _ strings.Reader
 var _ aws.Config
+
+func parseTime(layout, value string) *time.Time {
+	t, err := time.Parse(layout, value)
+	if err != nil {
+		panic(err)
+	}
+	return &t
+}
 
 // To create a new file system
 //
@@ -440,8 +452,6 @@ func ExampleClient_DescribeMountTargetsRequest_shared00() {
 				fmt.Println(efs.ErrCodeFileSystemNotFound, aerr.Error())
 			case efs.ErrCodeMountTargetNotFound:
 				fmt.Println(efs.ErrCodeMountTargetNotFound, aerr.Error())
-			case efs.ErrCodeAccessPointNotFound:
-				fmt.Println(efs.ErrCodeAccessPointNotFound, aerr.Error())
 			default:
 				fmt.Println(aerr.Error())
 			}

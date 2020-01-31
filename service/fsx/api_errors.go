@@ -35,26 +35,6 @@ const (
 	// A generic error indicating a failure with a client request.
 	ErrCodeBadRequest = "BadRequest"
 
-	// ErrCodeDataRepositoryTaskEnded for service response error code
-	// "DataRepositoryTaskEnded".
-	//
-	// The data repository task could not be canceled because the task has already
-	// ended.
-	ErrCodeDataRepositoryTaskEnded = "DataRepositoryTaskEnded"
-
-	// ErrCodeDataRepositoryTaskExecuting for service response error code
-	// "DataRepositoryTaskExecuting".
-	//
-	// An existing data repository task is currently executing on the file system.
-	// Wait until the existing task has completed, then create the new task.
-	ErrCodeDataRepositoryTaskExecuting = "DataRepositoryTaskExecuting"
-
-	// ErrCodeDataRepositoryTaskNotFound for service response error code
-	// "DataRepositoryTaskNotFound".
-	//
-	// The data repository task or tasks you specified could not be found.
-	ErrCodeDataRepositoryTaskNotFound = "DataRepositoryTaskNotFound"
-
 	// ErrCodeFileSystemNotFound for service response error code
 	// "FileSystemNotFound".
 	//
@@ -133,6 +113,6 @@ const (
 	// ErrCodeUnsupportedOperation for service response error code
 	// "UnsupportedOperation".
 	//
-	// The requested operation is not supported for this resource or API.
+	// An error occured.
 	ErrCodeUnsupportedOperation = "UnsupportedOperation"
 )

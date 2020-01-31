@@ -915,9 +915,7 @@
         "NETWORK_ERRORS",
         "INTERNAL_ERROR",
         "INSUFFICIENT_CLOUDHSM_HSMS",
-        "USER_LOCKED_OUT",
-        "USER_NOT_FOUND",
-        "USER_LOGGED_IN"
+        "USER_LOCKED_OUT"
       ]
     },
     "ConnectionStateType":{
@@ -1698,8 +1696,7 @@
     },
     "KeyStorePasswordType":{
       "type":"string",
-      "max":32,
-      "min":7,
+      "min":1,
       "sensitive":true
     },
     "KeyUnavailableException":{

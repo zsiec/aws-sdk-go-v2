@@ -27,7 +27,6 @@ type Operation struct {
 	imports             map[string]bool
 	CustomBuildHandlers []string       `json:"-"`
 	Endpoint            *EndpointTrait `json:"endpoint"`
-	HasEndpointARN      bool           `json:"-"`
 }
 
 // EndpointTrait provides the structure of the modeled enpdoint trait, and its

@@ -174,12 +174,6 @@
       "output_token": "NextToken",
       "result_key": "InternetGateways"
     },
-    "DescribeIpv6Pools": {
-      "input_token": "NextToken",
-      "limit_key": "MaxResults",
-      "output_token": "NextToken",
-      "result_key": "Ipv6Pools"
-    },
     "DescribeKeyPairs": {
       "result_key": "KeyPairs"
     },
@@ -445,12 +439,6 @@
     },
     "DescribeVpnGateways": {
       "result_key": "VpnGateways"
-    },
-    "GetAssociatedIpv6PoolCidrs": {
-      "input_token": "NextToken",
-      "limit_key": "MaxResults",
-      "output_token": "NextToken",
-      "result_key": "Ipv6CidrAssociations"
     },
     "GetTransitGatewayAttachmentPropagations": {
       "input_token": "NextToken",

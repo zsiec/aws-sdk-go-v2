@@ -1,7 +1,6 @@
 package external
 
 import (
-	"context"
 	"io/ioutil"
 	"net/http"
 	"strings"
@@ -141,7 +140,7 @@ func TestResolveCredentialsValue(t *testing.T) {
 		t.Errorf("expect %v provider name, got %v", e, a)
 	}
 
-	creds, err := cfg.Credentials.Retrieve(context.Background())
+	creds, err := cfg.Credentials.Retrieve()
 	if err != nil {
 		t.Fatalf("expect no error, got %v", err)
 	}

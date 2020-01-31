@@ -13,7 +13,7 @@ import (
 type ListArtifactsInput struct {
 	_ struct{} `type:"structure"`
 
-	// The run, job, suite, or test ARN.
+	// The Run, Job, Suite, or Test ARN.
 	//
 	// Arn is a required field
 	Arn *string `locationName:"arn" min:"32" type:"string" required:"true"`
@@ -26,11 +26,11 @@ type ListArtifactsInput struct {
 	//
 	// Allowed values include:
 	//
-	//    * FILE
+	//    * FILE: The artifacts are files.
 	//
-	//    * LOG
+	//    * LOG: The artifacts are logs.
 	//
-	//    * SCREENSHOT
+	//    * SCREENSHOT: The artifacts are screenshots.
 	//
 	// Type is a required field
 	Type ArtifactCategory `locationName:"type" type:"string" required:"true" enum:"true"`
@@ -72,7 +72,7 @@ type ListArtifactsOutput struct {
 	Artifacts []Artifact `locationName:"artifacts" type:"list"`
 
 	// If the number of items that are returned is significantly large, this is
-	// an identifier that is also returned. It can be used in a subsequent call
+	// an identifier that is also returned, which can be used in a subsequent call
 	// to this operation to return the next set of items in the list.
 	NextToken *string `locationName:"nextToken" min:"4" type:"string"`
 }

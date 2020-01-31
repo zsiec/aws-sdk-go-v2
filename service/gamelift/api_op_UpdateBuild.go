@@ -13,18 +13,17 @@ import (
 type UpdateBuildInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a build to update. You can use either the build ID
-	// or ARN value.
+	// Unique identifier for a build to update.
 	//
 	// BuildId is a required field
 	BuildId *string `type:"string" required:"true"`
 
-	// A descriptive label that is associated with a build. Build names do not need
+	// Descriptive label that is associated with a build. Build names do not need
 	// to be unique.
 	Name *string `min:"1" type:"string"`
 
-	// Version information that is associated with a build or script. Version strings
-	// do not need to be unique.
+	// Version that is associated with a build or script. Version strings do not
+	// need to be unique.
 	Version *string `min:"1" type:"string"`
 }
 
@@ -57,7 +56,7 @@ func (s *UpdateBuildInput) Validate() error {
 type UpdateBuildOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The updated build record.
+	// Object that contains the updated build record.
 	Build *Build `type:"structure"`
 }
 

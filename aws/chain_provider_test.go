@@ -1,7 +1,6 @@
 package aws
 
 import (
-	"context"
 	"strings"
 	"testing"
 	"time"
@@ -31,7 +30,7 @@ func TestChainProvider_WithNames(t *testing.T) {
 		},
 	)
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err != nil {
 		t.Fatalf("expect no error")
 	}
@@ -66,7 +65,7 @@ func TestChainProvider_Retrieve(t *testing.T) {
 		},
 	)
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err != nil {
 		t.Fatalf("expect no error")
 	}
@@ -88,7 +87,7 @@ func TestChainProvider_IsExpired(t *testing.T) {
 		},
 	)
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err != nil {
 		t.Fatalf("expect no error")
 	}
@@ -100,7 +99,7 @@ func TestChainProvider_IsExpired(t *testing.T) {
 func TestChainProvider_WithNoProvider(t *testing.T) {
 	p := NewChainProvider([]CredentialsProvider{})
 
-	_, err := p.Retrieve(context.Background())
+	_, err := p.Retrieve()
 	if e, a := "no valid providers", err.Error(); !strings.Contains(a, e) {
 		t.Errorf("expect %q error in %q", e, a)
 	}
@@ -118,7 +117,7 @@ func TestChainProvider_WithNoValidProvider(t *testing.T) {
 		},
 	)
 
-	_, err := p.Retrieve(context.Background())
+	_, err := p.Retrieve()
 	if e, a := "no valid providers", err.Error(); !strings.Contains(a, e) {
 		t.Errorf("expect %q error in %q", e, a)
 	}

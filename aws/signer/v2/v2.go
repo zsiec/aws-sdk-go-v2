@@ -1,7 +1,6 @@
 package v2
 
 import (
-	"context"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
@@ -71,7 +70,7 @@ func SignSDKRequest(req *aws.Request) {
 		Logger:      req.Config.Logger,
 	}
 
-	req.Error = v2.Sign(req.Context())
+	req.Error = v2.Sign()
 
 	if req.Error != nil {
 		return
@@ -90,8 +89,8 @@ func SignSDKRequest(req *aws.Request) {
 	}
 }
 
-func (v2 *signer) Sign(ctx context.Context) error {
-	credValue, err := v2.Credentials.Retrieve(ctx)
+func (v2 *signer) Sign() error {
+	credValue, err := v2.Credentials.Retrieve()
 	if err != nil {
 		return err
 	}

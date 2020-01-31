@@ -1,7 +1,6 @@
 package stscreds
 
 import (
-	"context"
 	"fmt"
 	"net/http"
 	"testing"
@@ -58,7 +57,7 @@ func TestAssumeRoleProvider(t *testing.T) {
 	stub := &stubSTS{}
 	p := NewAssumeRoleProvider(stub, roleARN)
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err != nil {
 		t.Fatalf("Expect no error, %v", err)
 	}
@@ -89,7 +88,7 @@ func TestAssumeRoleProvider_WithTokenCode(t *testing.T) {
 	p.SerialNumber = aws.String("0123456789")
 	p.TokenCode = aws.String(tokenCode)
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err != nil {
 		t.Fatalf("Expect no error, %v", err)
 	}
@@ -122,7 +121,7 @@ func TestAssumeRoleProvider_WithTokenProvider(t *testing.T) {
 		return tokenCode, nil
 	}
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err != nil {
 		t.Fatalf("Expect no error, %v", err)
 	}
@@ -150,7 +149,7 @@ func TestAssumeRoleProvider_WithTokenProviderError(t *testing.T) {
 		return "", fmt.Errorf("error occurred")
 	}
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err == nil {
 		t.Fatalf("expect error, got none")
 	}
@@ -175,7 +174,7 @@ func TestAssumeRoleProvider_MFAWithNoToken(t *testing.T) {
 	p := NewAssumeRoleProvider(stub, roleARN)
 	p.SerialNumber = aws.String("0123456789")
 
-	creds, err := p.Retrieve(context.Background())
+	creds, err := p.Retrieve()
 	if err == nil {
 		t.Fatalf("expect error, got none")
 	}
@@ -197,7 +196,7 @@ func BenchmarkAssumeRoleProvider(b *testing.B) {
 
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
-		if _, err := p.Retrieve(context.Background()); err != nil {
+		if _, err := p.Retrieve(); err != nil {
 			b.Fatal(err)
 		}
 	}

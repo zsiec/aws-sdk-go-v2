@@ -13,19 +13,19 @@ import (
 type DescribeGameSessionsInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for an alias associated with the fleet to retrieve all
-	// game sessions for. You can use either the alias ID or ARN value.
+	// Unique identifier for an alias associated with the fleet to retrieve all
+	// game sessions for.
 	AliasId *string `type:"string"`
 
-	// A unique identifier for a fleet to retrieve all game sessions for. You can
-	// use either the fleet ID or ARN value.
+	// Unique identifier for a fleet to retrieve all game sessions for.
 	FleetId *string `type:"string"`
 
-	// A unique identifier for the game session to retrieve.
+	// Unique identifier for the game session to retrieve. You can use either a
+	// GameSessionId or GameSessionArn value.
 	GameSessionId *string `min:"1" type:"string"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages.
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages.
 	Limit *int64 `min:"1" type:"integer"`
 
 	// Token that indicates the start of the next sequential page of results. Use
@@ -70,7 +70,7 @@ func (s *DescribeGameSessionsInput) Validate() error {
 type DescribeGameSessionsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of objects containing game session properties for each session
+	// Collection of objects containing game session properties for each session
 	// matching the request.
 	GameSessions []GameSession `type:"list"`
 

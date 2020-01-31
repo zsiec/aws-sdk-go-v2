@@ -18,11 +18,10 @@ type ComplianceDetails struct {
 	// Whether a resource is compliant with the effective tag policy.
 	ComplianceStatus *bool `type:"boolean"`
 
-	// These are keys defined in the effective policy that are on the resource with
-	// either incorrect case treatment or noncompliant values.
+	// The tag value is noncompliant with the effective tag policy.
 	KeysWithNoncompliantValues []string `type:"list"`
 
-	// These tag keys on the resource are noncompliant with the effective tag policy.
+	// The tag key is noncompliant with the effective tag policy.
 	NoncompliantKeys []string `type:"list"`
 }
 

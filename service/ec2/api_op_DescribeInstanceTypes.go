@@ -86,7 +86,7 @@ type DescribeInstanceTypesInput struct {
 	//    type.
 	//
 	//    * vcpu-info.default-threads-per-core - The default number of threads per
-	//    core for the instance type.
+	//    cores for the instance type.
 	//
 	//    * vcpu-info.default-vcpus - The default number of vCPUs for the instance
 	//    type.

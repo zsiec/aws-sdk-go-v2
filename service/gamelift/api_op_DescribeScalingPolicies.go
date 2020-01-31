@@ -13,14 +13,13 @@ import (
 type DescribeScalingPoliciesInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet to retrieve scaling policies for. You can
-	// use either the fleet ID or ARN value.
+	// Unique identifier for a fleet to retrieve scaling policies for.
 	//
 	// FleetId is a required field
 	FleetId *string `type:"string" required:"true"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages.
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages.
 	Limit *int64 `min:"1" type:"integer"`
 
 	// Token that indicates the start of the next sequential page of results. Use
@@ -82,7 +81,7 @@ type DescribeScalingPoliciesOutput struct {
 	// of the list.
 	NextToken *string `min:"1" type:"string"`
 
-	// A collection of objects containing the scaling policies matching the request.
+	// Collection of objects containing the scaling policies matching the request.
 	ScalingPolicies []ScalingPolicy `type:"list"`
 }
 

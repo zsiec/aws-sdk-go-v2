@@ -128,8 +128,7 @@ type DescribeNetworkInterfacesInput struct {
 
 	// The maximum number of items to return for this request. The request returns
 	// a token that you can specify in a subsequent call to get the next set of
-	// results. You cannot specify this parameter and the network interface IDs
-	// parameter in the same request.
+	// results.
 	MaxResults *int64 `min:"5" type:"integer"`
 
 	// One or more network interface IDs.

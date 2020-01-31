@@ -18,6 +18,8 @@ type GetReservationUtilizationInput struct {
 	//
 	//    * CACHE_ENGINE
 	//
+	//    * DATABASE_ENGINE
+	//
 	//    * DEPLOYMENT_OPTION
 	//
 	//    * INSTANCE_TYPE

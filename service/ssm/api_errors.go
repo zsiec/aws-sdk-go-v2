@@ -129,9 +129,8 @@ const (
 	// Error returned when the ID specified for a resource, such as a maintenance
 	// window or Patch baseline, doesn't exist.
 	//
-	// For information about resource quotas in Systems Manager, see Systems Manager
-	// Service Quotas (http://docs.aws.amazon.com/general/latest/gr/ssm.html#limits_ssm)
-	// in the AWS General Reference.
+	// For information about resource limits in Systems Manager, see AWS Systems
+	// Manager Limits (http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ssm).
 	ErrCodeDoesNotExistException = "DoesNotExistException"
 
 	// ErrCodeDuplicateDocumentContent for service response error code
@@ -555,8 +554,8 @@ const (
 	// ErrCodeOpsItemLimitExceededException for service response error code
 	// "OpsItemLimitExceededException".
 	//
-	// The request caused OpsItems to exceed one or more quotas. For information
-	// about OpsItem quotas, see What are the resource limits for OpsCenter? (http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-learn-more.html#OpsCenter-learn-more-limits).
+	// The request caused OpsItems to exceed one or more limits. For information
+	// about OpsItem limits, see What are the resource limits for OpsCenter? (http://docs.aws.amazon.com/systems-manager/latest/userguide/OpsCenter-learn-more.html#OpsCenter-learn-more-limits).
 	ErrCodeOpsItemLimitExceededException = "OpsItemLimitExceededException"
 
 	// ErrCodeOpsItemNotFoundException for service response error code
@@ -657,12 +656,11 @@ const (
 	// ErrCodeResourceLimitExceededException for service response error code
 	// "ResourceLimitExceededException".
 	//
-	// Error returned when the caller has exceeded the default resource quotas.
+	// Error returned when the caller has exceeded the default resource limits.
 	// For example, too many maintenance windows or patch baselines have been created.
 	//
-	// For information about resource quotas in Systems Manager, see Systems Manager
-	// Service Quotas (http://docs.aws.amazon.com/general/latest/gr/ssm.html#limits_ssm)
-	// in the AWS General Reference.
+	// For information about resource limits in Systems Manager, see AWS Systems
+	// Manager Limits (http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ssm).
 	ErrCodeResourceLimitExceededException = "ResourceLimitExceededException"
 
 	// ErrCodeServiceSettingNotFound for service response error code

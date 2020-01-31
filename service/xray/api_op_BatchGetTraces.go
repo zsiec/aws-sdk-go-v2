@@ -13,7 +13,7 @@ import (
 type BatchGetTracesInput struct {
 	_ struct{} `type:"structure"`
 
-	// Pagination token.
+	// Pagination token. Not used.
 	NextToken *string `type:"string"`
 
 	// Specify the trace IDs of requests for which to retrieve segments.
@@ -69,7 +69,7 @@ func (s BatchGetTracesInput) MarshalFields(e protocol.FieldEncoder) error {
 type BatchGetTracesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// Pagination token.
+	// Pagination token. Not used.
 	NextToken *string `type:"string"`
 
 	// Full traces for the specified requests.

@@ -55,20 +55,15 @@ type ModifyDBClusterInput struct {
 	// The name of the DB cluster parameter group to use for the DB cluster.
 	DBClusterParameterGroupName *string `type:"string"`
 
-	// A value that indicates whether the DB cluster has deletion protection enabled.
-	// The database can't be deleted when deletion protection is enabled. By default,
-	// deletion protection is disabled.
-	DeletionProtection *bool `type:"boolean"`
-
 	// True to enable mapping of AWS Identity and Access Management (IAM) accounts
 	// to database accounts, and otherwise false.
 	//
 	// Default: false
 	EnableIAMDatabaseAuthentication *bool `type:"boolean"`
 
-	// The version number of the database engine. Currently, setting this parameter
-	// has no effect. To upgrade your database engine to the most recent release,
-	// use the ApplyPendingMaintenanceAction API.
+	// The version number of the database engine to which you want to upgrade. Changing
+	// this parameter results in an outage. The change is applied during the next
+	// maintenance window unless the ApplyImmediately parameter is set to true.
 	//
 	// For a list of valid engine versions, see CreateDBInstance, or call DescribeDBEngineVersions.
 	EngineVersion *string `type:"string"`
@@ -93,7 +88,16 @@ type ModifyDBClusterInput struct {
 	// Example: my-cluster2
 	NewDBClusterIdentifier *string `type:"string"`
 
-	// (Not supported by Neptune)
+	// A value that indicates that the DB cluster should be associated with the
+	// specified option group. Changing this parameter doesn't result in an outage
+	// except in the following case, and the change is applied during the next maintenance
+	// window unless the ApplyImmediately parameter is set to true for this request.
+	// If the parameter change results in an option group that enables OEM, this
+	// change can cause a brief (sub-second) period during which new connections
+	// are rejected but existing connections are not interrupted.
+	//
+	// Permanent options can't be removed from an option group. The option group
+	// can't be removed from a DB cluster once it is associated with a DB cluster.
 	OptionGroupName *string `type:"string"`
 
 	// The port number on which the DB cluster accepts connections.

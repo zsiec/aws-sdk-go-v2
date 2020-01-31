@@ -13,7 +13,8 @@ import (
 type PutClusterCapacityProvidersInput struct {
 	_ struct{} `type:"structure"`
 
-	// The name of one or more capacity providers to associate with the cluster.
+	// The short name or full Amazon Resource Name (ARN) of one or more capacity
+	// providers to associate with the cluster.
 	//
 	// If specifying a capacity provider that uses an Auto Scaling group, the capacity
 	// provider must already be created. New capacity providers can be created with

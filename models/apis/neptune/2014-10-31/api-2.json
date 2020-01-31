@@ -1206,8 +1206,7 @@
         "KmsKeyId":{"shape":"String"},
         "PreSignedUrl":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
-        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"}
       }
     },
     "CreateDBClusterParameterGroupMessage":{
@@ -1306,8 +1305,7 @@
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
-        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "EnableCloudwatchLogsExports":{"shape":"LogTypeList"}
       }
     },
     "CreateDBInstanceResult":{
@@ -1416,8 +1414,7 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "CloneGroupId":{"shape":"String"},
         "ClusterCreateTime":{"shape":"TStamp"},
-        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"}
       },
       "wrapper":true
     },
@@ -1766,8 +1763,7 @@
         "IAMDatabaseAuthenticationEnabled":{"shape":"Boolean"},
         "PerformanceInsightsEnabled":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
-        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "EnabledCloudwatchLogsExports":{"shape":"LogTypeList"}
       },
       "wrapper":true
     },
@@ -2749,8 +2745,7 @@
         "PreferredMaintenanceWindow":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
         "CloudwatchLogsExportConfiguration":{"shape":"CloudwatchLogsExportConfiguration"},
-        "EngineVersion":{"shape":"String"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "EngineVersion":{"shape":"String"}
       }
     },
     "ModifyDBClusterParameterGroupMessage":{
@@ -2831,8 +2826,7 @@
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
         "EnablePerformanceInsights":{"shape":"BooleanOptional"},
         "PerformanceInsightsKMSKeyId":{"shape":"String"},
-        "CloudwatchLogsExportConfiguration":{"shape":"CloudwatchLogsExportConfiguration"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "CloudwatchLogsExportConfiguration":{"shape":"CloudwatchLogsExportConfiguration"}
       }
     },
     "ModifyDBInstanceResult":{
@@ -3204,8 +3198,7 @@
         "KmsKeyId":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DBClusterParameterGroupName":{"shape":"String"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "DBClusterParameterGroupName":{"shape":"String"}
       }
     },
     "RestoreDBClusterFromSnapshotResult":{
@@ -3234,8 +3227,7 @@
         "KmsKeyId":{"shape":"String"},
         "EnableIAMDatabaseAuthentication":{"shape":"BooleanOptional"},
         "EnableCloudwatchLogsExports":{"shape":"LogTypeList"},
-        "DBClusterParameterGroupName":{"shape":"String"},
-        "DeletionProtection":{"shape":"BooleanOptional"}
+        "DBClusterParameterGroupName":{"shape":"String"}
       }
     },
     "RestoreDBClusterToPointInTimeResult":{

@@ -2,24 +2,6 @@
 
 package iam
 
-type AssignmentStatusType string
-
-// Enum values for AssignmentStatusType
-const (
-	AssignmentStatusTypeAssigned   AssignmentStatusType = "Assigned"
-	AssignmentStatusTypeUnassigned AssignmentStatusType = "Unassigned"
-	AssignmentStatusTypeAny        AssignmentStatusType = "Any"
-)
-
-func (enum AssignmentStatusType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum AssignmentStatusType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
 type ContextKeyTypeEnum string
 
 // Enum values for ContextKeyTypeEnum
@@ -66,23 +48,6 @@ func (enum DeletionTaskStatusType) MarshalValueBuf(b []byte) ([]byte, error) {
 	return append(b, enum...), nil
 }
 
-type EncodingType string
-
-// Enum values for EncodingType
-const (
-	EncodingTypeSsh EncodingType = "SSH"
-	EncodingTypePem EncodingType = "PEM"
-)
-
-func (enum EncodingType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum EncodingType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
 type EntityType string
 
 // Enum values for EntityType
@@ -99,41 +64,6 @@ func (enum EntityType) MarshalValue() (string, error) {
 }
 
 func (enum EntityType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
-type GlobalEndpointTokenVersion string
-
-// Enum values for GlobalEndpointTokenVersion
-const (
-	GlobalEndpointTokenVersionV1token GlobalEndpointTokenVersion = "v1Token"
-	GlobalEndpointTokenVersionV2token GlobalEndpointTokenVersion = "v2Token"
-)
-
-func (enum GlobalEndpointTokenVersion) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum GlobalEndpointTokenVersion) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
-type JobStatusType string
-
-// Enum values for JobStatusType
-const (
-	JobStatusTypeInProgress JobStatusType = "IN_PROGRESS"
-	JobStatusTypeCompleted  JobStatusType = "COMPLETED"
-	JobStatusTypeFailed     JobStatusType = "FAILED"
-)
-
-func (enum JobStatusType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum JobStatusType) MarshalValueBuf(b []byte) ([]byte, error) {
 	b = b[0:0]
 	return append(b, enum...), nil
 }
@@ -172,42 +102,6 @@ func (enum PolicyEvaluationDecisionType) MarshalValueBuf(b []byte) ([]byte, erro
 	return append(b, enum...), nil
 }
 
-type PolicyOwnerEntityType string
-
-// Enum values for PolicyOwnerEntityType
-const (
-	PolicyOwnerEntityTypeUser  PolicyOwnerEntityType = "USER"
-	PolicyOwnerEntityTypeRole  PolicyOwnerEntityType = "ROLE"
-	PolicyOwnerEntityTypeGroup PolicyOwnerEntityType = "GROUP"
-)
-
-func (enum PolicyOwnerEntityType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum PolicyOwnerEntityType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
-type PolicyScopeType string
-
-// Enum values for PolicyScopeType
-const (
-	PolicyScopeTypeAll   PolicyScopeType = "All"
-	PolicyScopeTypeAws   PolicyScopeType = "AWS"
-	PolicyScopeTypeLocal PolicyScopeType = "Local"
-)
-
-func (enum PolicyScopeType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum PolicyScopeType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
 type PolicySourceType string
 
 // Enum values for PolicySourceType
@@ -226,23 +120,6 @@ func (enum PolicySourceType) MarshalValue() (string, error) {
 }
 
 func (enum PolicySourceType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
-type PolicyType string
-
-// Enum values for PolicyType
-const (
-	PolicyTypeInline  PolicyType = "INLINE"
-	PolicyTypeManaged PolicyType = "MANAGED"
-)
-
-func (enum PolicyType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum PolicyType) MarshalValueBuf(b []byte) ([]byte, error) {
 	b = b[0:0]
 	return append(b, enum...), nil
 }
@@ -300,6 +177,129 @@ func (enum ReportStateType) MarshalValue() (string, error) {
 }
 
 func (enum ReportStateType) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type AssignmentStatusType string
+
+// Enum values for AssignmentStatusType
+const (
+	AssignmentStatusTypeAssigned   AssignmentStatusType = "Assigned"
+	AssignmentStatusTypeUnassigned AssignmentStatusType = "Unassigned"
+	AssignmentStatusTypeAny        AssignmentStatusType = "Any"
+)
+
+func (enum AssignmentStatusType) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum AssignmentStatusType) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type EncodingType string
+
+// Enum values for EncodingType
+const (
+	EncodingTypeSsh EncodingType = "SSH"
+	EncodingTypePem EncodingType = "PEM"
+)
+
+func (enum EncodingType) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum EncodingType) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type GlobalEndpointTokenVersion string
+
+// Enum values for GlobalEndpointTokenVersion
+const (
+	GlobalEndpointTokenVersionV1token GlobalEndpointTokenVersion = "v1Token"
+	GlobalEndpointTokenVersionV2token GlobalEndpointTokenVersion = "v2Token"
+)
+
+func (enum GlobalEndpointTokenVersion) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum GlobalEndpointTokenVersion) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type JobStatusType string
+
+// Enum values for JobStatusType
+const (
+	JobStatusTypeInProgress JobStatusType = "IN_PROGRESS"
+	JobStatusTypeCompleted  JobStatusType = "COMPLETED"
+	JobStatusTypeFailed     JobStatusType = "FAILED"
+)
+
+func (enum JobStatusType) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum JobStatusType) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type PolicyOwnerEntityType string
+
+// Enum values for PolicyOwnerEntityType
+const (
+	PolicyOwnerEntityTypeUser  PolicyOwnerEntityType = "USER"
+	PolicyOwnerEntityTypeRole  PolicyOwnerEntityType = "ROLE"
+	PolicyOwnerEntityTypeGroup PolicyOwnerEntityType = "GROUP"
+)
+
+func (enum PolicyOwnerEntityType) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum PolicyOwnerEntityType) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type PolicyScopeType string
+
+// Enum values for PolicyScopeType
+const (
+	PolicyScopeTypeAll   PolicyScopeType = "All"
+	PolicyScopeTypeAws   PolicyScopeType = "AWS"
+	PolicyScopeTypeLocal PolicyScopeType = "Local"
+)
+
+func (enum PolicyScopeType) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum PolicyScopeType) MarshalValueBuf(b []byte) ([]byte, error) {
+	b = b[0:0]
+	return append(b, enum...), nil
+}
+
+type PolicyType string
+
+// Enum values for PolicyType
+const (
+	PolicyTypeInline  PolicyType = "INLINE"
+	PolicyTypeManaged PolicyType = "MANAGED"
+)
+
+func (enum PolicyType) MarshalValue() (string, error) {
+	return string(enum), nil
+}
+
+func (enum PolicyType) MarshalValueBuf(b []byte) ([]byte, error) {
 	b = b[0:0]
 	return append(b, enum...), nil
 }

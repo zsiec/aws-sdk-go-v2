@@ -14,16 +14,12 @@ import (
 type PutAccountSuppressionAttributesInput struct {
 	_ struct{} `type:"structure"`
 
-	// A list that contains the reasons that email addresses will be automatically
-	// added to the suppression list for your account. This list can contain any
-	// or all of the following:
+	// A list of reasons to suppress email addresses. The only valid reasons are:
 	//
-	//    * COMPLAINT – Amazon SES adds an email address to the suppression list
-	//    for your account when a message sent to that address results in a complaint.
+	//    * COMPLAINT – Amazon SES will suppress an email address that receives
+	//    a complaint.
 	//
-	//    * BOUNCE – Amazon SES adds an email address to the suppression list
-	//    for your account when a message sent to that address results in a hard
-	//    bounce.
+	//    * BOUNCE – Amazon SES will suppress an email address that hard bounces.
 	SuppressedReasons []SuppressionListReason `type:"list"`
 }
 
@@ -72,7 +68,7 @@ const opPutAccountSuppressionAttributes = "PutAccountSuppressionAttributes"
 // PutAccountSuppressionAttributesRequest returns a request value for making API operation for
 // Amazon Simple Email Service.
 //
-// Change the settings for the account-level suppression list.
+// Change your account's suppression preferences for your account.
 //
 //    // Example sending a request using PutAccountSuppressionAttributesRequest.
 //    req := client.PutAccountSuppressionAttributesRequest(params)

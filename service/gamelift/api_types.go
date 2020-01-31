@@ -13,7 +13,7 @@ import (
 var _ aws.Config
 var _ = awsutil.Prettify
 
-// Properties that describe an alias resource.
+// Properties describing a fleet alias.
 //
 //    * CreateAlias
 //
@@ -29,32 +29,28 @@ var _ = awsutil.Prettify
 type Alias struct {
 	_ struct{} `type:"structure"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift alias resource and uniquely identifies it.
-	// ARNs are unique across all Regions.. In a GameLift alias ARN, the resource
-	// ID matches the alias ID value.
+	// Unique identifier for an alias; alias ARNs are unique across all regions.
 	AliasArn *string `min:"1" type:"string"`
 
-	// A unique identifier for an alias. Alias IDs are unique within a Region.
+	// Unique identifier for an alias; alias IDs are unique within a region.
 	AliasId *string `type:"string"`
 
-	// A time stamp indicating when this data object was created. Format is a number
+	// Time stamp indicating when this data object was created. Format is a number
 	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// A human-readable description of an alias.
+	// Human-readable description of an alias.
 	Description *string `type:"string"`
 
-	// The time that this data object was last modified. Format is a number expressed
-	// in Unix time as milliseconds (for example "1469498468.057").
+	// Time stamp indicating when this data object was last modified. Format is
+	// a number expressed in Unix time as milliseconds (for example "1469498468.057").
 	LastUpdatedTime *time.Time `type:"timestamp"`
 
-	// A descriptive label that is associated with an alias. Alias names do not
-	// need to be unique.
+	// Descriptive label that is associated with an alias. Alias names do not need
+	// to be unique.
 	Name *string `min:"1" type:"string"`
 
-	// The routing configuration, including routing type and fleet target, for the
-	// alias.
+	// Alias configuration for the alias, including routing type and settings.
 	RoutingStrategy *RoutingStrategy `type:"structure"`
 }
 
@@ -63,7 +59,7 @@ func (s Alias) String() string {
 	return awsutil.Prettify(s)
 }
 
-// Values for use in Player attribute key-value pairs. This object lets you
+// Values for use in Player attribute key:value pairs. This object lets you
 // specify an attribute value using any of the valid data types: string, number,
 // string array, or data map. Each AttributeValue object can use only one of
 // the available properties.
@@ -142,20 +138,14 @@ func (s AwsCredentials) String() string {
 type Build struct {
 	_ struct{} `type:"structure"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift build resource and uniquely identifies it.
-	// ARNs are unique across all Regions. In a GameLift build ARN, the resource
-	// ID matches the BuildId value.
-	BuildArn *string `type:"string"`
-
-	// A unique identifier for a build.
+	// Unique identifier for a build.
 	BuildId *string `type:"string"`
 
 	// Time stamp indicating when this data object was created. Format is a number
 	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// A descriptive label that is associated with a build. Build names do not need
+	// Descriptive label that is associated with a build. Build names do not need
 	// to be unique. It can be set using CreateBuild or UpdateBuild.
 	Name *string `type:"string"`
 
@@ -183,8 +173,8 @@ type Build struct {
 	//    for this build.
 	Status BuildStatus `type:"string" enum:"true"`
 
-	// Version information that is associated with a build or script. Version strings
-	// do not need to be unique. This value can be set using CreateBuild or UpdateBuild.
+	// Version that is associated with a build or script. Version strings do not
+	// need to be unique. This value can be set using CreateBuild or UpdateBuild.
 	Version *string `type:"string"`
 }
 
@@ -193,16 +183,9 @@ func (s Build) String() string {
 	return awsutil.Prettify(s)
 }
 
-// Information about the use of a TLS/SSL certificate for a fleet. TLS certificate
-// generation is enabled at the fleet level, with one certificate generated
-// for the fleet. When this feature is enabled, the certificate can be retrieved
-// using the GameLift Server SDK (https://docs.aws.amazon.com/gamelift/latest/developerguide/reference-serversdk.html)
-// call GetInstanceCertificate. All instances in a fleet share the same certificate.
 type CertificateConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// Indicates whether a TLS/SSL certificate was generated for a fleet.
-	//
 	// CertificateType is a required field
 	CertificateType CertificateType `type:"string" required:"true" enum:"true"`
 }
@@ -234,7 +217,7 @@ type DesiredPlayerSession struct {
 	// use this data, so it can be formatted as needed for use in the game.
 	PlayerData *string `min:"1" type:"string"`
 
-	// A unique identifier for a player to associate with the player session.
+	// Unique identifier for a player to associate with the player session.
 	PlayerId *string `min:"1" type:"string"`
 }
 
@@ -271,9 +254,12 @@ func (s *DesiredPlayerSession) Validate() error {
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 type EC2InstanceCounts struct {
@@ -289,10 +275,10 @@ type EC2InstanceCounts struct {
 	// game session.
 	IDLE *int64 `type:"integer"`
 
-	// The maximum value allowed for the fleet's instance count.
+	// Maximum value allowed for the fleet's instance count.
 	MAXIMUM *int64 `type:"integer"`
 
-	// The minimum value allowed for the fleet's instance count.
+	// Minimum value allowed for the fleet's instance count.
 	MINIMUM *int64 `type:"integer"`
 
 	// Number of instances in the fleet that are starting but not yet active.
@@ -308,9 +294,8 @@ func (s EC2InstanceCounts) String() string {
 	return awsutil.Prettify(s)
 }
 
-// The maximum number of instances allowed based on the Amazon Elastic Compute
-// Cloud (Amazon EC2) instance type. Instance limits can be retrieved by calling
-// DescribeEC2InstanceLimits.
+// Maximum number of instances allowed based on the Amazon Elastic Compute Cloud
+// (Amazon EC2) instance type. Instance limits can be retrieved by calling DescribeEC2InstanceLimits.
 type EC2InstanceLimit struct {
 	_ struct{} `type:"structure"`
 
@@ -340,9 +325,9 @@ func (s EC2InstanceLimit) String() string {
 type Event struct {
 	_ struct{} `type:"structure"`
 
-	// The type of event being logged.
+	// Type of event being logged. The following events are currently in use:
 	//
-	// Fleet creation events (ordered by fleet creation activity):
+	// Fleet creation events:
 	//
 	//    * FLEET_CREATED -- A fleet record was successfully created with a status
 	//    of NEW. Event messaging includes the fleet ID.
@@ -369,22 +354,22 @@ type Event struct {
 	//
 	//    * FLEET_CREATION_VALIDATING_RUNTIME_CONFIG -- The build process was successful,
 	//    and the Amazon GameLift is now verifying that the game server launch paths,
-	//    which are specified in the fleet's runtime configuration, exist. If any
+	//    which are specified in the fleet's run-time configuration, exist. If any
 	//    listed launch path exists, Amazon GameLift tries to launch a game server
 	//    process and waits for the process to report ready. Failures in this stage
 	//    prevent a fleet from moving to ACTIVE status. Logs for this stage list
-	//    the launch paths in the runtime configuration and indicate whether each
+	//    the launch paths in the run-time configuration and indicate whether each
 	//    is found. Access the logs by using the URL in PreSignedLogUrl.
 	//
 	//    * FLEET_STATE_VALIDATING -- Fleet status changed from DOWNLOADING to VALIDATING.
 	//
-	//    * FLEET_VALIDATION_LAUNCH_PATH_NOT_FOUND -- Validation of the runtime
+	//    * FLEET_VALIDATION_LAUNCH_PATH_NOT_FOUND -- Validation of the run-time
 	//    configuration failed because the executable specified in a launch path
 	//    does not exist on the instance.
 	//
 	//    * FLEET_STATE_BUILDING -- Fleet status changed from VALIDATING to BUILDING.
 	//
-	//    * FLEET_VALIDATION_EXECUTABLE_RUNTIME_FAILURE -- Validation of the runtime
+	//    * FLEET_VALIDATION_EXECUTABLE_RUNTIME_FAILURE -- Validation of the run-time
 	//    configuration failed because the executable specified in a launch path
 	//    failed to run on the fleet instance.
 	//
@@ -393,8 +378,9 @@ type Event struct {
 	//    * FLEET_ACTIVATION_FAILED - The fleet failed to successfully complete
 	//    one of the steps in the fleet activation process. This event code indicates
 	//    that the game build was successfully downloaded to a fleet instance, built,
-	//    and validated, but was not able to start a server process. Learn more
-	//    at Debug Fleet Creation Issues (https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-creating-debug.html#fleets-creating-debug-creation)
+	//    and validated, but was not able to start a server process. A possible
+	//    reason for failure is that the game server is not reporting "process ready"
+	//    to the Amazon GameLift service.
 	//
 	//    * FLEET_STATE_ACTIVE -- The fleet's status changed from ACTIVATING to
 	//    ACTIVE. The fleet is now ready to host game sessions.
@@ -435,7 +421,7 @@ type Event struct {
 	//    * GENERIC_EVENT -- An unspecified event has occurred.
 	EventCode EventCode `type:"string" enum:"true"`
 
-	// A unique identifier for a fleet event.
+	// Unique identifier for a fleet event.
 	EventId *string `min:"1" type:"string"`
 
 	// Time stamp indicating when this event occurred. Format is a number expressed
@@ -450,7 +436,7 @@ type Event struct {
 	// can also access fleet creation logs through the Amazon GameLift console.
 	PreSignedLogUrl *string `min:"1" type:"string"`
 
-	// A unique identifier for an event resource, such as a fleet ID.
+	// Unique identifier for an event resource, such as a fleet ID.
 	ResourceId *string `min:"1" type:"string"`
 }
 
@@ -467,24 +453,20 @@ func (s Event) String() string {
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 type FleetAttributes struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift build resource that is deployed on instances
-	// in this fleet. In a GameLift build ARN, the resource ID matches the BuildId
-	// value.
-	BuildArn *string `type:"string"`
-
-	// A unique identifier for a build.
+	// Unique identifier for a build.
 	BuildId *string `type:"string"`
 
-	// Indicates whether a TLS/SSL certificate was generated for the fleet.
 	CertificateConfiguration *CertificateConfiguration `type:"structure"`
 
 	// Time stamp indicating when this data object was created. Format is a number
@@ -494,24 +476,21 @@ type FleetAttributes struct {
 	// Human-readable description of the fleet.
 	Description *string `min:"1" type:"string"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift fleet resource and uniquely identifies it.
-	// ARNs are unique across all Regions. In a GameLift fleet ARN, the resource
-	// ID matches the FleetId value.
+	// Identifier for a fleet that is unique across all regions.
 	FleetArn *string `min:"1" type:"string"`
 
-	// A unique identifier for a fleet.
+	// Unique identifier for a fleet.
 	FleetId *string `type:"string"`
 
 	// Indicates whether the fleet uses on-demand or spot instances. A spot instance
 	// in use may be interrupted with a two-minute notification.
 	FleetType FleetType `type:"string" enum:"true"`
 
-	// A unique identifier for an AWS IAM role that manages access to your AWS services.
+	// Unique identifier for an AWS IAM role that manages access to your AWS services.
 	// With an instance role ARN set, any application that runs on an instance in
 	// this fleet can assume the role, including install scripts, server processes,
-	// and daemons (background processes). Create a role or look up a role's ARN
-	// from the IAM dashboard (https://console.aws.amazon.com/iam/) in the AWS Management
+	// daemons (background processes). Create a role or look up a role's ARN using
+	// the IAM dashboard (https://console.aws.amazon.com/iam/) in the AWS Management
 	// Console. Learn more about using on-box credentials for your game servers
 	// at Access external resources from a game server (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-resources.html).
 	InstanceRoleArn *string `min:"1" type:"string"`
@@ -538,12 +517,12 @@ type FleetAttributes struct {
 	// group at a time.
 	MetricGroups []string `type:"list"`
 
-	// A descriptive label that is associated with a fleet. Fleet names do not need
+	// Descriptive label that is associated with a fleet. Fleet names do not need
 	// to be unique.
 	Name *string `min:"1" type:"string"`
 
-	// The type of game session protection to set for all new instances started
-	// in the fleet.
+	// Type of game session protection to set for all new instances started in the
+	// fleet.
 	//
 	//    * NoProtection -- The game session can be terminated during a scale-down
 	//    event.
@@ -561,13 +540,7 @@ type FleetAttributes struct {
 	// create over a span of time.
 	ResourceCreationLimitPolicy *ResourceCreationLimitPolicy `type:"structure"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift script resource that is deployed on instances
-	// in this fleet. In a GameLift script ARN, the resource ID matches the ScriptId
-	// value.
-	ScriptArn *string `type:"string"`
-
-	// A unique identifier for a Realtime script.
+	// Unique identifier for a Realtime script.
 	ScriptId *string `type:"string"`
 
 	// Game server launch parameters specified for fleets created before 2016-08-04
@@ -626,15 +599,18 @@ func (s FleetAttributes) String() string {
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 type FleetCapacity struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet.
+	// Unique identifier for a fleet.
 	FleetId *string `type:"string"`
 
 	// Current status of fleet capacity.
@@ -662,9 +638,12 @@ func (s FleetCapacity) String() string {
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 type FleetUtilization struct {
@@ -682,11 +661,11 @@ type FleetUtilization struct {
 	// in the fleet.
 	CurrentPlayerSessionCount *int64 `type:"integer"`
 
-	// A unique identifier for a fleet.
+	// Unique identifier for a fleet.
 	FleetId *string `type:"string"`
 
-	// The maximum number of players allowed across all game sessions currently
-	// being hosted on all instances in the fleet.
+	// Maximum players allowed across all game sessions currently being hosted on
+	// all instances in the fleet.
 	MaximumPlayerSessionCount *int64 `type:"integer"`
 }
 
@@ -697,19 +676,20 @@ func (s FleetUtilization) String() string {
 
 // Set of key-value pairs that contain information about a game session. When
 // included in a game session request, these properties communicate details
-// to be used when setting up the new game session. For example, a game property
-// might specify a game mode, level, or map. Game properties are passed to the
-// game server process when initiating a new game session. For more information,
-// see the Amazon GameLift Developer Guide (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-create).
+// to be used when setting up the new game session, such as to specify a game
+// mode, level, or map. Game properties are passed to the game server process
+// when initiating a new game session; the server process uses the properties
+// as appropriate. For more information, see the Amazon GameLift Developer Guide
+// (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-client-api.html#gamelift-sdk-client-api-create).
 type GameProperty struct {
 	_ struct{} `type:"structure"`
 
-	// The game property identifier.
+	// Game property identifier.
 	//
 	// Key is a required field
 	Key *string `type:"string" required:"true"`
 
-	// The game property value.
+	// Game property value.
 	//
 	// Value is a required field
 	Value *string `type:"string" required:"true"`
@@ -768,7 +748,7 @@ type GameSession struct {
 	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// A unique identifier for a player. This ID is used to enforce a resource protection
+	// Unique identifier for a player. This ID is used to enforce a resource protection
 	// policy (if one exists), that limits the number of game sessions a player
 	// can create.
 	CreatorId *string `min:"1" type:"string"`
@@ -776,23 +756,9 @@ type GameSession struct {
 	// Number of players currently in the game session.
 	CurrentPlayerSessionCount *int64 `type:"integer"`
 
-	// DNS identifier assigned to the instance that is running the game session.
-	// Values have the following format:
-	//
-	//    * TLS-enabled fleets: <unique identifier>.<region identifier>.amazongamelift.com.
-	//
-	//    * Non-TLS-enabled fleets: ec2-<unique identifier>.compute.amazonaws.com.
-	//    (See Amazon EC2 Instance IP Addressing (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses).)
-	//
-	// When connecting to a game session that is running on a TLS-enabled fleet,
-	// you must use the DNS name, not the IP address.
 	DnsName *string `type:"string"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift fleet that this game session is running on.
-	FleetArn *string `min:"1" type:"string"`
-
-	// A unique identifier for a fleet that the game session is running on.
+	// Unique identifier for a fleet that the game session is running on.
 	FleetId *string `type:"string"`
 
 	// Set of custom properties for a game session, formatted as key:value pairs.
@@ -806,14 +772,13 @@ type GameSession struct {
 	// a request to start a new game session (see Start a Game Session (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession)).
 	GameSessionData *string `min:"1" type:"string"`
 
-	// A unique identifier for the game session. A game session ARN has the following
+	// Unique identifier for the game session. A game session ARN has the following
 	// format: arn:aws:gamelift:<region>::gamesession/<fleet ID>/<custom ID string
 	// or idempotency token>.
 	GameSessionId *string `min:"1" type:"string"`
 
-	// IP address of the instance that is running the game session. When connecting
-	// to a Amazon GameLift game server, a client needs to reference an IP address
-	// (or DNS name) and port number.
+	// IP address of the game session. To connect to a Amazon GameLift game server,
+	// an app needs both the IP address and port number.
 	IpAddress *string `type:"string"`
 
 	// Information about the matchmaking process that was used to create the game
@@ -825,12 +790,12 @@ type GameSession struct {
 	// whenever new players are added during a successful backfill (see StartMatchBackfill).
 	MatchmakerData *string `min:"1" type:"string"`
 
-	// The maximum number of players that can be connected simultaneously to the
-	// game session.
+	// Maximum number of players that can be connected simultaneously to the game
+	// session.
 	MaximumPlayerSessionCount *int64 `type:"integer"`
 
-	// A descriptive label that is associated with a game session. Session names
-	// do not need to be unique.
+	// Descriptive label that is associated with a game session. Session names do
+	// not need to be unique.
 	Name *string `min:"1" type:"string"`
 
 	// Indicates whether or not the game session is accepting new players.
@@ -868,28 +833,17 @@ func (s GameSession) String() string {
 type GameSessionConnectionInfo struct {
 	_ struct{} `type:"structure"`
 
-	// DNS identifier assigned to the instance that is running the game session.
-	// Values have the following format:
-	//
-	//    * TLS-enabled fleets: <unique identifier>.<region identifier>.amazongamelift.com.
-	//
-	//    * Non-TLS-enabled fleets: ec2-<unique identifier>.compute.amazonaws.com.
-	//    (See Amazon EC2 Instance IP Addressing (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses).)
-	//
-	// When connecting to a game session that is running on a TLS-enabled fleet,
-	// you must use the DNS name, not the IP address.
 	DnsName *string `type:"string"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
+	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html))
 	// that is assigned to a game session and uniquely identifies it.
 	GameSessionArn *string `min:"1" type:"string"`
 
-	// IP address of the instance that is running the game session. When connecting
-	// to a Amazon GameLift game server, a client needs to reference an IP address
-	// (or DNS name) and port number.
+	// IP address of the game session. To connect to a Amazon GameLift game server,
+	// an app needs both the IP address and port number.
 	IpAddress *string `type:"string"`
 
-	// A collection of player session IDs, one for each player ID that was included
+	// Collection of player session IDs, one for each player ID that was included
 	// in the original matchmaking request.
 	MatchedPlayerSessions []MatchedPlayerSession `type:"list"`
 
@@ -939,16 +893,6 @@ func (s GameSessionDetail) String() string {
 type GameSessionPlacement struct {
 	_ struct{} `type:"structure"`
 
-	// DNS identifier assigned to the instance that is running the game session.
-	// Values have the following format:
-	//
-	//    * TLS-enabled fleets: <unique identifier>.<region identifier>.amazongamelift.com.
-	//
-	//    * Non-TLS-enabled fleets: ec2-<unique identifier>.compute.amazonaws.com.
-	//    (See Amazon EC2 Instance IP Addressing (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses).)
-	//
-	// When connecting to a game session that is running on a TLS-enabled fleet,
-	// you must use the DNS name, not the IP address.
 	DnsName *string `type:"string"`
 
 	// Time stamp indicating when this request was completed, canceled, or timed
@@ -962,7 +906,7 @@ type GameSessionPlacement struct {
 
 	// Identifier for the game session created by this placement request. This value
 	// is set once the new game session is placed (placement status is FULFILLED).
-	// This identifier is unique across all Regions. You can use this value as a
+	// This identifier is unique across all regions. You can use this value as a
 	// GameSessionId value as needed.
 	GameSessionArn *string `min:"1" type:"string"`
 
@@ -971,27 +915,26 @@ type GameSessionPlacement struct {
 	// a request to start a new game session (see Start a Game Session (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession)).
 	GameSessionData *string `min:"1" type:"string"`
 
-	// A unique identifier for the game session. This value is set once the new
-	// game session is placed (placement status is FULFILLED).
+	// Unique identifier for the game session. This value is set once the new game
+	// session is placed (placement status is FULFILLED).
 	GameSessionId *string `min:"1" type:"string"`
 
-	// A descriptive label that is associated with a game session. Session names
-	// do not need to be unique.
+	// Descriptive label that is associated with a game session. Session names do
+	// not need to be unique.
 	GameSessionName *string `min:"1" type:"string"`
 
-	// A descriptive label that is associated with game session queue. Queue names
-	// must be unique within each Region.
+	// Descriptive label that is associated with game session queue. Queue names
+	// must be unique within each region.
 	GameSessionQueueName *string `min:"1" type:"string"`
 
-	// Name of the Region where the game session created by this placement request
+	// Name of the region where the game session created by this placement request
 	// is running. This value is set once the new game session is placed (placement
 	// status is FULFILLED).
 	GameSessionRegion *string `min:"1" type:"string"`
 
-	// IP address of the instance that is running the game session. When connecting
-	// to a Amazon GameLift game server, a client needs to reference an IP address
-	// (or DNS name) and port number. This value is set once the new game session
-	// is placed (placement status is FULFILLED).
+	// IP address of the game session. To connect to a Amazon GameLift game server,
+	// an app needs both the IP address and port number. This value is set once
+	// the new game session is placed (placement status is FULFILLED).
 	IpAddress *string `type:"string"`
 
 	// Information on the matchmaking process for this game. Data is in JSON syntax,
@@ -1001,23 +944,23 @@ type GameSessionPlacement struct {
 	// data, see Match Data (https://docs.aws.amazon.com/gamelift/latest/developerguide/match-server.html#match-server-data).
 	MatchmakerData *string `min:"1" type:"string"`
 
-	// The maximum number of players that can be connected simultaneously to the
-	// game session.
+	// Maximum number of players that can be connected simultaneously to the game
+	// session.
 	MaximumPlayerSessionCount *int64 `type:"integer"`
 
-	// A collection of information on player sessions created in response to the
-	// game session placement request. These player sessions are created only once
-	// a new game session is successfully placed (placement status is FULFILLED).
+	// Collection of information on player sessions created in response to the game
+	// session placement request. These player sessions are created only once a
+	// new game session is successfully placed (placement status is FULFILLED).
 	// This information includes the player ID (as provided in the placement request)
 	// and the corresponding player session ID. Retrieve full player sessions by
 	// calling DescribePlayerSessions with the player session ID.
 	PlacedPlayerSessions []PlacedPlayerSession `type:"list"`
 
-	// A unique identifier for a game session placement.
+	// Unique identifier for a game session placement.
 	PlacementId *string `min:"1" type:"string"`
 
 	// Set of values, expressed in milliseconds, indicating the amount of latency
-	// that a player experiences when connected to AWS Regions.
+	// that a player experiences when connected to AWS regions.
 	PlayerLatencies []PlayerLatency `type:"list"`
 
 	// Port number for the game session. To connect to a Amazon GameLift game server,
@@ -1042,10 +985,6 @@ type GameSessionPlacement struct {
 	//
 	//    * TIMED_OUT -- A new game session was not successfully created before
 	//    the time limit expired. You can resubmit the placement request as needed.
-	//
-	//    * FAILED -- GameLift is not able to complete the process of placing the
-	//    game session. Common reasons are the game session terminated before the
-	//    placement process was completed, or an unexpected internal error.
 	Status GameSessionPlacementState `type:"string" enum:"true"`
 }
 
@@ -1081,32 +1020,31 @@ func (s GameSessionPlacement) String() string {
 type GameSessionQueue struct {
 	_ struct{} `type:"structure"`
 
-	// A list of fleets that can be used to fulfill game session placement requests
+	// List of fleets that can be used to fulfill game session placement requests
 	// in the queue. Fleets are identified by either a fleet ARN or a fleet alias
 	// ARN. Destinations are listed in default preference order.
 	Destinations []GameSessionQueueDestination `type:"list"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift game session queue resource and uniquely identifies
-	// it. ARNs are unique across all Regions. In a GameLift game session queue
-	// ARN, the resource ID matches the Name value.
+	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html))
+	// that is assigned to a game session queue and uniquely identifies it. Format
+	// is arn:aws:gamelift:<region>:<aws account>:gamesessionqueue/<queue name>.
 	GameSessionQueueArn *string `min:"1" type:"string"`
 
-	// A descriptive label that is associated with game session queue. Queue names
-	// must be unique within each Region.
+	// Descriptive label that is associated with game session queue. Queue names
+	// must be unique within each region.
 	Name *string `min:"1" type:"string"`
 
-	// A collection of latency policies to apply when processing game sessions placement
+	// Collection of latency policies to apply when processing game sessions placement
 	// requests with player latency information. Multiple policies are evaluated
 	// in order of the maximum latency value, starting with the lowest latency values.
-	// With just one policy, the policy is enforced at the start of the game session
-	// placement for the duration period. With multiple policies, each policy is
-	// enforced consecutively for its duration period. For example, a queue might
-	// enforce a 60-second policy followed by a 120-second policy, and then no policy
-	// for the remainder of the placement.
+	// With just one policy, it is enforced at the start of the game session placement
+	// for the duration period. With multiple policies, each policy is enforced
+	// consecutively for its duration period. For example, a queue might enforce
+	// a 60-second policy followed by a 120-second policy, and then no policy for
+	// the remainder of the placement.
 	PlayerLatencyPolicies []PlayerLatencyPolicy `type:"list"`
 
-	// The maximum time, in seconds, that a new game session placement request remains
+	// Maximum time, in seconds, that a new game session placement request remains
 	// in the queue. When a request exceeds this time, the game session placement
 	// changes to a TIMED_OUT status.
 	TimeoutInSeconds *int64 `type:"integer"`
@@ -1119,7 +1057,7 @@ func (s GameSessionQueue) String() string {
 
 // Fleet designated in a game session queue. Requests for new game sessions
 // in the queue are fulfilled by starting a new game session on any destination
-// that is configured for a queue.
+// configured for a queue.
 //
 //    * CreateGameSessionQueue
 //
@@ -1131,9 +1069,9 @@ func (s GameSessionQueue) String() string {
 type GameSessionQueueDestination struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN) that is assigned to fleet or fleet alias.
-	// ARNs, which include a fleet ID or alias ID and a Region name, provide a unique
-	// identifier across all Regions.
+	// Amazon Resource Name (ARN) assigned to fleet or fleet alias. ARNs, which
+	// include a fleet ID or alias ID and a region name, provide a unique identifier
+	// across all regions.
 	DestinationArn *string `min:"1" type:"string"`
 }
 
@@ -1164,25 +1102,15 @@ type Instance struct {
 	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// DNS identifier assigned to the instance that is running the game session.
-	// Values have the following format:
-	//
-	//    * TLS-enabled fleets: <unique identifier>.<region identifier>.amazongamelift.com.
-	//
-	//    * Non-TLS-enabled fleets: ec2-<unique identifier>.compute.amazonaws.com.
-	//    (See Amazon EC2 Instance IP Addressing (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses).)
-	//
-	// When connecting to a game session that is running on a TLS-enabled fleet,
-	// you must use the DNS name, not the IP address.
 	DnsName *string `type:"string"`
 
-	// A unique identifier for a fleet that the instance is in.
+	// Unique identifier for a fleet that the instance is in.
 	FleetId *string `type:"string"`
 
-	// A unique identifier for an instance.
+	// Unique identifier for an instance.
 	InstanceId *string `type:"string"`
 
-	// IP address that is assigned to the instance.
+	// IP address assigned to the instance.
 	IpAddress *string `type:"string"`
 
 	// Operating system that is running on this instance.
@@ -1220,13 +1148,13 @@ type InstanceAccess struct {
 	// Credentials required to access the instance.
 	Credentials *InstanceCredentials `type:"structure" sensitive:"true"`
 
-	// A unique identifier for a fleet containing the instance being accessed.
+	// Unique identifier for a fleet containing the instance being accessed.
 	FleetId *string `type:"string"`
 
-	// A unique identifier for an instance being accessed.
+	// Unique identifier for an instance being accessed.
 	InstanceId *string `type:"string"`
 
-	// IP address that is assigned to the instance.
+	// IP address assigned to the instance.
 	IpAddress *string `type:"string"`
 
 	// Operating system that is running on the instance.
@@ -1259,33 +1187,33 @@ func (s InstanceCredentials) String() string {
 }
 
 // A range of IP addresses and port settings that allow inbound traffic to connect
-// to server processes on an Amazon GameLift hosting resource. New game sessions
-// that are started on the fleet are assigned an IP address/port number combination,
-// which must fall into the fleet's allowed ranges. For fleets created with
-// a custom game server, the ranges reflect the server's game session assignments.
-// For Realtime Servers fleets, Amazon GameLift automatically opens two port
-// ranges, one for TCP messaging and one for UDP for use by the Realtime servers.
+// to server processes on an Amazon GameLift. New game sessions that are started
+// on the fleet are assigned an IP address/port number combination, which must
+// fall into the fleet's allowed ranges. For fleets created with a custom game
+// server, the ranges reflect the server's game session assignments. For Realtime
+// Servers fleets, Amazon GameLift automatically opens two port ranges, one
+// for TCP messaging and one for UDP for use by the Realtime servers.
 type IpPermission struct {
 	_ struct{} `type:"structure"`
 
-	// A starting value for a range of allowed port numbers.
+	// Starting value for a range of allowed port numbers.
 	//
 	// FromPort is a required field
 	FromPort *int64 `min:"1" type:"integer" required:"true"`
 
-	// A range of allowed IP addresses. This value must be expressed in CIDR notation.
+	// Range of allowed IP addresses. This value must be expressed in CIDR notation.
 	// Example: "000.000.000.000/[subnet mask]" or optionally the shortened version
 	// "0.0.0.0/[subnet mask]".
 	//
 	// IpRange is a required field
 	IpRange *string `type:"string" required:"true"`
 
-	// The network communication protocol used by the fleet.
+	// Network communication protocol used by the fleet.
 	//
 	// Protocol is a required field
 	Protocol IpProtocol `type:"string" required:"true" enum:"true"`
 
-	// An ending value for a range of allowed port numbers. Port numbers are end-inclusive.
+	// Ending value for a range of allowed port numbers. Port numbers are end-inclusive.
 	// This value must be higher than FromPort.
 	//
 	// ToPort is a required field
@@ -1337,10 +1265,10 @@ func (s *IpPermission) Validate() error {
 type MatchedPlayerSession struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a player
+	// Unique identifier for a player
 	PlayerId *string `min:"1" type:"string"`
 
-	// A unique identifier for a player session
+	// Unique identifier for a player session
 	PlayerSessionId *string `type:"string"`
 }
 
@@ -1354,85 +1282,74 @@ func (s MatchedPlayerSession) String() string {
 type MatchmakingConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// A flag that indicates whether a match that was created with this configuration
+	// Flag that determines whether a match that was created with this configuration
 	// must be accepted by the matched players. To require acceptance, set to TRUE.
 	AcceptanceRequired *bool `type:"boolean"`
 
-	// The length of time (in seconds) to wait for players to accept a proposed
-	// match. If any player rejects the match or fails to accept before the timeout,
-	// the ticket continues to look for an acceptable match.
+	// Length of time (in seconds) to wait for players to accept a proposed match.
+	// If any player rejects the match or fails to accept before the timeout, the
+	// ticket continues to look for an acceptable match.
 	AcceptanceTimeoutSeconds *int64 `min:"1" type:"integer"`
 
-	// The number of player slots in a match to keep open for future players. For
-	// example, assume that the configuration's rule set specifies a match for a
-	// single 12-person team. If the additional player count is set to 2, only 10
-	// players are initially selected for the match.
+	// Number of player slots in a match to keep open for future players. For example,
+	// if the configuration's rule set specifies a match for a single 12-person
+	// team, and the additional player count is set to 2, only 10 players are selected
+	// for the match.
 	AdditionalPlayerCount *int64 `type:"integer"`
 
-	// The method used to backfill game sessions created with this matchmaking configuration.
+	// Method used to backfill game sessions created with this matchmaking configuration.
 	// MANUAL indicates that the game makes backfill requests or does not use the
 	// match backfill feature. AUTOMATIC indicates that GameLift creates StartMatchBackfill
 	// requests whenever a game session has one or more open slots. Learn more about
 	// manual and automatic backfill in Backfill Existing Games with FlexMatch (https://docs.aws.amazon.com/gamelift/latest/developerguide/match-backfill.html).
 	BackfillMode BackfillMode `type:"string" enum:"true"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift matchmaking configuration resource and uniquely
-	// identifies it. ARNs are unique across all Regions. In a GameLift configuration
-	// ARN, the resource ID matches the Name value.
-	ConfigurationArn *string `type:"string"`
-
-	// The time stamp indicating when this data object was created. The format is
-	// a number expressed in Unix time as milliseconds (for example "1469498468.057").
+	// Time stamp indicating when this data object was created. Format is a number
+	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
 	// Information to attach to all events related to the matchmaking configuration.
 	CustomEventData *string `type:"string"`
 
-	// A descriptive label that is associated with matchmaking configuration.
+	// Descriptive label that is associated with matchmaking configuration.
 	Description *string `min:"1" type:"string"`
 
-	// A set of custom properties for a game session, formatted as key-value pairs.
+	// Set of custom properties for a game session, formatted as key:value pairs.
 	// These properties are passed to a game server process in the GameSession object
 	// with a request to start a new game session (see Start a Game Session (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession)).
 	// This information is added to the new GameSession object that is created for
 	// a successful match.
 	GameProperties []GameProperty `type:"list"`
 
-	// A set of custom game session properties, formatted as a single string value.
+	// Set of custom game session properties, formatted as a single string value.
 	// This data is passed to a game server process in the GameSession object with
 	// a request to start a new game session (see Start a Game Session (https://docs.aws.amazon.com/gamelift/latest/developerguide/gamelift-sdk-server-api.html#gamelift-sdk-server-startsession)).
 	// This information is added to the new GameSession object that is created for
 	// a successful match.
 	GameSessionData *string `min:"1" type:"string"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift game session queue resource and uniquely identifies
-	// it. ARNs are unique across all Regions. GameLift uses the listed queues when
-	// placing game sessions for matches that are created with this matchmaking
-	// configuration. Queues can be located in any Region.
+	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html))
+	// that is assigned to a game session queue and uniquely identifies it. Format
+	// is arn:aws:gamelift:<region>:<aws account>:gamesessionqueue/<queue name>.
+	// These queues are used when placing game sessions for matches that are created
+	// with this matchmaking configuration. Queues can be located in any region.
 	GameSessionQueueArns []string `type:"list"`
 
-	// A unique identifier for a matchmaking configuration. This name is used to
-	// identify the configuration associated with a matchmaking request or ticket.
+	// Unique identifier for a matchmaking configuration. This name is used to identify
+	// the configuration associated with a matchmaking request or ticket.
 	Name *string `type:"string"`
 
-	// An SNS topic ARN that is set up to receive matchmaking notifications.
+	// SNS topic ARN that is set up to receive matchmaking notifications.
 	NotificationTarget *string `type:"string"`
 
-	// The maximum duration, in seconds, that a matchmaking ticket can remain in
-	// process before timing out. Requests that fail due to timing out can be resubmitted
+	// Maximum duration, in seconds, that a matchmaking ticket can remain in process
+	// before timing out. Requests that fail due to timing out can be resubmitted
 	// as needed.
 	RequestTimeoutSeconds *int64 `min:"1" type:"integer"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift matchmaking rule set resource that this configuration
-	// uses.
-	RuleSetArn *string `type:"string"`
-
-	// A unique identifier for a matchmaking rule set to use with this configuration.
+	// Unique identifier for a matchmaking rule set to use with this configuration.
 	// A matchmaking configuration can only use rule sets that are defined in the
-	// same Region.
+	// same region.
 	RuleSetName *string `type:"string"`
 }
 
@@ -1477,23 +1394,17 @@ func (s MatchmakingConfiguration) String() string {
 type MatchmakingRuleSet struct {
 	_ struct{} `type:"structure"`
 
-	// The time stamp indicating when this data object was created. The format is
-	// a number expressed in Unix time as milliseconds (for example "1469498468.057").
+	// Time stamp indicating when this data object was created. Format is a number
+	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift matchmaking rule set resource and uniquely
-	// identifies it. ARNs are unique across all Regions. In a GameLift rule set
-	// ARN, the resource ID matches the RuleSetName value.
-	RuleSetArn *string `type:"string"`
-
-	// A collection of matchmaking rules, formatted as a JSON string. Comments are
+	// Collection of matchmaking rules, formatted as a JSON string. Comments are
 	// not allowed in JSON, but most elements support a description field.
 	//
 	// RuleSetBody is a required field
 	RuleSetBody *string `min:"1" type:"string" required:"true"`
 
-	// A unique identifier for a matchmaking rule set
+	// Unique identifier for a matchmaking rule set
 	RuleSetName *string `type:"string"`
 }
 
@@ -1508,11 +1419,6 @@ func (s MatchmakingRuleSet) String() string {
 // calling DescribeMatchmaking with the ticket ID.
 type MatchmakingTicket struct {
 	_ struct{} `type:"structure"`
-
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift matchmaking configuration resource that is used
-	// with this ticket.
-	ConfigurationArn *string `type:"string"`
 
 	// Name of the MatchmakingConfiguration that is used with this ticket. Matchmaking
 	// configurations determine how players are grouped into a match and how a new
@@ -1583,7 +1489,7 @@ type MatchmakingTicket struct {
 	// to receive player acceptances.
 	StatusReason *string `type:"string"`
 
-	// A unique identifier for a matchmaking ticket.
+	// Unique identifier for a matchmaking ticket.
 	TicketId *string `type:"string"`
 }
 
@@ -1608,10 +1514,10 @@ func (s MatchmakingTicket) String() string {
 type PlacedPlayerSession struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a player that is associated with this player session.
+	// Unique identifier for a player that is associated with this player session.
 	PlayerId *string `min:"1" type:"string"`
 
-	// A unique identifier for a player session.
+	// Unique identifier for a player session.
 	PlayerSessionId *string `type:"string"`
 }
 
@@ -1627,23 +1533,23 @@ type Player struct {
 	_ struct{} `type:"structure"`
 
 	// Set of values, expressed in milliseconds, indicating the amount of latency
-	// that a player experiences when connected to AWS Regions. If this property
-	// is present, FlexMatch considers placing the match only in Regions for which
+	// that a player experiences when connected to AWS regions. If this property
+	// is present, FlexMatch considers placing the match only in regions for which
 	// latency is reported.
 	//
 	// If a matchmaker has a rule that evaluates player latency, players must report
 	// latency in order to be matched. If no latency is reported in this scenario,
-	// FlexMatch assumes that no Regions are available to the player and the ticket
+	// FlexMatch assumes that no regions are available to the player and the ticket
 	// is not matchable.
 	LatencyInMs map[string]int64 `type:"map"`
 
-	// A collection of key:value pairs containing player information for use in
-	// matchmaking. Player attribute keys must match the playerAttributes used in
-	// a matchmaking rule set. Example: "PlayerAttributes": {"skill": {"N": "23"},
-	// "gameMode": {"S": "deathmatch"}}.
+	// Collection of key:value pairs containing player information for use in matchmaking.
+	// Player attribute keys must match the playerAttributes used in a matchmaking
+	// rule set. Example: "PlayerAttributes": {"skill": {"N": "23"}, "gameMode":
+	// {"S": "deathmatch"}}.
 	PlayerAttributes map[string]AttributeValue `type:"map"`
 
-	// A unique identifier for a player
+	// Unique identifier for a player
 	PlayerId *string `min:"1" type:"string"`
 
 	// Name of the team that the player is assigned to in a match. Team names are
@@ -1682,20 +1588,20 @@ func (s *Player) Validate() error {
 // Regional latency information for a player, used when requesting a new game
 // session with StartGameSessionPlacement. This value indicates the amount of
 // time lag that exists when the player is connected to a fleet in the specified
-// Region. The relative difference between a player's latency values for multiple
-// Regions are used to determine which fleets are best suited to place a new
+// region. The relative difference between a player's latency values for multiple
+// regions are used to determine which fleets are best suited to place a new
 // game session for the player.
 type PlayerLatency struct {
 	_ struct{} `type:"structure"`
 
 	// Amount of time that represents the time lag experienced by the player when
-	// connected to the specified Region.
+	// connected to the specified region.
 	LatencyInMilliseconds *float64 `type:"float"`
 
-	// A unique identifier for a player associated with the latency data.
+	// Unique identifier for a player associated with the latency data.
 	PlayerId *string `min:"1" type:"string"`
 
-	// Name of the Region that is associated with the latency value.
+	// Name of the region that is associated with the latency value.
 	RegionIdentifier *string `min:"1" type:"string"`
 }
 
@@ -1722,9 +1628,9 @@ func (s *PlayerLatency) Validate() error {
 
 // Queue setting that determines the highest latency allowed for individual
 // players when placing a game session. When a latency policy is in force, a
-// game session cannot be placed with any fleet in a Region where a player reports
-// latency higher than the cap. Latency policies are only enforced when the
-// placement request contains player latency information.
+// game session cannot be placed at any destination in a region where a player
+// is reporting latency higher than the cap. Latency policies are only enforced
+// when the placement request contains player latency information.
 //
 //    * CreateGameSessionQueue
 //
@@ -1778,44 +1684,27 @@ type PlayerSession struct {
 	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// DNS identifier assigned to the instance that is running the game session.
-	// Values have the following format:
-	//
-	//    * TLS-enabled fleets: <unique identifier>.<region identifier>.amazongamelift.com.
-	//
-	//    * Non-TLS-enabled fleets: ec2-<unique identifier>.compute.amazonaws.com.
-	//    (See Amazon EC2 Instance IP Addressing (https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-instance-addressing.html#concepts-public-addresses).)
-	//
-	// When connecting to a game session that is running on a TLS-enabled fleet,
-	// you must use the DNS name, not the IP address.
 	DnsName *string `type:"string"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift fleet that the player's game session is running
-	// on.
-	FleetArn *string `min:"1" type:"string"`
-
-	// A unique identifier for a fleet that the player's game session is running
-	// on.
+	// Unique identifier for a fleet that the player's game session is running on.
 	FleetId *string `type:"string"`
 
-	// A unique identifier for the game session that the player session is connected
+	// Unique identifier for the game session that the player session is connected
 	// to.
 	GameSessionId *string `min:"1" type:"string"`
 
-	// IP address of the instance that is running the game session. When connecting
-	// to a Amazon GameLift game server, a client needs to reference an IP address
-	// (or DNS name) and port number.
+	// IP address of the game session. To connect to a Amazon GameLift game server,
+	// an app needs both the IP address and port number.
 	IpAddress *string `type:"string"`
 
 	// Developer-defined information related to a player. Amazon GameLift does not
 	// use this data, so it can be formatted as needed for use in the game.
 	PlayerData *string `min:"1" type:"string"`
 
-	// A unique identifier for a player that is associated with this player session.
+	// Unique identifier for a player that is associated with this player session.
 	PlayerId *string `min:"1" type:"string"`
 
-	// A unique identifier for a player session.
+	// Unique identifier for a player session.
 	PlayerSessionId *string `type:"string"`
 
 	// Port number for the game session. To connect to a Amazon GameLift server
@@ -1848,25 +1737,25 @@ func (s PlayerSession) String() string {
 	return awsutil.Prettify(s)
 }
 
-// A policy that limits the number of game sessions a player can create on the
+// Policy that limits the number of game sessions a player can create on the
 // same fleet. This optional policy gives game owners control over how players
 // can consume available game server resources. A resource creation policy makes
 // the following statement: "An individual player can create a maximum number
 // of new game sessions within a specified time period".
 //
 // The policy is evaluated when a player tries to create a new game session.
-// For example: Assume you have a policy of 10 new game sessions and a time
-// period of 60 minutes. On receiving a CreateGameSession request, Amazon GameLift
-// checks that the player (identified by CreatorId) has created fewer than 10
-// game sessions in the past 60 minutes.
+// For example, with a policy of 10 new game sessions and a time period of 60
+// minutes, on receiving a CreateGameSession request, Amazon GameLift checks
+// that the player (identified by CreatorId) has created fewer than 10 game
+// sessions in the past 60 minutes.
 type ResourceCreationLimitPolicy struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum number of game sessions that an individual can create during
-	// the policy period.
+	// Maximum number of game sessions that an individual can create during the
+	// policy period.
 	NewGameSessionsPerCreator *int64 `type:"integer"`
 
-	// The time span used in evaluating the resource creation limit policy.
+	// Time span used in evaluating the resource creation limit policy.
 	PolicyPeriodInMinutes *int64 `type:"integer"`
 }
 
@@ -1875,7 +1764,7 @@ func (s ResourceCreationLimitPolicy) String() string {
 	return awsutil.Prettify(s)
 }
 
-// The routing configuration for a fleet alias.
+// Routing configuration for a fleet alias.
 //
 //    * CreateAlias
 //
@@ -1891,21 +1780,20 @@ func (s ResourceCreationLimitPolicy) String() string {
 type RoutingStrategy struct {
 	_ struct{} `type:"structure"`
 
-	// The unique identifier for a fleet that the alias points to. This value is
-	// the fleet ID, not the fleet ARN.
+	// Unique identifier for a fleet that the alias points to.
 	FleetId *string `type:"string"`
 
-	// The message text to be used with a terminal routing strategy.
+	// Message text to be used with a terminal routing strategy.
 	Message *string `type:"string"`
 
-	// The type of routing strategy for the alias.
+	// Type of routing strategy.
 	//
 	// Possible routing types include the following:
 	//
-	//    * SIMPLE - The alias resolves to one specific fleet. Use this type when
+	//    * SIMPLE -- The alias resolves to one specific fleet. Use this type when
 	//    routing to active fleets.
 	//
-	//    * TERMINAL - The alias does not resolve to a fleet but instead can be
+	//    * TERMINAL -- The alias does not resolve to a fleet but instead can be
 	//    used to display a message to the user. A terminal alias throws a TerminalRoutingStrategyException
 	//    with the RoutingStrategy message embedded.
 	Type RoutingStrategyType `type:"string" enum:"true"`
@@ -1920,15 +1808,15 @@ func (s RoutingStrategy) String() string {
 // to run on each instance in a fleet. Server processes run either a custom
 // game build executable or a Realtime Servers script. Each instance in the
 // fleet starts the specified server processes and continues to start new processes
-// as existing processes end. Each instance regularly checks for an updated
-// runtime configuration.
+// as existing processes end. An instance regularly checks for an updated run-time
+// configuration.
 //
-// The runtime configuration enables the instances in a fleet to run multiple
+// The run-time configuration enables the instances in a fleet to run multiple
 // processes simultaneously. Learn more about Running Multiple Processes on
 // a Fleet (https://docs.aws.amazon.com/gamelift/latest/developerguide/fleets-multiprocess.html).
 //
 // A Amazon GameLift instance is limited to 50 processes running simultaneously.
-// To calculate the total number of processes in a runtime configuration, add
+// To calculate the total number of processes in a run-time configuration, add
 // the values of the ConcurrentExecutions parameter for each ServerProcess object.
 //
 //    * CreateFleet
@@ -1937,26 +1825,29 @@ func (s RoutingStrategy) String() string {
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 type RuntimeConfiguration struct {
 	_ struct{} `type:"structure"`
 
-	// The maximum amount of time (in seconds) that a game session can remain in
-	// status ACTIVATING. If the game session is not active before the timeout,
-	// activation is terminated and the game session status is changed to TERMINATED.
+	// Maximum amount of time (in seconds) that a game session can remain in status
+	// ACTIVATING. If the game session is not active before the timeout, activation
+	// is terminated and the game session status is changed to TERMINATED.
 	GameSessionActivationTimeoutSeconds *int64 `min:"1" type:"integer"`
 
-	// The maximum number of game sessions with status ACTIVATING to allow on an
-	// instance simultaneously. This setting limits the amount of instance resources
-	// that can be used for new game activations at any one time.
+	// Maximum number of game sessions with status ACTIVATING to allow on an instance
+	// simultaneously. This setting limits the amount of instance resources that
+	// can be used for new game activations at any one time.
 	MaxConcurrentGameSessionActivations *int64 `min:"1" type:"integer"`
 
-	// A collection of server process configurations that describe which server
-	// processes to run on each instance in a fleet.
+	// Collection of server process configurations that describe which server processes
+	// to run on each instance in a fleet.
 	ServerProcesses []ServerProcess `min:"1" type:"list"`
 }
 
@@ -1991,25 +1882,25 @@ func (s *RuntimeConfiguration) Validate() error {
 	return nil
 }
 
-// The location in Amazon S3 where build or script files are stored for access
-// by Amazon GameLift. This location is specified in CreateBuild, CreateScript,
-// and UpdateScript requests.
+// Location in Amazon Simple Storage Service (Amazon S3) where build or script
+// files are stored for access by Amazon GameLift. This location is specified
+// in CreateBuild, CreateScript, and UpdateScript requests.
 type S3Location struct {
 	_ struct{} `type:"structure"`
 
-	// An Amazon S3 bucket identifier. This is the name of the S3 bucket.
+	// Amazon S3 bucket identifier. This is the name of the S3 bucket.
 	Bucket *string `min:"1" type:"string"`
 
-	// The name of the zip file that contains the build files or script files.
+	// Name of the zip file containing the build files or script files.
 	Key *string `min:"1" type:"string"`
 
-	// The version of the file, if object versioning is turned on for the bucket.
-	// Amazon GameLift uses this information when retrieving files from an S3 bucket
-	// that you own. Use this parameter to specify a specific version of the file.
-	// If not set, the latest version of the file is retrieved.
+	// Version of the file, if object versioning is turned on for the bucket. Amazon
+	// GameLift uses this information when retrieving files from an S3 bucket that
+	// you own. Use this parameter to specify a specific version of the file; if
+	// not set, the latest version of the file is retrieved.
 	ObjectVersion *string `min:"1" type:"string"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html))
+	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/AmazonS3/latest/dev/s3-arn-format.html))
 	// for an IAM role that allows Amazon GameLift to access the S3 bucket.
 	RoleArn *string `min:"1" type:"string"`
 }
@@ -2065,7 +1956,7 @@ type ScalingPolicy struct {
 	// before a scaling event is triggered.
 	EvaluationPeriods *int64 `min:"1" type:"integer"`
 
-	// A unique identifier for a fleet that is associated with this scaling policy.
+	// Unique identifier for a fleet that is associated with this scaling policy.
 	FleetId *string `type:"string"`
 
 	// Name of the Amazon GameLift-defined metric that is used to trigger a scaling
@@ -2106,12 +1997,12 @@ type ScalingPolicy struct {
 	//    in any queue, where the current fleet is the top-priority destination.
 	MetricName MetricName `type:"string" enum:"true"`
 
-	// A descriptive label that is associated with a scaling policy. Policy names
+	// Descriptive label that is associated with a scaling policy. Policy names
 	// do not need to be unique.
 	Name *string `min:"1" type:"string"`
 
-	// The type of scaling policy to create. For a target-based policy, set the
-	// parameter MetricName to 'PercentAvailableGameSessions' and specify a TargetConfiguration.
+	// Type of scaling policy to create. For a target-based policy, set the parameter
+	// MetricName to 'PercentAvailableGameSessions' and specify a TargetConfiguration.
 	// For a rule-based policy set the following parameters: MetricName, ComparisonOperator,
 	// Threshold, EvaluationPeriods, ScalingAdjustmentType, and ScalingAdjustment.
 	PolicyType PolicyType `type:"string" enum:"true"`
@@ -2119,7 +2010,7 @@ type ScalingPolicy struct {
 	// Amount of adjustment to make, based on the scaling adjustment type.
 	ScalingAdjustment *int64 `type:"integer"`
 
-	// The type of adjustment to make to a fleet's instance count (see FleetCapacity):
+	// Type of adjustment to make to a fleet's instance count (see FleetCapacity):
 	//
 	//    * ChangeInCapacity -- add (or subtract) the scaling adjustment value from
 	//    the current instance count. Positive values scale up while negative values
@@ -2155,7 +2046,7 @@ type ScalingPolicy struct {
 	//    and recreated.
 	Status ScalingStatusType `type:"string" enum:"true"`
 
-	// The settings for a target-based scaling policy.
+	// Object that contains settings for a target-based scaling policy.
 	TargetConfiguration *TargetConfiguration `type:"structure"`
 
 	// Metric value used to trigger a scaling event.
@@ -2183,34 +2074,28 @@ func (s ScalingPolicy) String() string {
 type Script struct {
 	_ struct{} `type:"structure"`
 
-	// A time stamp indicating when this data object was created. The format is
-	// a number expressed in Unix time as milliseconds (for example "1469498468.057").
+	// Time stamp indicating when this data object was created. Format is a number
+	// expressed in Unix time as milliseconds (for example "1469498468.057").
 	CreationTime *time.Time `type:"timestamp"`
 
-	// A descriptive label that is associated with a script. Script names do not
-	// need to be unique.
+	// Descriptive label that is associated with a script. Script names do not need
+	// to be unique.
 	Name *string `min:"1" type:"string"`
 
-	// Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// that is assigned to a GameLift script resource and uniquely identifies it.
-	// ARNs are unique across all Regions. In a GameLift script ARN, the resource
-	// ID matches the ScriptId value.
-	ScriptArn *string `type:"string"`
-
-	// A unique identifier for a Realtime script
+	// Unique identifier for a Realtime script
 	ScriptId *string `type:"string"`
 
-	// The file size of the uploaded Realtime script, expressed in bytes. When files
+	// File size of the uploaded Realtime script, expressed in bytes. When files
 	// are uploaded from an S3 location, this value remains at "0".
 	SizeOnDisk *int64 `min:"1" type:"long"`
 
-	// The location in Amazon S3 where build or script files are stored for access
-	// by Amazon GameLift. This location is specified in CreateBuild, CreateScript,
-	// and UpdateScript requests.
+	// Location in Amazon Simple Storage Service (Amazon S3) where build or script
+	// files are stored for access by Amazon GameLift. This location is specified
+	// in CreateBuild, CreateScript, and UpdateScript requests.
 	StorageLocation *S3Location `type:"structure"`
 
-	// The version that is associated with a build or script. Version strings do
-	// not need to be unique.
+	// Version that is associated with a build or script. Version strings do not
+	// need to be unique.
 	Version *string `min:"1" type:"string"`
 }
 
@@ -2229,15 +2114,15 @@ func (s Script) String() string {
 type ServerProcess struct {
 	_ struct{} `type:"structure"`
 
-	// The number of server processes that use this configuration to run concurrently
-	// on an instance.
+	// Number of server processes using this configuration to run concurrently on
+	// an instance.
 	//
 	// ConcurrentExecutions is a required field
 	ConcurrentExecutions *int64 `min:"1" type:"integer" required:"true"`
 
-	// The location of the server executable in a custom game build or the name
-	// of the Realtime script file that contains the Init() function. Game builds
-	// and Realtime scripts are installed on instances at the root:
+	// Location of the server executable in a custom game build or the name of the
+	// Realtime script file that contains the Init() function. Game builds and Realtime
+	// scripts are installed on instances at the root:
 	//
 	//    * Windows (for custom game builds only): C:\game. Example: "C:\game\MyGame\server.exe"
 	//
@@ -2246,7 +2131,7 @@ type ServerProcess struct {
 	// LaunchPath is a required field
 	LaunchPath *string `min:"1" type:"string" required:"true"`
 
-	// An optional list of parameters to pass to the server executable or Realtime
+	// Optional list of parameters to pass to the server executable or Realtime
 	// script on launch.
 	Parameters *string `min:"1" type:"string"`
 }
@@ -2275,62 +2160,6 @@ func (s *ServerProcess) Validate() error {
 	}
 	if s.Parameters != nil && len(*s.Parameters) < 1 {
 		invalidParams.Add(aws.NewErrParamMinLen("Parameters", 1))
-	}
-
-	if invalidParams.Len() > 0 {
-		return invalidParams
-	}
-	return nil
-}
-
-// A label that can be assigned to a GameLift resource.
-//
-// Learn more
-//
-// Tagging AWS Resources (https://docs.aws.amazon.com/general/latest/gr/aws_tagging.html)
-// in the AWS General Reference
-//
-//  AWS Tagging Strategies (http://aws.amazon.com/answers/account-management/aws-tagging-strategies/)
-//
-// Related operations
-//
-//    * TagResource
-//
-//    * UntagResource
-//
-//    * ListTagsForResource
-type Tag struct {
-	_ struct{} `type:"structure"`
-
-	// The key for a developer-defined key:value pair for tagging an AWS resource.
-	//
-	// Key is a required field
-	Key *string `min:"1" type:"string" required:"true"`
-
-	// The value for a developer-defined key:value pair for tagging an AWS resource.
-	//
-	// Value is a required field
-	Value *string `type:"string" required:"true"`
-}
-
-// String returns the string representation
-func (s Tag) String() string {
-	return awsutil.Prettify(s)
-}
-
-// Validate inspects the fields of the type to determine if they are valid.
-func (s *Tag) Validate() error {
-	invalidParams := aws.ErrInvalidParams{Context: "Tag"}
-
-	if s.Key == nil {
-		invalidParams.Add(aws.NewErrParamRequired("Key"))
-	}
-	if s.Key != nil && len(*s.Key) < 1 {
-		invalidParams.Add(aws.NewErrParamMinLen("Key", 1))
-	}
-
-	if s.Value == nil {
-		invalidParams.Add(aws.NewErrParamRequired("Value"))
 	}
 
 	if invalidParams.Len() > 0 {
@@ -2415,15 +2244,15 @@ type VpcPeeringAuthorization struct {
 	// Format is a number expressed in Unix time as milliseconds (for example "1469498468.057").
 	ExpirationTime *time.Time `type:"timestamp"`
 
-	// A unique identifier for the AWS account that you use to manage your Amazon
+	// Unique identifier for the AWS account that you use to manage your Amazon
 	// GameLift fleet. You can find your Account ID in the AWS Management Console
 	// under account settings.
 	GameLiftAwsAccountId *string `min:"1" type:"string"`
 
 	PeerVpcAwsAccountId *string `min:"1" type:"string"`
 
-	// A unique identifier for a VPC with resources to be accessed by your Amazon
-	// GameLift fleet. The VPC must be in the same Region where your fleet is deployed.
+	// Unique identifier for a VPC with resources to be accessed by your Amazon
+	// GameLift fleet. The VPC must be in the same region where your fleet is deployed.
 	// Look up a VPC ID using the VPC Dashboard (https://console.aws.amazon.com/vpc/)
 	// in the AWS Management Console. Learn more about VPC peering in VPC Peering
 	// with Amazon GameLift Fleets (https://docs.aws.amazon.com/gamelift/latest/developerguide/vpc-peering.html).
@@ -2453,15 +2282,11 @@ func (s VpcPeeringAuthorization) String() string {
 type VpcPeeringConnection struct {
 	_ struct{} `type:"structure"`
 
-	// The Amazon Resource Name (ARN (https://docs.aws.amazon.com/general/latest/gr/aws-arns-and-namespaces.html))
-	// associated with the GameLift fleet resource for this connection.
-	FleetArn *string `min:"1" type:"string"`
-
-	// A unique identifier for a fleet. This ID determines the ID of the Amazon
-	// GameLift VPC for your fleet.
+	// Unique identifier for a fleet. This ID determines the ID of the Amazon GameLift
+	// VPC for your fleet.
 	FleetId *string `type:"string"`
 
-	// A unique identifier for the VPC that contains the Amazon GameLift fleet for
+	// Unique identifier for the VPC that contains the Amazon GameLift fleet for
 	// this connection. This VPC is managed by Amazon GameLift and does not appear
 	// in your AWS account.
 	GameLiftVpcId *string `min:"1" type:"string"`
@@ -2471,18 +2296,18 @@ type VpcPeeringConnection struct {
 	// it; these blocks cannot overlap or the peering connection cannot be created.
 	IpV4CidrBlock *string `min:"1" type:"string"`
 
-	// A unique identifier for a VPC with resources to be accessed by your Amazon
-	// GameLift fleet. The VPC must be in the same Region where your fleet is deployed.
+	// Unique identifier for a VPC with resources to be accessed by your Amazon
+	// GameLift fleet. The VPC must be in the same region where your fleet is deployed.
 	// Look up a VPC ID using the VPC Dashboard (https://console.aws.amazon.com/vpc/)
 	// in the AWS Management Console. Learn more about VPC peering in VPC Peering
 	// with Amazon GameLift Fleets (https://docs.aws.amazon.com/gamelift/latest/developerguide/vpc-peering.html).
 	PeerVpcId *string `min:"1" type:"string"`
 
-	// The status information about the connection. Status indicates if a connection
-	// is pending, successful, or failed.
+	// Object that contains status information about the connection. Status indicates
+	// if a connection is pending, successful, or failed.
 	Status *VpcPeeringConnectionStatus `type:"structure"`
 
-	// A unique identifier that is automatically assigned to the connection record.
+	// Unique identifier that is automatically assigned to the connection record.
 	// This ID is referenced in VPC peering connection events, and is used when
 	// deleting a connection with DeleteVpcPeeringConnection.
 	VpcPeeringConnectionId *string `min:"1" type:"string"`

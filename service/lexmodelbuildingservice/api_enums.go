@@ -57,23 +57,6 @@ func (enum ContentType) MarshalValueBuf(b []byte) ([]byte, error) {
 	return append(b, enum...), nil
 }
 
-type Destination string
-
-// Enum values for Destination
-const (
-	DestinationCloudwatchLogs Destination = "CLOUDWATCH_LOGS"
-	DestinationS3             Destination = "S3"
-)
-
-func (enum Destination) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum Destination) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
 type ExportStatus string
 
 // Enum values for ExportStatus
@@ -162,23 +145,6 @@ func (enum Locale) MarshalValueBuf(b []byte) ([]byte, error) {
 	return append(b, enum...), nil
 }
 
-type LogType string
-
-// Enum values for LogType
-const (
-	LogTypeAudio LogType = "AUDIO"
-	LogTypeText  LogType = "TEXT"
-)
-
-func (enum LogType) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum LogType) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
 type MergeStrategy string
 
 // Enum values for MergeStrategy
@@ -192,23 +158,6 @@ func (enum MergeStrategy) MarshalValue() (string, error) {
 }
 
 func (enum MergeStrategy) MarshalValueBuf(b []byte) ([]byte, error) {
-	b = b[0:0]
-	return append(b, enum...), nil
-}
-
-type ObfuscationSetting string
-
-// Enum values for ObfuscationSetting
-const (
-	ObfuscationSettingNone               ObfuscationSetting = "NONE"
-	ObfuscationSettingDefaultObfuscation ObfuscationSetting = "DEFAULT_OBFUSCATION"
-)
-
-func (enum ObfuscationSetting) MarshalValue() (string, error) {
-	return string(enum), nil
-}
-
-func (enum ObfuscationSetting) MarshalValueBuf(b []byte) ([]byte, error) {
 	b = b[0:0]
 	return append(b, enum...), nil
 }

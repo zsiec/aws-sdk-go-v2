@@ -83,8 +83,6 @@ type ClientAPI interface {
 
 	DescribeBackupVaultRequest(*backup.DescribeBackupVaultInput) backup.DescribeBackupVaultRequest
 
-	DescribeCopyJobRequest(*backup.DescribeCopyJobInput) backup.DescribeCopyJobRequest
-
 	DescribeProtectedResourceRequest(*backup.DescribeProtectedResourceInput) backup.DescribeProtectedResourceRequest
 
 	DescribeRecoveryPointRequest(*backup.DescribeRecoveryPointInput) backup.DescribeRecoveryPointRequest
@@ -121,8 +119,6 @@ type ClientAPI interface {
 
 	ListBackupVaultsRequest(*backup.ListBackupVaultsInput) backup.ListBackupVaultsRequest
 
-	ListCopyJobsRequest(*backup.ListCopyJobsInput) backup.ListCopyJobsRequest
-
 	ListProtectedResourcesRequest(*backup.ListProtectedResourcesInput) backup.ListProtectedResourcesRequest
 
 	ListRecoveryPointsByBackupVaultRequest(*backup.ListRecoveryPointsByBackupVaultInput) backup.ListRecoveryPointsByBackupVaultRequest
@@ -138,8 +134,6 @@ type ClientAPI interface {
 	PutBackupVaultNotificationsRequest(*backup.PutBackupVaultNotificationsInput) backup.PutBackupVaultNotificationsRequest
 
 	StartBackupJobRequest(*backup.StartBackupJobInput) backup.StartBackupJobRequest
-
-	StartCopyJobRequest(*backup.StartCopyJobInput) backup.StartCopyJobRequest
 
 	StartRestoreJobRequest(*backup.StartRestoreJobInput) backup.StartRestoreJobRequest
 

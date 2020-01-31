@@ -35,8 +35,4 @@ const (
 	//
 	// The request was rejected because an error occurred.
 	ErrCodeCloudHsmServiceException = "CloudHsmServiceException"
-
-	// ErrCodeCloudHsmTagException for service response error code
-	// "CloudHsmTagException".
-	ErrCodeCloudHsmTagException = "CloudHsmTagException"
 )

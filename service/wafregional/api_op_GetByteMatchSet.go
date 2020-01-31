@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type GetByteMatchSetInput struct {
@@ -54,7 +55,7 @@ type GetByteMatchSetOutput struct {
 	//    TextTransformation
 	//
 	//    * FieldToMatch: Contains Data and Type
-	ByteMatchSet *ByteMatchSet `type:"structure"`
+	ByteMatchSet *waf.ByteMatchSet `type:"structure"`
 }
 
 // String returns the string representation

@@ -127,8 +127,6 @@ type ClientAPI interface {
 
 	StartPipelineExecutionRequest(*codepipeline.StartPipelineExecutionInput) codepipeline.StartPipelineExecutionRequest
 
-	StopPipelineExecutionRequest(*codepipeline.StopPipelineExecutionInput) codepipeline.StopPipelineExecutionRequest
-
 	TagResourceRequest(*codepipeline.TagResourceInput) codepipeline.TagResourceRequest
 
 	UntagResourceRequest(*codepipeline.UntagResourceInput) codepipeline.UntagResourceRequest

@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type UpdateGeoMatchSetInput struct {
@@ -34,7 +35,7 @@ type UpdateGeoMatchSetInput struct {
 	//    GeoMatchSetUpdate objects in your request.
 	//
 	// Updates is a required field
-	Updates []GeoMatchSetUpdate `min:"1" type:"list" required:"true"`
+	Updates []waf.GeoMatchSetUpdate `min:"1" type:"list" required:"true"`
 }
 
 // String returns the string representation

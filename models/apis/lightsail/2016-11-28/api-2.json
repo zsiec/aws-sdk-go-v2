@@ -4574,8 +4574,7 @@
         "preferredMaintenanceWindow":{"shape":"NonEmptyString"},
         "publiclyAccessible":{"shape":"boolean"},
         "masterEndpoint":{"shape":"RelationalDatabaseEndpoint"},
-        "pendingMaintenanceActions":{"shape":"PendingMaintenanceActionList"},
-        "caCertificateIdentifier":{"shape":"string"}
+        "pendingMaintenanceActions":{"shape":"PendingMaintenanceActionList"}
       }
     },
     "RelationalDatabaseBlueprint":{
@@ -4997,8 +4996,7 @@
         "enableBackupRetention":{"shape":"boolean"},
         "disableBackupRetention":{"shape":"boolean"},
         "publiclyAccessible":{"shape":"boolean"},
-        "applyImmediately":{"shape":"boolean"},
-        "caCertificateIdentifier":{"shape":"string"}
+        "applyImmediately":{"shape":"boolean"}
       }
     },
     "UpdateRelationalDatabaseResult":{

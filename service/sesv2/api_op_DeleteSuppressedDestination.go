@@ -10,11 +10,11 @@ import (
 	"github.com/aws/aws-sdk-go-v2/private/protocol"
 )
 
-// A request to remove an email address from the suppression list for your account.
+// A request to delete a suppressed email destination.
 type DeleteSuppressedDestinationInput struct {
 	_ struct{} `type:"structure"`
 
-	// The suppressed email destination to remove from the account suppression list.
+	// The suppressed email destination to delete.
 	//
 	// EmailAddress is a required field
 	EmailAddress *string `location:"uri" locationName:"EmailAddress" type:"string" required:"true"`
@@ -73,7 +73,7 @@ const opDeleteSuppressedDestination = "DeleteSuppressedDestination"
 // DeleteSuppressedDestinationRequest returns a request value for making API operation for
 // Amazon Simple Email Service.
 //
-// Removes an email address from the suppression list for your account.
+// Used to delete a suppressed email destination from your suppression list.
 //
 //    // Example sending a request using DeleteSuppressedDestinationRequest.
 //    req := client.DeleteSuppressedDestinationRequest(params)

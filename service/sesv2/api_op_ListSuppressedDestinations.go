@@ -11,18 +11,15 @@ import (
 	"github.com/aws/aws-sdk-go-v2/private/protocol"
 )
 
-// A request to obtain a list of email destinations that are on the suppression
-// list for your account.
+// A request to obtain a list of suppressed email destinations.
 type ListSuppressedDestinationsInput struct {
 	_ struct{} `type:"structure"`
 
-	// Used to filter the list of suppressed email destinations so that it only
-	// includes addresses that were added to the list before a specific date. The
-	// date that you specify should be in Unix time format.
+	// Filters email destinations suppressed after the given time.
 	EndDate *time.Time `location:"querystring" locationName:"EndDate" type:"timestamp"`
 
 	// A token returned from a previous call to ListSuppressedDestinations to indicate
-	// the position in the list of suppressed email addresses.
+	// the position in the list of suppressed email destinations.
 	NextToken *string `location:"querystring" locationName:"NextToken" type:"string"`
 
 	// The number of results to show in a single call to ListSuppressedDestinations.
@@ -31,12 +28,10 @@ type ListSuppressedDestinationsInput struct {
 	// use to obtain additional results.
 	PageSize *int64 `location:"querystring" locationName:"PageSize" type:"integer"`
 
-	// The factors that caused the email address to be added to .
+	// Filters email destinations suppressed by the given reasons.
 	Reasons []SuppressionListReason `location:"querystring" locationName:"Reason" type:"list"`
 
-	// Used to filter the list of suppressed email destinations so that it only
-	// includes addresses that were added to the list after a specific date. The
-	// date that you specify should be in Unix time format.
+	// Filters email destinations suppressed before the given time.
 	StartDate *time.Time `location:"querystring" locationName:"StartDate" type:"timestamp"`
 }
 
@@ -90,14 +85,13 @@ func (s ListSuppressedDestinationsInput) MarshalFields(e protocol.FieldEncoder) 
 	return nil
 }
 
-// A list of suppressed email addresses.
+// A list of suppressed email destinations.
 type ListSuppressedDestinationsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A token that indicates that there are additional email addresses on the suppression
-	// list for your account. To view additional suppressed addresses, issue another
-	// request to ListSuppressedDestinations, and pass this token in the NextToken
-	// parameter.
+	// A token that indicates that there are additional suppressed destinations
+	// to list. To view additional suppressed destinations, issue another request
+	// to ListSuppressedDestinations, and pass this token in the NextToken parameter.
 	NextToken *string `type:"string"`
 
 	// A list of summaries, each containing a summary for a suppressed email destination.
@@ -137,8 +131,8 @@ const opListSuppressedDestinations = "ListSuppressedDestinations"
 // ListSuppressedDestinationsRequest returns a request value for making API operation for
 // Amazon Simple Email Service.
 //
-// Retrieves a list of email addresses that are on the suppression list for
-// your account.
+// Used to fetch a list suppressed email destinations from your suppression
+// list.
 //
 //    // Example sending a request using ListSuppressedDestinationsRequest.
 //    req := client.ListSuppressedDestinationsRequest(params)

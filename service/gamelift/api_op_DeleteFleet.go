@@ -15,8 +15,7 @@ import (
 type DeleteFleetInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet to be deleted. You can use either the fleet
-	// ID or ARN value.
+	// Unique identifier for a fleet to be deleted.
 	//
 	// FleetId is a required field
 	FleetId *string `type:"string" required:"true"`
@@ -78,9 +77,12 @@ const opDeleteFleet = "DeleteFleet"
 //
 //    * DeleteFleet
 //
-//    * DescribeFleetAttributes
+//    * Describe fleets: DescribeFleetAttributes DescribeFleetCapacity DescribeFleetPortSettings
+//    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
+//    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 //

@@ -4,12 +4,11 @@ package api
 
 import (
 	"encoding/json"
-	"testing"
-
 	"github.com/google/go-cmp/cmp"
+	"testing"
 )
 
-func buildAPI() (*API, error) {
+func buildAPI() *API {
 	a := &API{}
 
 	stringShape := &Shape{
@@ -85,8 +84,8 @@ func buildAPI() (*API, error) {
 
 	a.BaseImportPath = "github.com/aws/aws-sdk-go-v2/service/"
 
-	err := a.Setup()
-	return a, err
+	a.Setup()
+	return a
 }
 
 func TestExampleGeneration(t *testing.T) {
@@ -115,30 +114,41 @@ func TestExampleGeneration(t *testing.T) {
   }
 }
 	`
-	a, err := buildAPI()
-	if err != nil {
-		t.Error(err)
-	}
+	a := buildAPI()
 	def := &ExamplesDefinition{}
-	err = json.Unmarshal([]byte(example), def)
+	err := json.Unmarshal([]byte(example), def)
 	if err != nil {
 		t.Error(err)
 	}
 	def.API = a
 
 	def.setup()
-	expected := `import (
-	"context"
+	expected := `
+import (
 	"fmt"
+	"context"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/awserr"
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/fooservice"
+	
 )
 
-
+var _ time.Duration
+var _ strings.Reader
 var _ aws.Config
+
+func parseTime(layout, value string) *time.Time {
+	t, err := time.Parse(layout, value)
+	if err != nil {
+		panic(err)
+	}
+	return &t
+}
+
 // I pity the foo
 //
 // Foo bar baz qux
@@ -178,10 +188,7 @@ func ExampleClient_FooRequest_shared00() {
 }
 
 func TestBuildShape(t *testing.T) {
-	a, err := buildAPI()
-	if err != nil {
-		t.Error(err)
-	}
+	a := buildAPI()
 	cases := []struct {
 		defs     map[string]interface{}
 		expected string
@@ -202,7 +209,7 @@ func TestBuildShape(t *testing.T) {
 
 	for _, c := range cases {
 		ref := a.Operations["Foo"].InputRef
-		shapeStr := NewExamplesBuilder().BuildShape(&ref, c.defs, false, false)
+		shapeStr := defaultExamplesBuilder{}.BuildShape(&ref, c.defs, false, false)
 		if c.expected != shapeStr {
 			t.Errorf("Expected:\n%s\nReceived:\n%s", c.expected, shapeStr)
 		}

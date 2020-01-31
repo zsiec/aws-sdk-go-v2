@@ -13,12 +13,11 @@ import (
 type DeleteMatchmakingRuleSetInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a matchmaking rule set to be deleted. (Note: The
-	// rule set name is different from the optional "name" field in the rule set
-	// body.) You can use either the rule set name or ARN value.
+	// Unique identifier for a matchmaking rule set to be deleted. (Note: The rule
+	// set name is different from the optional "name" field in the rule set body.)
 	//
 	// Name is a required field
-	Name *string `min:"1" type:"string" required:"true"`
+	Name *string `type:"string" required:"true"`
 }
 
 // String returns the string representation
@@ -32,9 +31,6 @@ func (s *DeleteMatchmakingRuleSetInput) Validate() error {
 
 	if s.Name == nil {
 		invalidParams.Add(aws.NewErrParamRequired("Name"))
-	}
-	if s.Name != nil && len(*s.Name) < 1 {
-		invalidParams.Add(aws.NewErrParamMinLen("Name", 1))
 	}
 
 	if invalidParams.Len() > 0 {

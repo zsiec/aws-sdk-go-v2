@@ -13,12 +13,12 @@ import (
 type DescribeFleetAttributesInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet(s) to retrieve attributes for. You can use
-	// either the fleet ID or ARN value.
+	// Unique identifier for a fleet(s) to retrieve attributes for. To request attributes
+	// for all fleets, leave this parameter empty.
 	FleetIds []string `min:"1" type:"list"`
 
-	// The maximum number of results to return. Use this parameter with NextToken
-	// to get results as a set of sequential pages. This parameter is ignored when
+	// Maximum number of results to return. Use this parameter with NextToken to
+	// get results as a set of sequential pages. This parameter is ignored when
 	// the request specifies one or a list of fleet IDs.
 	Limit *int64 `min:"1" type:"integer"`
 
@@ -57,8 +57,8 @@ func (s *DescribeFleetAttributesInput) Validate() error {
 type DescribeFleetAttributesOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of objects containing attribute metadata for each requested
-	// fleet ID.
+	// Collection of objects containing attribute metadata for each requested fleet
+	// ID.
 	FleetAttributes []FleetAttributes `type:"list"`
 
 	// Token that indicates where to resume retrieving results on the next call
@@ -105,7 +105,8 @@ const opDescribeFleetAttributes = "DescribeFleetAttributes"
 //    DescribeFleetUtilization DescribeRuntimeConfiguration DescribeEC2InstanceLimits
 //    DescribeFleetEvents
 //
-//    * UpdateFleetAttributes
+//    * Update fleets: UpdateFleetAttributes UpdateFleetCapacity UpdateFleetPortSettings
+//    UpdateRuntimeConfiguration
 //
 //    * Manage fleet actions: StartFleetActions StopFleetActions
 //

@@ -13,7 +13,7 @@ import (
 type DescribeVpcPeeringConnectionsInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a fleet. You can use either the fleet ID or ARN value.
+	// Unique identifier for a fleet.
 	FleetId *string `type:"string"`
 }
 
@@ -26,7 +26,7 @@ func (s DescribeVpcPeeringConnectionsInput) String() string {
 type DescribeVpcPeeringConnectionsOutput struct {
 	_ struct{} `type:"structure"`
 
-	// A collection of VPC peering connection records that match the request.
+	// Collection of VPC peering connection records that match the request.
 	VpcPeeringConnections []VpcPeeringConnection `type:"list"`
 }
 

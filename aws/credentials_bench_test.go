@@ -1,7 +1,6 @@
 package aws
 
 import (
-	"context"
 	"fmt"
 	"strconv"
 	"sync"
@@ -10,7 +9,7 @@ import (
 )
 
 func BenchmarkSafeCredentialsProvider_Retrieve(b *testing.B) {
-	retrieveFn := func(ctx context.Context) (Credentials, error) {
+	retrieveFn := func() (Credentials, error) {
 		return Credentials{
 			AccessKeyID:     "key",
 			SecretAccessKey: "secret",
@@ -29,7 +28,7 @@ func BenchmarkSafeCredentialsProvider_Retrieve(b *testing.B) {
 			for i := 0; i < c; i++ {
 				go func() {
 					for j := 0; j < b.N; j++ {
-						v, err := p.Retrieve(context.Background())
+						v, err := p.Retrieve()
 						if err != nil {
 							b.Fatalf("expect no error %v, %v", v, err)
 						}
@@ -45,7 +44,7 @@ func BenchmarkSafeCredentialsProvider_Retrieve(b *testing.B) {
 }
 
 func BenchmarkSafeCredentialsProvider_Retrieve_Invalidate(b *testing.B) {
-	retrieveFn := func(ctx context.Context) (Credentials, error) {
+	retrieveFn := func() (Credentials, error) {
 		time.Sleep(time.Millisecond)
 		return Credentials{
 			AccessKeyID:     "key",
@@ -67,7 +66,7 @@ func BenchmarkSafeCredentialsProvider_Retrieve_Invalidate(b *testing.B) {
 				for i := 0; i < c; i++ {
 					go func(id int) {
 						for j := 0; j < b.N; j++ {
-							v, err := p.Retrieve(context.Background())
+							v, err := p.Retrieve()
 							if err != nil {
 								b.Fatalf("expect no error %v, %v", v, err)
 							}

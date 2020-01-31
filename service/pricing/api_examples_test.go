@@ -5,6 +5,8 @@ package pricing_test
 import (
 	"context"
 	"fmt"
+	"strings"
+	"time"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/awserr"
@@ -12,7 +14,17 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/pricing"
 )
 
+var _ time.Duration
+var _ strings.Reader
 var _ aws.Config
+
+func parseTime(layout, value string) *time.Time {
+	t, err := time.Parse(layout, value)
+	if err != nil {
+		panic(err)
+	}
+	return &t
+}
 
 // To retrieve a list of services and service codes
 //

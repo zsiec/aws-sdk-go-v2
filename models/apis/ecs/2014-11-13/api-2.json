@@ -1283,8 +1283,7 @@
         "capacityProviderStrategy":{"shape":"CapacityProviderStrategy"},
         "platformVersion":{"shape":"String"},
         "scale":{"shape":"Scale"},
-        "clientToken":{"shape":"String"},
-        "tags":{"shape":"Tags"}
+        "clientToken":{"shape":"String"}
       }
     },
     "CreateTaskSetResponse":{
@@ -1527,8 +1526,7 @@
       "members":{
         "cluster":{"shape":"String"},
         "service":{"shape":"String"},
-        "taskSets":{"shape":"StringList"},
-        "include":{"shape":"TaskSetFieldList"}
+        "taskSets":{"shape":"StringList"}
       }
     },
     "DescribeTaskSetsResponse":{
@@ -1617,14 +1615,6 @@
       }
     },
     "Double":{"type":"double"},
-    "EFSVolumeConfiguration":{
-      "type":"structure",
-      "required":["fileSystemId"],
-      "members":{
-        "fileSystemId":{"shape":"String"},
-        "rootDirectory":{"shape":"String"}
-      }
-    },
     "EnvironmentVariables":{
       "type":"list",
       "member":{"shape":"KeyValuePair"}
@@ -2879,17 +2869,8 @@
         "serviceRegistries":{"shape":"ServiceRegistries"},
         "scale":{"shape":"Scale"},
         "stabilityStatus":{"shape":"StabilityStatus"},
-        "stabilityStatusAt":{"shape":"Timestamp"},
-        "tags":{"shape":"Tags"}
+        "stabilityStatusAt":{"shape":"Timestamp"}
       }
-    },
-    "TaskSetField":{
-      "type":"string",
-      "enum":["TAGS"]
-    },
-    "TaskSetFieldList":{
-      "type":"list",
-      "member":{"shape":"TaskSetField"}
     },
     "TaskSetNotFoundException":{
       "type":"structure",
@@ -3127,8 +3108,7 @@
       "members":{
         "name":{"shape":"String"},
         "host":{"shape":"HostVolumeProperties"},
-        "dockerVolumeConfiguration":{"shape":"DockerVolumeConfiguration"},
-        "efsVolumeConfiguration":{"shape":"EFSVolumeConfiguration"}
+        "dockerVolumeConfiguration":{"shape":"DockerVolumeConfiguration"}
       }
     },
     "VolumeFrom":{

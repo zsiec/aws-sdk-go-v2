@@ -20,8 +20,6 @@ type DescribeBrokerInstanceOptionsInput struct {
 	MaxResults *int64 `location:"querystring" locationName:"maxResults" min:"1" type:"integer"`
 
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
-
-	StorageType *string `location:"querystring" locationName:"storageType" type:"string"`
 }
 
 // String returns the string representation
@@ -69,12 +67,6 @@ func (s DescribeBrokerInstanceOptionsInput) MarshalFields(e protocol.FieldEncode
 
 		metadata := protocol.Metadata{}
 		e.SetValue(protocol.QueryTarget, "nextToken", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
-	}
-	if s.StorageType != nil {
-		v := *s.StorageType
-
-		metadata := protocol.Metadata{}
-		e.SetValue(protocol.QueryTarget, "storageType", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
 	}
 	return nil
 }

@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 var _ aws.Config
@@ -37,7 +38,7 @@ type ActivatedRule struct {
 	// ActivatedRule|OverrideAction applies only when updating or adding a RuleGroup
 	// to a WebACL. In this case, you do not use ActivatedRule|Action. For all other
 	// update requests, ActivatedRule|Action is used instead of ActivatedRule|OverrideAction.
-	Action *WafAction `type:"structure"`
+	Action *waf.WafAction `type:"structure"`
 
 	// An array of rules to exclude from a rule group. This is applicable only when
 	// the ActivatedRule refers to a RuleGroup.
@@ -72,7 +73,7 @@ type ActivatedRule struct {
 	//    the rules to exclude. That is, the second Updates:Action should be INSERT,
 	//    Updates:ActivatedRule:RuleId should be the rule group that you just removed,
 	//    and ExcludedRules should contain the rules that you want to exclude.
-	ExcludedRules []ExcludedRule `type:"list"`
+	ExcludedRules []waf.ExcludedRule `type:"list"`
 
 	// Use the OverrideAction to test your RuleGroup.
 	//
@@ -88,7 +89,7 @@ type ActivatedRule struct {
 	// ActivatedRule|OverrideAction applies only when updating or adding a RuleGroup
 	// to a WebACL. In this case you do not use ActivatedRule|Action. For all other
 	// update requests, ActivatedRule|Action is used instead of ActivatedRule|OverrideAction.
-	OverrideAction *WafOverrideAction `type:"structure"`
+	OverrideAction *waf.WafOverrideAction `type:"structure"`
 
 	// Specifies the order in which the Rules in a WebACL are evaluated. Rules with
 	// a lower value for Priority are evaluated before Rules with a higher value.
@@ -187,7 +188,7 @@ type ByteMatchSet struct {
 	// that you want AWS WAF to search, and other settings.
 	//
 	// ByteMatchTuples is a required field
-	ByteMatchTuples []ByteMatchTuple `type:"list" required:"true"`
+	ByteMatchTuples []waf.ByteMatchTuple `type:"list" required:"true"`
 
 	// A friendly name or description of the ByteMatchSet. You can't change Name
 	// after you create a ByteMatchSet.
@@ -241,7 +242,7 @@ type ByteMatchSetUpdate struct {
 	// values in the ByteMatchTuple that you want to delete from the ByteMatchSet.
 	//
 	// ByteMatchTuple is a required field
-	ByteMatchTuple *ByteMatchTuple `type:"structure" required:"true"`
+	ByteMatchTuple *waf.ByteMatchTuple `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -281,7 +282,7 @@ type ByteMatchTuple struct {
 	// header or a query string. For more information, see FieldToMatch.
 	//
 	// FieldToMatch is a required field
-	FieldToMatch *FieldToMatch `type:"structure" required:"true"`
+	FieldToMatch *waf.FieldToMatch `type:"structure" required:"true"`
 
 	// Within the portion of a web request that you want to search (for example,
 	// in the query string, if any), specify where you want AWS WAF to search. Valid
@@ -652,7 +653,7 @@ type GeoMatchSet struct {
 	// want AWS WAF to search for.
 	//
 	// GeoMatchConstraints is a required field
-	GeoMatchConstraints []GeoMatchConstraint `type:"list" required:"true"`
+	GeoMatchConstraints []waf.GeoMatchConstraint `type:"list" required:"true"`
 
 	// The GeoMatchSetId for an GeoMatchSet. You use GeoMatchSetId to get information
 	// about a GeoMatchSet (see GeoMatchSet), update a GeoMatchSet (see UpdateGeoMatchSet),
@@ -709,7 +710,7 @@ type GeoMatchSetUpdate struct {
 	// for.
 	//
 	// GeoMatchConstraint is a required field
-	GeoMatchConstraint *GeoMatchConstraint `type:"structure" required:"true"`
+	GeoMatchConstraint *waf.GeoMatchConstraint `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -785,7 +786,7 @@ type HTTPRequest struct {
 
 	// A complex type that contains two values for each header in the sampled web
 	// request: the name of the header and the value of the header.
-	Headers []HTTPHeader `type:"list"`
+	Headers []waf.HTTPHeader `type:"list"`
 
 	// The HTTP method specified in the sampled web request. CloudFront supports
 	// the following methods: DELETE, GET, HEAD, OPTIONS, PATCH, POST, and PUT.
@@ -820,7 +821,7 @@ type IPSet struct {
 	// access logs.
 	//
 	// IPSetDescriptors is a required field
-	IPSetDescriptors []IPSetDescriptor `type:"list" required:"true"`
+	IPSetDescriptors []waf.IPSetDescriptor `type:"list" required:"true"`
 
 	// The IPSetId for an IPSet. You use IPSetId to get information about an IPSet
 	// (see GetIPSet), update an IPSet (see UpdateIPSet), insert an IPSet into a
@@ -933,7 +934,7 @@ type IPSetUpdate struct {
 	// that web requests originate from.
 	//
 	// IPSetDescriptor is a required field
-	IPSetDescriptor *IPSetDescriptor `type:"structure" required:"true"`
+	IPSetDescriptor *waf.IPSetDescriptor `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -976,7 +977,7 @@ type LoggingConfiguration struct {
 	// The parts of the request that you want redacted from the logs. For example,
 	// if you redact the cookie field, the cookie field in the firehose will be
 	// xxx.
-	RedactedFields []FieldToMatch `type:"list"`
+	RedactedFields []waf.FieldToMatch `type:"list"`
 
 	// The Amazon Resource Name (ARN) of the web ACL that you want to associate
 	// with LogDestinationConfigs.
@@ -1106,7 +1107,7 @@ type RateBasedRule struct {
 	// IPSet, or SqlInjectionMatchSet object that you want to include in a RateBasedRule.
 	//
 	// MatchPredicates is a required field
-	MatchPredicates []Predicate `type:"list" required:"true"`
+	MatchPredicates []waf.Predicate `type:"list" required:"true"`
 
 	// A friendly name or description for the metrics for a RateBasedRule. The name
 	// can contain only alphanumeric characters (A-Z, a-z, 0-9), with maximum length
@@ -1186,7 +1187,7 @@ type RegexMatchSet struct {
 	//
 	//    * Whether to perform any conversions on the request, such as converting
 	//    it to lowercase, before inspecting it for the specified string.
-	RegexMatchTuples []RegexMatchTuple `type:"list"`
+	RegexMatchTuples []waf.RegexMatchTuple `type:"list"`
 }
 
 // String returns the string representation
@@ -1237,7 +1238,7 @@ type RegexMatchSetUpdate struct {
 	// that you want to delete from the RegexMatchSet.
 	//
 	// RegexMatchTuple is a required field
-	RegexMatchTuple *RegexMatchTuple `type:"structure" required:"true"`
+	RegexMatchTuple *waf.RegexMatchTuple `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -1285,7 +1286,7 @@ type RegexMatchTuple struct {
 	// Specifies where in a web request to look for the RegexPatternSet.
 	//
 	// FieldToMatch is a required field
-	FieldToMatch *FieldToMatch `type:"structure" required:"true"`
+	FieldToMatch *waf.FieldToMatch `type:"structure" required:"true"`
 
 	// The RegexPatternSetId for a RegexPatternSet. You use RegexPatternSetId to
 	// get information about a RegexPatternSet (see GetRegexPatternSet), update
@@ -1540,7 +1541,7 @@ type Rule struct {
 	// IPSet, or SqlInjectionMatchSet object that you want to include in a Rule.
 	//
 	// Predicates is a required field
-	Predicates []Predicate `type:"list" required:"true"`
+	Predicates []waf.Predicate `type:"list" required:"true"`
 
 	// A unique identifier for a Rule. You use RuleId to get more information about
 	// a Rule (see GetRule), update a Rule (see UpdateRule), insert a Rule into
@@ -1640,7 +1641,7 @@ type RuleGroupUpdate struct {
 	// WAF to take when a web request matches the Rule (ALLOW, BLOCK, or COUNT).
 	//
 	// ActivatedRule is a required field
-	ActivatedRule *ActivatedRule `type:"structure" required:"true"`
+	ActivatedRule *waf.ActivatedRule `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -1710,7 +1711,7 @@ type RuleUpdate struct {
 	// The ID of the Predicate (such as an IPSet) that you want to add to a Rule.
 	//
 	// Predicate is a required field
-	Predicate *Predicate `type:"structure" required:"true"`
+	Predicate *waf.Predicate `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -1753,7 +1754,7 @@ type SampledHTTPRequest struct {
 	// A complex type that contains detailed information about the request.
 	//
 	// Request is a required field
-	Request *HTTPRequest `type:"structure" required:"true"`
+	Request *waf.HTTPRequest `type:"structure" required:"true"`
 
 	// This value is returned if the GetSampledRequests request specifies the ID
 	// of a RuleGroup rather than the ID of an individual rule. RuleWithinRuleGroup
@@ -1810,7 +1811,7 @@ type SizeConstraint struct {
 	// Specifies where in a web request to look for the size constraint.
 	//
 	// FieldToMatch is a required field
-	FieldToMatch *FieldToMatch `type:"structure" required:"true"`
+	FieldToMatch *waf.FieldToMatch `type:"structure" required:"true"`
 
 	// The size in bytes that you want AWS WAF to compare against the size of the
 	// specified FieldToMatch. AWS WAF uses this in combination with ComparisonOperator
@@ -1965,7 +1966,7 @@ type SizeConstraintSet struct {
 	// Specifies the parts of web requests that you want to inspect the size of.
 	//
 	// SizeConstraints is a required field
-	SizeConstraints []SizeConstraint `type:"list" required:"true"`
+	SizeConstraints []waf.SizeConstraint `type:"list" required:"true"`
 }
 
 // String returns the string representation
@@ -2017,7 +2018,7 @@ type SizeConstraintSetUpdate struct {
 	// that expression is true, the SizeConstraint is considered to match.
 	//
 	// SizeConstraint is a required field
-	SizeConstraint *SizeConstraint `type:"structure" required:"true"`
+	SizeConstraint *waf.SizeConstraint `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -2074,7 +2075,7 @@ type SqlInjectionMatchSet struct {
 	// of malicious SQL code.
 	//
 	// SqlInjectionMatchTuples is a required field
-	SqlInjectionMatchTuples []SqlInjectionMatchTuple `type:"list" required:"true"`
+	SqlInjectionMatchTuples []waf.SqlInjectionMatchTuple `type:"list" required:"true"`
 }
 
 // String returns the string representation
@@ -2125,7 +2126,7 @@ type SqlInjectionMatchSetUpdate struct {
 	// the name of the header.
 	//
 	// SqlInjectionMatchTuple is a required field
-	SqlInjectionMatchTuple *SqlInjectionMatchTuple `type:"structure" required:"true"`
+	SqlInjectionMatchTuple *waf.SqlInjectionMatchTuple `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -2164,7 +2165,7 @@ type SqlInjectionMatchTuple struct {
 	// Specifies where in a web request to look for snippets of malicious SQL code.
 	//
 	// FieldToMatch is a required field
-	FieldToMatch *FieldToMatch `type:"structure" required:"true"`
+	FieldToMatch *waf.FieldToMatch `type:"structure" required:"true"`
 
 	// Text transformations eliminate some of the unusual formatting that attackers
 	// use in web requests in an effort to bypass AWS WAF. If you specify a transformation,
@@ -2331,7 +2332,7 @@ type TagInfoForResource struct {
 
 	ResourceARN *string `min:"1" type:"string"`
 
-	TagList []Tag `min:"1" type:"list"`
+	TagList []waf.Tag `min:"1" type:"list"`
 }
 
 // String returns the string representation
@@ -2478,7 +2479,7 @@ type WebACL struct {
 	// The action is specified by the WafAction object.
 	//
 	// DefaultAction is a required field
-	DefaultAction *WafAction `type:"structure" required:"true"`
+	DefaultAction *waf.WafAction `type:"structure" required:"true"`
 
 	// A friendly name or description for the metrics for this WebACL. The name
 	// can contain only alphanumeric characters (A-Z, a-z, 0-9), with maximum length
@@ -2495,7 +2496,7 @@ type WebACL struct {
 	// of the Rule, and the ID of the Rule.
 	//
 	// Rules is a required field
-	Rules []ActivatedRule `type:"list" required:"true"`
+	Rules []waf.ActivatedRule `type:"list" required:"true"`
 
 	// Tha Amazon Resource Name (ARN) of the web ACL.
 	WebACLArn *string `min:"1" type:"string"`
@@ -2555,7 +2556,7 @@ type WebACLUpdate struct {
 	// (ALLOW, BLOCK, or COUNT).
 	//
 	// ActivatedRule is a required field
-	ActivatedRule *ActivatedRule `type:"structure" required:"true"`
+	ActivatedRule *waf.ActivatedRule `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -2611,7 +2612,7 @@ type XssMatchSet struct {
 	// scripting attacks.
 	//
 	// XssMatchTuples is a required field
-	XssMatchTuples []XssMatchTuple `type:"list" required:"true"`
+	XssMatchTuples []waf.XssMatchTuple `type:"list" required:"true"`
 }
 
 // String returns the string representation
@@ -2661,7 +2662,7 @@ type XssMatchSetUpdate struct {
 	// the name of the header.
 	//
 	// XssMatchTuple is a required field
-	XssMatchTuple *XssMatchTuple `type:"structure" required:"true"`
+	XssMatchTuple *waf.XssMatchTuple `type:"structure" required:"true"`
 }
 
 // String returns the string representation
@@ -2700,7 +2701,7 @@ type XssMatchTuple struct {
 	// Specifies where in a web request to look for cross-site scripting attacks.
 	//
 	// FieldToMatch is a required field
-	FieldToMatch *FieldToMatch `type:"structure" required:"true"`
+	FieldToMatch *waf.FieldToMatch `type:"structure" required:"true"`
 
 	// Text transformations eliminate some of the unusual formatting that attackers
 	// use in web requests in an effort to bypass AWS WAF. If you specify a transformation,

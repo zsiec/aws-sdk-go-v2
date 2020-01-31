@@ -23,7 +23,7 @@ import (
 //    // myFunc uses an SDK service client to make a request to
 //    // Amazon FSx.
 //    func myFunc(svc fsxiface.ClientAPI) bool {
-//        // Make svc.CancelDataRepositoryTask request
+//        // Make svc.CreateBackup request
 //    }
 //
 //    func main() {
@@ -43,7 +43,7 @@ import (
 //    type mockClientClient struct {
 //        fsxiface.ClientPI
 //    }
-//    func (m *mockClientClient) CancelDataRepositoryTask(input *fsx.CancelDataRepositoryTaskInput) (*fsx.CancelDataRepositoryTaskOutput, error) {
+//    func (m *mockClientClient) CreateBackup(input *fsx.CreateBackupInput) (*fsx.CreateBackupOutput, error) {
 //        // mock response/functionality
 //    }
 //
@@ -61,11 +61,7 @@ import (
 // and waiters. Its suggested to use the pattern above for testing, or using
 // tooling to generate mocks to satisfy the interfaces.
 type ClientAPI interface {
-	CancelDataRepositoryTaskRequest(*fsx.CancelDataRepositoryTaskInput) fsx.CancelDataRepositoryTaskRequest
-
 	CreateBackupRequest(*fsx.CreateBackupInput) fsx.CreateBackupRequest
-
-	CreateDataRepositoryTaskRequest(*fsx.CreateDataRepositoryTaskInput) fsx.CreateDataRepositoryTaskRequest
 
 	CreateFileSystemRequest(*fsx.CreateFileSystemInput) fsx.CreateFileSystemRequest
 
@@ -76,8 +72,6 @@ type ClientAPI interface {
 	DeleteFileSystemRequest(*fsx.DeleteFileSystemInput) fsx.DeleteFileSystemRequest
 
 	DescribeBackupsRequest(*fsx.DescribeBackupsInput) fsx.DescribeBackupsRequest
-
-	DescribeDataRepositoryTasksRequest(*fsx.DescribeDataRepositoryTasksInput) fsx.DescribeDataRepositoryTasksRequest
 
 	DescribeFileSystemsRequest(*fsx.DescribeFileSystemsInput) fsx.DescribeFileSystemsRequest
 

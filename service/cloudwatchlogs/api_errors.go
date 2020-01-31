@@ -25,8 +25,7 @@ const (
 	// ErrCodeInvalidSequenceTokenException for service response error code
 	// "InvalidSequenceTokenException".
 	//
-	// The sequence token is not valid. You can get the correct sequence token in
-	// the expectedSequenceToken field in the InvalidSequenceTokenException message.
+	// The sequence token is not valid.
 	ErrCodeInvalidSequenceTokenException = "InvalidSequenceTokenException"
 
 	// ErrCodeLimitExceededException for service response error code

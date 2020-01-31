@@ -13,21 +13,19 @@ import (
 type UpdateAliasInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for the alias that you want to update. You can use either
-	// the alias ID or ARN value.
+	// Unique identifier for a fleet alias. Specify the alias you want to update.
 	//
 	// AliasId is a required field
 	AliasId *string `type:"string" required:"true"`
 
-	// A human-readable description of the alias.
+	// Human-readable description of an alias.
 	Description *string `min:"1" type:"string"`
 
-	// A descriptive label that is associated with an alias. Alias names do not
-	// need to be unique.
+	// Descriptive label that is associated with an alias. Alias names do not need
+	// to be unique.
 	Name *string `min:"1" type:"string"`
 
-	// The routing configuration, including routing type and fleet target, for the
-	// alias.
+	// Object that specifies the fleet and routing type to use for the alias.
 	RoutingStrategy *RoutingStrategy `type:"structure"`
 }
 
@@ -60,7 +58,7 @@ func (s *UpdateAliasInput) Validate() error {
 type UpdateAliasOutput struct {
 	_ struct{} `type:"structure"`
 
-	// The updated alias resource.
+	// Object that contains the updated alias configuration.
 	Alias *Alias `type:"structure"`
 }
 

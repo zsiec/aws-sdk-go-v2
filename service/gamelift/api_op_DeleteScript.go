@@ -14,8 +14,7 @@ import (
 type DeleteScriptInput struct {
 	_ struct{} `type:"structure"`
 
-	// A unique identifier for a Realtime script to delete. You can use either the
-	// script ID or ARN value.
+	// Unique identifier for a Realtime script to delete.
 	//
 	// ScriptId is a required field
 	ScriptId *string `type:"string" required:"true"`

@@ -208,8 +208,6 @@ type ClientAPI interface {
 
 	DescribeUserProfileRequest(*sagemaker.DescribeUserProfileInput) sagemaker.DescribeUserProfileRequest
 
-	DescribeWorkforceRequest(*sagemaker.DescribeWorkforceInput) sagemaker.DescribeWorkforceRequest
-
 	DescribeWorkteamRequest(*sagemaker.DescribeWorkteamInput) sagemaker.DescribeWorkteamRequest
 
 	DisassociateTrialComponentRequest(*sagemaker.DisassociateTrialComponentInput) sagemaker.DisassociateTrialComponentRequest
@@ -325,8 +323,6 @@ type ClientAPI interface {
 	UpdateTrialComponentRequest(*sagemaker.UpdateTrialComponentInput) sagemaker.UpdateTrialComponentRequest
 
 	UpdateUserProfileRequest(*sagemaker.UpdateUserProfileInput) sagemaker.UpdateUserProfileRequest
-
-	UpdateWorkforceRequest(*sagemaker.UpdateWorkforceInput) sagemaker.UpdateWorkforceRequest
 
 	UpdateWorkteamRequest(*sagemaker.UpdateWorkteamInput) sagemaker.UpdateWorkteamRequest
 

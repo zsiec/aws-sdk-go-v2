@@ -76,8 +76,7 @@ type GetAccountOutput struct {
 	// in the current AWS Region.
 	SendingEnabled *bool `type:"boolean"`
 
-	// An object that contains information about the email address suppression preferences
-	// for your account in the current AWS Region.
+	// An object that contains information about your account's suppression preferences.
 	SuppressionAttributes *SuppressionAttributes `type:"structure"`
 }
 

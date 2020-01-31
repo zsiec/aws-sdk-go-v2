@@ -80,9 +80,6 @@ const (
 	LastUpdateStatusReasonCodeInsufficientRolePermissions LastUpdateStatusReasonCode = "InsufficientRolePermissions"
 	LastUpdateStatusReasonCodeInvalidConfiguration        LastUpdateStatusReasonCode = "InvalidConfiguration"
 	LastUpdateStatusReasonCodeInternalError               LastUpdateStatusReasonCode = "InternalError"
-	LastUpdateStatusReasonCodeSubnetOutOfIpaddresses      LastUpdateStatusReasonCode = "SubnetOutOfIPAddresses"
-	LastUpdateStatusReasonCodeInvalidSubnet               LastUpdateStatusReasonCode = "InvalidSubnet"
-	LastUpdateStatusReasonCodeInvalidSecurityGroup        LastUpdateStatusReasonCode = "InvalidSecurityGroup"
 )
 
 func (enum LastUpdateStatusReasonCode) MarshalValue() (string, error) {
@@ -194,8 +191,6 @@ const (
 	StateReasonCodeInvalidConfiguration        StateReasonCode = "InvalidConfiguration"
 	StateReasonCodeInternalError               StateReasonCode = "InternalError"
 	StateReasonCodeSubnetOutOfIpaddresses      StateReasonCode = "SubnetOutOfIPAddresses"
-	StateReasonCodeInvalidSubnet               StateReasonCode = "InvalidSubnet"
-	StateReasonCodeInvalidSecurityGroup        StateReasonCode = "InvalidSecurityGroup"
 )
 
 func (enum StateReasonCode) MarshalValue() (string, error) {

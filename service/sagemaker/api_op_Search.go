@@ -21,7 +21,8 @@ type SearchInput struct {
 	// and Sort parameters.
 	NextToken *string `type:"string"`
 
-	// The name of the Amazon SageMaker resource to search for.
+	// The name of the Amazon SageMaker resource to search for. Currently, the only
+	// valid Resource value is TrainingJob.
 	//
 	// Resource is a required field
 	Resource ResourceType `type:"string" required:"true" enum:"true"`
@@ -98,8 +99,8 @@ const opSearch = "Search"
 // can sort the search results by any resource property in a ascending or descending
 // order.
 //
-// You can query against the following value types: numeric, text, Boolean,
-// and timestamp.
+// You can query against the following value types: numerical, text, Booleans,
+// and timestamps.
 //
 //    // Example sending a request using SearchRequest.
 //    req := client.SearchRequest(params)

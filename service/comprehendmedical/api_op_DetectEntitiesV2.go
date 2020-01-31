@@ -88,7 +88,8 @@ const opDetectEntitiesV2 = "DetectEntitiesV2"
 // should use the DetectEntitiesV2 operation in all new applications.
 //
 // The DetectEntitiesV2 operation returns the Acuity and Direction entities
-// as attributes instead of types.
+// as attributes instead of types. It does not return the Quality or Quantity
+// entities.
 //
 //    // Example sending a request using DetectEntitiesV2Request.
 //    req := client.DetectEntitiesV2Request(params)

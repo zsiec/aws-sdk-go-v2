@@ -8,7 +8,6 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/aws/awserr"
-	"github.com/aws/aws-sdk-go-v2/service/s3/internal/arn"
 )
 
 // an operationBlacklist is a list of operation names that should a
@@ -30,37 +29,60 @@ var accelerateOpBlacklist = operationBlacklist{
 	opListBuckets, opCreateBucket, opDeleteBucket,
 }
 
-// Automatically add the bucket name to the endpoint domain
+// Request handler to automatically add the bucket name to the endpoint domain
 // if possible. This style of bucket is valid for all bucket names which are
 // DNS compatible and do not contain "."
-func updateEndpointForS3Config(c *Client, r *aws.Request, bucketName string) {
-	if c.UseAccelerate && accelerateOpBlacklist.Continue(r) {
-		if c.ForcePathStyle {
-			if r.Config.Logger != nil {
-				r.Config.Logger.Log("ERROR: s3.S3.UseAccelerate is not compatible with s3.S3.ForcePathStyle, ignoring ForcePathStyle.")
+func buildUpdateEndpointForS3Config(c *Client) func(*aws.Request) {
+	forceHostStyle := c.ForcePathStyle
+	accelerate := c.UseAccelerate
+
+	return func(r *aws.Request) {
+		if accelerate && accelerateOpBlacklist.Continue(r) {
+			if forceHostStyle {
+				if r.Config.Logger != nil {
+					r.Config.Logger.Log("ERROR: s3.S3.UseAccelerate is not compatible with s3.S3.ForcePathStyle, ignoring ForcePathStyle.")
+				}
 			}
+			updateEndpointForAccelerate(r)
+		} else if !forceHostStyle && r.Operation.Name != opGetBucketLocation {
+			updateEndpointForHostStyle(r)
 		}
-		updateEndpointForAccelerate(r, bucketName)
-	} else if !c.ForcePathStyle && r.Operation.Name != opGetBucketLocation {
-		updateEndpointForHostStyle(r, bucketName)
 	}
 }
 
-func updateEndpointForHostStyle(r *aws.Request, bucketName string) {
-	if !hostCompatibleBucketName(r.HTTPRequest.URL, bucketName) {
+func updateEndpointForHostStyle(r *aws.Request) {
+	bucket, ok := bucketNameFromReqParams(r.Params)
+	if !ok {
+		// Ignore operation requests if the bucketname was not provided
+		// if this is an input validation error the validation handler
+		// will report it.
+		return
+	}
+
+	if !hostCompatibleBucketName(r.HTTPRequest.URL, bucket) {
 		// bucket name must be valid to put into the host
 		return
 	}
 
-	moveBucketToHost(r.HTTPRequest.URL, bucketName)
+	moveBucketToHost(r.HTTPRequest.URL, bucket)
 }
 
-var accelElem = []byte("s3-accelerate.dualstack.")
+var (
+	accelElem = []byte("s3-accelerate.dualstack.")
+)
 
-func updateEndpointForAccelerate(r *aws.Request, bucketName string) {
-	if !hostCompatibleBucketName(r.HTTPRequest.URL, bucketName) {
+func updateEndpointForAccelerate(r *aws.Request) {
+	bucket, ok := bucketNameFromReqParams(r.Params)
+	if !ok {
+		// Ignore operation requests if the bucketname was not provided
+		// if this is an input validation error the validation handler
+		// will report it.
+		return
+	}
+
+	if !hostCompatibleBucketName(r.HTTPRequest.URL, bucket) {
 		r.Error = awserr.New("InvalidParameterException",
-			fmt.Sprintf("bucket name %s is not compatible with S3 Accelerate", bucketName),
+			fmt.Sprintf("bucket name %s is not compatible with S3 Accelerate", bucket),
 			nil)
 		return
 	}
@@ -85,7 +107,7 @@ func updateEndpointForAccelerate(r *aws.Request, bucketName string) {
 
 	r.HTTPRequest.URL.Host = strings.Join(parts, ".")
 
-	moveBucketToHost(r.HTTPRequest.URL, bucketName)
+	moveBucketToHost(r.HTTPRequest.URL, bucket)
 }
 
 // Attempts to retrieve the bucket name from the request input parameters.
@@ -127,10 +149,8 @@ func dnsCompatibleBucketName(bucket string) bool {
 // moveBucketToHost moves the bucket name from the URI path to URL host.
 func moveBucketToHost(u *url.URL, bucket string) {
 	u.Host = bucket + "." + u.Host
-	removeBucketFromPath(u)
-}
-
-type endpointARNGetter interface {
-	getEndpointARN() (arn.Resource, error)
-	hasEndpointARN() bool
+	u.Path = strings.Replace(u.Path, "/{Bucket}", "", -1)
+	if u.Path == "" {
+		u.Path = "/"
+	}
 }

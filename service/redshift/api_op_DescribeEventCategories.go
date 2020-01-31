@@ -15,8 +15,7 @@ type DescribeEventCategoriesInput struct {
 	// The source type, such as cluster or parameter group, to which the described
 	// event categories apply.
 	//
-	// Valid values: cluster, cluster-snapshot, cluster-parameter-group, cluster-security-group,
-	// and scheduled-action.
+	// Valid values: cluster, cluster-snapshot, cluster-parameter-group, and cluster-security-group.
 	SourceType *string `type:"string"`
 }
 

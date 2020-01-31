@@ -16,7 +16,7 @@ type GetDevicePoolCompatibilityInput struct {
 	// The ARN of the app that is associated with the specified device pool.
 	AppArn *string `locationName:"appArn" min:"32" type:"string"`
 
-	// An object that contains information about the settings for a run.
+	// An object containing information about the settings for a run.
 	Configuration *ScheduleRunConfiguration `locationName:"configuration" type:"structure"`
 
 	// The device pool's ARN.
@@ -31,42 +31,43 @@ type GetDevicePoolCompatibilityInput struct {
 	//
 	// Allowed values include the following:
 	//
-	//    * BUILTIN_FUZZ.
+	//    * BUILTIN_FUZZ: The built-in fuzz type.
 	//
-	//    * BUILTIN_EXPLORER. For Android, an app explorer that traverses an Android
-	//    app, interacting with it and capturing screenshots at the same time.
+	//    * BUILTIN_EXPLORER: For Android, an app explorer that will traverse an
+	//    Android app, interacting with it and capturing screenshots at the same
+	//    time.
 	//
-	//    * APPIUM_JAVA_JUNIT.
+	//    * APPIUM_JAVA_JUNIT: The Appium Java JUnit type.
 	//
-	//    * APPIUM_JAVA_TESTNG.
+	//    * APPIUM_JAVA_TESTNG: The Appium Java TestNG type.
 	//
-	//    * APPIUM_PYTHON.
+	//    * APPIUM_PYTHON: The Appium Python type.
 	//
-	//    * APPIUM_NODE.
+	//    * APPIUM_NODE: The Appium Node.js type.
 	//
-	//    * APPIUM_RUBY.
+	//    * APPIUM_RUBY: The Appium Ruby type.
 	//
-	//    * APPIUM_WEB_JAVA_JUNIT.
+	//    * APPIUM_WEB_JAVA_JUNIT: The Appium Java JUnit type for web apps.
 	//
-	//    * APPIUM_WEB_JAVA_TESTNG.
+	//    * APPIUM_WEB_JAVA_TESTNG: The Appium Java TestNG type for web apps.
 	//
-	//    * APPIUM_WEB_PYTHON.
+	//    * APPIUM_WEB_PYTHON: The Appium Python type for web apps.
 	//
-	//    * APPIUM_WEB_NODE.
+	//    * APPIUM_WEB_NODE: The Appium Node.js type for web apps.
 	//
-	//    * APPIUM_WEB_RUBY.
+	//    * APPIUM_WEB_RUBY: The Appium Ruby type for web apps.
 	//
-	//    * CALABASH.
+	//    * CALABASH: The Calabash type.
 	//
-	//    * INSTRUMENTATION.
+	//    * INSTRUMENTATION: The Instrumentation type.
 	//
-	//    * UIAUTOMATION.
+	//    * UIAUTOMATION: The uiautomation type.
 	//
-	//    * UIAUTOMATOR.
+	//    * UIAUTOMATOR: The uiautomator type.
 	//
-	//    * XCTEST.
+	//    * XCTEST: The Xcode test type.
 	//
-	//    * XCTEST_UI.
+	//    * XCTEST_UI: The Xcode UI test type.
 	TestType TestType `locationName:"testType" type:"string" enum:"true"`
 }
 

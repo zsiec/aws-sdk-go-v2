@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type ListActivatedRulesInRuleGroupInput struct {
@@ -55,7 +56,7 @@ type ListActivatedRulesInRuleGroupOutput struct {
 	_ struct{} `type:"structure"`
 
 	// An array of ActivatedRules objects.
-	ActivatedRules []ActivatedRule `type:"list"`
+	ActivatedRules []waf.ActivatedRule `type:"list"`
 
 	// If you have more ActivatedRules than the number that you specified for Limit
 	// in the request, the response includes a NextMarker value. To list more ActivatedRules,

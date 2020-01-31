@@ -13,10 +13,8 @@ type UpdateServerInput struct {
 	_ struct{} `type:"structure"`
 
 	// The virtual private cloud (VPC) endpoint settings that are configured for
-	// your SFTP server. With a VPC endpoint, you can restrict access to your SFTP
-	// server to resources only within your VPC. To control incoming internet traffic,
-	// you will need to associate one or more Elastic IP addresses with your server's
-	// endpoint.
+	// your SFTP server. With a VPC endpoint, your SFTP server isn't accessible
+	// over the public internet.
 	EndpointDetails *EndpointDetails `type:"structure"`
 
 	// The type of endpoint that you want your SFTP server to connect to. You can

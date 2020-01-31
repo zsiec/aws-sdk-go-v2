@@ -23,6 +23,10 @@ type CreateBackupSelectionInput struct {
 	// Specifies the body of a request to assign a set of resources to a backup
 	// plan.
 	//
+	// It includes an array of resources, an optional array of patterns to exclude
+	// resources, an optional role to provide access to the AWS service the resource
+	// belongs to, and an optional array of tags used to identify a set of resources.
+	//
 	// BackupSelection is a required field
 	BackupSelection *BackupSelection `type:"structure" required:"true"`
 
@@ -143,9 +147,9 @@ const opCreateBackupSelection = "CreateBackupSelection"
 //
 //    * Resources: "arn:aws:ec2:region:account-id:volume/volume-id"
 //
-//    * ConditionKey:"department" ConditionValue:"finance" ConditionType:"STRINGEQUALS"
+//    * ConditionKey:"department" ConditionValue:"finance" ConditionType:"StringEquals"
 //
-//    * ConditionKey:"importance" ConditionValue:"critical" ConditionType:"STRINGEQUALS"
+//    * ConditionKey:"importance" ConditionValue:"critical" ConditionType:"StringEquals"
 //
 // Using these patterns would back up all Amazon Elastic Block Store (Amazon
 // EBS) volumes that are tagged as "department=finance", "importance=critical",

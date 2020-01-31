@@ -396,7 +396,7 @@ func buildJSONValues(shape *api.Shape) map[string]struct{} {
 
 // generateTestSuite generates a protocol test suite for a given configuration
 // JSON protocol test file.
-func generateTestSuite(filename string) (string, error) {
+func generateTestSuite(filename string) string {
 	inout := "Input"
 	if strings.Contains(filename, "output/") {
 		inout = "Output"
@@ -434,9 +434,7 @@ func generateTestSuite(filename string) (string, error) {
 		suite.API.NoStringerMethods = true           // don't generate stringer methods
 		suite.API.NoConstServiceNames = true         // don't generate service names
 		suite.API.UseServiceIDForClientStruct = true // need unique client types.
-		if err := suite.API.Setup(); err != nil {
-			return "", err
-		}
+		suite.API.Setup()
 		suite.API.Metadata.EndpointPrefix = suite.API.PackageName()
 		suite.API.Metadata.EndpointsID = suite.API.Metadata.EndpointPrefix
 
@@ -451,7 +449,7 @@ func generateTestSuite(filename string) (string, error) {
 			s.Rename(svcPrefix + "TestShape" + name)
 		}
 
-		svcCode := addImports(suite.API.ClientGoCode())
+		svcCode := addImports(suite.API.ServiceGoCode())
 		if i == 0 {
 			importMatch := reImportRemoval.FindStringSubmatch(svcCode)
 			buf.WriteString(importMatch[0] + "\n\n")
@@ -472,7 +470,7 @@ func generateTestSuite(filename string) (string, error) {
 		innerBuf.WriteString(suite.TestSuite() + "\n")
 	}
 
-	return buf.String() + innerBuf.String(), nil
+	return buf.String() + innerBuf.String()
 }
 
 // findMember searches the shape for the member with the matching key name.
@@ -593,10 +591,7 @@ func getType(t string) uint {
 
 func main() {
 	fmt.Println("Generating test suite", os.Args[1:])
-	out, err := generateTestSuite(os.Args[1])
-	if err != nil {
-		panic(err)
-	}
+	out := generateTestSuite(os.Args[1])
 	if len(os.Args) == 3 {
 		f, err := os.Create(os.Args[2])
 		defer f.Close()

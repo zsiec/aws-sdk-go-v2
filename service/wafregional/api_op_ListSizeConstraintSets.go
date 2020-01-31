@@ -7,6 +7,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type ListSizeConstraintSetsInput struct {
@@ -55,7 +56,7 @@ type ListSizeConstraintSetsOutput struct {
 	NextMarker *string `min:"1" type:"string"`
 
 	// An array of SizeConstraintSetSummary objects.
-	SizeConstraintSets []SizeConstraintSetSummary `type:"list"`
+	SizeConstraintSets []waf.SizeConstraintSetSummary `type:"list"`
 }
 
 // String returns the string representation

@@ -8,6 +8,7 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/internal/awsutil"
+	"github.com/aws/aws-sdk-go-v2/service/waf"
 )
 
 type TagResourceInput struct {
@@ -17,7 +18,7 @@ type TagResourceInput struct {
 	ResourceARN *string `min:"1" type:"string" required:"true"`
 
 	// Tags is a required field
-	Tags []Tag `min:"1" type:"list" required:"true"`
+	Tags []waf.Tag `min:"1" type:"list" required:"true"`
 }
 
 // String returns the string representation

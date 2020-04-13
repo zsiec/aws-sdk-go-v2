@@ -31,6 +31,13 @@ type CreateJobInput struct {
 	// Idempotency token for CreateJob operation.
 	ClientRequestToken *string `locationName:"clientRequestToken" type:"string" idempotencyToken:"true"`
 
+	// Optional. Use queue hopping to avoid overly long waits in the backlog of
+	// the queue that you submit your job to. Specify an alternate queue and the
+	// maximum time that your job will wait in the initial queue before hopping.
+	// For more information about this feature, see the AWS Elemental MediaConvert
+	// User Guide.
+	HopDestinations []*HopDestination `locationName:"hopDestinations" type:"list"`
+
 	// When you create a job, you can either specify a job template or specify the
 	// transcoding settings individually
 	JobTemplate *string `locationName:"jobTemplate" type:"string"`
@@ -106,6 +113,16 @@ func (s *CreateJobInput) Validate() error {
 	if s.Settings != nil {
 		if err := s.Settings.Validate(); err != nil {
 			invalidParams.AddNested("Settings", err.(aws.ErrInvalidParams))
+		}
+	}
+	if s.HopDestinations != nil {
+		for i, v := range s.HopDestinations {
+			if v == nil {
+				continue
+			}
+			if err := v.Validate(); err != nil {
+				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "HopDestinations", i), err.(aws.ErrInvalidParams))
+			}
 		}
 	}
 

@@ -3,7 +3,6 @@
 package mediaconvert
 
 import (
-	"fmt"
 	"context"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -114,16 +113,6 @@ func (s *CreateJobInput) Validate() error {
 	if s.Settings != nil {
 		if err := s.Settings.Validate(); err != nil {
 			invalidParams.AddNested("Settings", err.(aws.ErrInvalidParams))
-		}
-	}
-	if s.HopDestinations != nil {
-		for i, v := range s.HopDestinations {
-			if v == nil {
-				continue
-			}
-			if err := v.Validate(); err != nil {
-				invalidParams.AddNested(fmt.Sprintf("%s[%v]", "HopDestinations", i), err.(aws.ErrInvalidParams))
-			}
 		}
 	}
 

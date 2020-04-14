@@ -13345,7 +13345,7 @@ func (s HopDestination) GoString() string {
 }
 
 // Validate inspects the fields of the type to determine if they are valid.
-func (s *HopDestination) Validate() error {
+func (s HopDestination) Validate() error {
 	invalidParams := aws.ErrInvalidParams{Context: "HopDestination"}
 	if s.Priority != nil && *s.Priority < -50 {
 		invalidParams.Add(aws.NewErrParamMinValue("Priority", -50))
@@ -13357,20 +13357,25 @@ func (s *HopDestination) Validate() error {
 	return nil
 }
 
-// SetPriority sets the Priority field's value.
-func (s *HopDestination) SetPriority(v int64) *HopDestination {
-	s.Priority = &v
-	return s
-}
+// MarshalFields encodes the AWS API shape using the passed in protocol encoder.
+func (s HopDestination) MarshalFields(e protocol.FieldEncoder) error {
+	if s.Priority != nil {
+		v := *s.Priority
 
-// SetQueue sets the Queue field's value.
-func (s *HopDestination) SetQueue(v string) *HopDestination {
-	s.Queue = &v
-	return s
-}
+		metadata := protocol.Metadata{}
+		e.SetValue(protocol.BodyTarget, "priority", protocol.Int64Value(v), metadata)
+	}
+	if s.WaitMinutes != nil {
+		v := *s.WaitMinutes
 
-// SetWaitMinutes sets the WaitMinutes field's value.
-func (s *HopDestination) SetWaitMinutes(v int64) *HopDestination {
-	s.WaitMinutes = &v
-	return s
+		metadata := protocol.Metadata{}
+		e.SetValue(protocol.BodyTarget, "waitMinutes", protocol.Int64Value(v), metadata)
+	}
+	if s.Queue != nil {
+		v := *s.Queue
+
+		metadata := protocol.Metadata{}
+		e.SetValue(protocol.BodyTarget, "queue", protocol.QuotedValue{ValueMarshaler: protocol.StringValue(v)}, metadata)
+	}
+	return nil
 }
